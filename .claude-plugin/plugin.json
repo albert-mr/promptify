@@ -1,6 +1,6 @@
 {
   "name": "promptify",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Drafts polished prompts and Claude Code /goal conditions, tuned to whichever Claude or OpenAI model family is detected.",
   "author": { "name": "Albert" }
 }

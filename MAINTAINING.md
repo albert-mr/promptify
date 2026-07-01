@@ -58,7 +58,7 @@ Merging a PR does not update every installed copy of promptify the same way. The
 
 - **Claude Code: not automatic.** The installed plugin is a cached git clone, not a symlink. After a PR is merged, the user must:
   1. Run `claude plugin marketplace update promptify` to refresh the cached clone.
-  2. Run `claude plugin update promptify` to update the installed plugin pointer.
+  2. Run `claude plugin update promptify@promptify` to update the installed plugin pointer (the bare plugin name alone fails with "Plugin not found" — verified live; the `plugin@marketplace` form is required here even though `install` accepts either).
   3. Restart the Claude Code session, or run `/reload-plugins`, for the change to take effect.
 
   There is no CLI-level auto-reload for Claude Code — skipping any of these three steps means the session keeps running stale reference content.

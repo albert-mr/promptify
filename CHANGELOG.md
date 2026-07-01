@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.0.2] - 2026-07-01
+
+### Fixed
+- MAINTAINING.md: corrected `claude plugin update` command — requires `plugin@marketplace` form, not the bare plugin name (verified live: `claude plugin update promptify` fails with "Plugin not found", `claude plugin update promptify@promptify` succeeds).
+
 ## [1.0.1] - 2026-07-01
 
 ### Added
