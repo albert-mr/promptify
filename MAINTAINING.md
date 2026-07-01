@@ -54,7 +54,7 @@ Manual updates follow the identical process by hand: re-fetch the relevant sourc
 
 Merging a PR does not update every installed copy of promptify the same way. The two install paths are asymmetric:
 
-- **Codex CLI: automatic.** Both the project-scoped install (`.agents/skills/promptify`) and the global install (`~/.codex/skills/promptify`) are symlinks into this repo's `skills/promptify/` directory. Once a PR is merged into `main`, any Codex CLI session using either install path picks up the change immediately. No further action is needed.
+- **Codex CLI: automatic for symlinks.** The checked-in project install (`.agents/skills/promptify`) and any global symlink at `$HOME/.agents/skills/promptify` point into this repo's `skills/promptify/` directory. Once a PR is merged into `main`, any Codex CLI session using one of those symlinked install paths picks up the change immediately. A copied global install must be recopied after updates.
 
 - **Claude Code: not automatic.** The installed plugin is a cached git clone, not a symlink. After a PR is merged, the user must:
   1. Run `claude plugin marketplace update promptify` to refresh the cached clone.
