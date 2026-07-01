@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.1.0] - 2026-07-01
+
+### Changed
+- claude-families.md: Claude Fable 5 / Mythos 5 is no longer flagged dormant — the June 12 suspension banner is gone from the live docs as of this check, and the model is presented as fully available and recommended. Added the new "Capability improvements over Opus 4.8" section from the live doc (long-horizon autonomy, first-shot correctness, vision, enterprise workflows, code review/debugging, ambiguity navigation, delegation).
+- Found and verified by the first live run of the `promptify-monthly-freshness-check` cloud routine (see MAINTAINING.md); the routine correctly detected the drift and prepared this exact fix locally, but could not push a branch or open a PR itself — both GitHub write paths in its cloud environment returned 403 (git-credential proxy, and GitHub MCP integration). It correctly stopped rather than working around that. This entry was completed manually using working local credentials so the finding wasn't lost; the cloud environment's GitHub write access still needs fixing before future scheduled runs can open PRs unattended.
+
 ## [1.0.2] - 2026-07-01
 
 ### Fixed
