@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 300" width="520" height="300" role="img" aria-label="A confused figure points at a butterfly, asking IS THIS SONNET 5? &#8212; a parody of the classic confused-man meme, illustrating promptify's disclosed best-guess model detection">
+  <!-- speech bubble -->
+  <rect x="30" y="14" width="180" height="56" rx="16" fill="none" stroke="#c96442" stroke-width="4"/>
+  <path d="M 90 70 L 78 96 L 112 72 Z" fill="none" stroke="#c96442" stroke-width="4" stroke-linejoin="round"/>
+  <text x="120" y="49" font-family="Helvetica, Arial, sans-serif" font-size="26" font-weight="700" fill="#c96442" text-anchor="middle">IS THIS</text>
+
+  <!-- figure -->
+  <g stroke="#c96442" stroke-width="5" stroke-linecap="round" fill="none">
+    <circle cx="130" cy="140" r="30" />
+    <!-- confused face: one flat brow, one raised, open "o" mouth -->
+    <circle cx="121" cy="135" r="3.5" fill="#c96442" stroke="none"/>
+    <circle cx="140" cy="138" r="3.5" fill="#c96442" stroke="none"/>
+    <path d="M 110 124 L 128 121" />
+    <path d="M 133 117 Q 145 104 154 115" />
+    <circle cx="129" cy="153" r="5.5" />
+    <!-- torso -->
+    <line x1="130" y1="170" x2="130" y2="235" />
+    <!-- pointing arm, raised toward butterfly -->
+    <line x1="130" y1="190" x2="245" y2="128" />
+    <line x1="245" y1="128" x2="262" y2="118" />
+    <!-- other arm -->
+    <line x1="130" y1="190" x2="95" y2="230" />
+    <!-- legs -->
+    <line x1="130" y1="235" x2="100" y2="292" />
+    <line x1="130" y1="235" x2="158" y2="292" />
+  </g>
+
+  <!-- dotted sightline from fingertip to butterfly -->
+  <line x1="262" y1="118" x2="345" y2="95" stroke="#c96442" stroke-width="2.5" stroke-dasharray="2 8" stroke-linecap="round"/>
+
+  <!-- butterfly -->
+  <g stroke="#c96442" stroke-width="4" stroke-linecap="round" fill="none">
+    <path d="M 375 90 C 355 55, 320 55, 315 85 C 312 105, 340 100, 375 90 Z" />
+    <path d="M 375 90 C 395 55, 430 55, 435 85 C 438 105, 410 100, 375 90 Z" />
+    <path d="M 375 90 C 358 108, 330 118, 322 132 C 318 140, 335 138, 355 122 C 365 114, 372 100, 375 90 Z" />
+    <path d="M 375 90 C 392 108, 420 118, 428 132 C 432 140, 415 138, 395 122 C 385 114, 378 100, 375 90 Z" />
+    <line x1="375" y1="72" x2="375" y2="110" />
+    <path d="M 375 72 Q 366 60 358 58" />
+    <path d="M 375 72 Q 384 60 392 58" />
+  </g>
+
+  <!-- tag hanging off the butterfly -->
+  <line x1="375" y1="112" x2="392" y2="150" stroke="#c96442" stroke-width="2" stroke-dasharray="1 6"/>
+  <rect x="356" y="150" width="118" height="42" rx="8" fill="none" stroke="#c96442" stroke-width="4"/>
+  <text x="415" y="177" font-family="Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#c96442" text-anchor="middle">SONNET 5?</text>
+</svg>
