@@ -4,11 +4,19 @@ Source: condensed from Anthropic's official prompt-engineering docs, research pa
 
 The prompt-engineering nav has exactly **three** dedicated model-specific pages: Fable 5, Opus 4.8, Sonnet 5. Sonnet 4.6, Opus 4.6/4.7, and Haiku 4.5 have no dedicated page — they're covered only by the general best-practices page (confirmed by checking the full left-nav; not a missed link).
 
-## Claude Fable 5 / Mythos 5 (currently suspended)
+## Claude Fable 5 / Mythos 5
 
 - **Model IDs**: `claude-fable-5`, `claude-mythos-5` (Project Glasswing, limited availability), `claude-mythos-preview` (invitation-only). Bedrock: `anthropic.claude-fable-5`. Google Cloud: `claude-fable-5`.
 - **Doc URL**: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5
-- **STATUS — access currently suspended**: the live docs page carries a banner: *"Update June 12: We've suspended access to Claude Fable 5 and Claude Mythos 5. Please use Opus 4.8 or another model."* This snapshot confirms access is suspended as of the fetch date. **This ruleset should still ship in the skill, but must be flagged dormant** (i.e., present for when the models are reinstated, not for active use today).
+- **STATUS — fully available (updated 2026-07-01)**: the June 12 suspension banner is gone from the live docs page. Fable 5 is now presented as fully available and actively recommended for hard, long-running, ambiguous work — no longer dormant. The doc adds a "Capability improvements" section (below) describing where it outperforms Opus 4.8.
+- **Capability improvements over Opus 4.8**:
+  - Long-horizon autonomy: sustains productive output over multi-day, goal-directed runs with strong instruction retention.
+  - First-shot correctness on complex, well-specified problems.
+  - Vision: interprets dense technical images, web apps, and screenshots more accurately, often with fewer output tokens; trained to use bash/crop tools for flipped, blurry, or noisy images.
+  - Enterprise workflows: stronger at financial analysis, spreadsheets, slides, and documents.
+  - Code review and debugging: noticeably higher bug-finding recall (outside the cybersecurity domains the safety classifiers cover), including cross-codebase and repo-history search.
+  - Navigating ambiguity and multi-threaded requests.
+  - Delegation: more dependable at dispatching and sustaining parallel subagents, with reliable ongoing communication to long-running subagents/peer agents.
 - **Rules/quirks**:
   - Runs safety classifiers for offensive cybersecurity, bio/life-sciences content, and thinking-extraction; benign requests can still trigger `stop_reason: "refusal"` — configure a fallback to Opus 4.8.
   - Thinking is **always on** (adaptive only); no manual extended-thinking budgets; `budget_tokens` returns a 400 error.
