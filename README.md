@@ -42,3 +42,7 @@ Codex CLI has no plugin marketplace, so there are two ways to make the skill ava
 - No provider (Anthropic or OpenAI) gives reliable runtime model-ID introspection — model-family detection here is best-effort and its guess is always disclosed and correctable, never asserted as fact.
 - Codex CLI has no equivalent of Claude Code's `/goal` completion-condition primitive, so goal-mode prompt drafting is Claude-Code-only; on Codex, promptify only produces normal (system/task/agent) prompts.
 - When in doubt about which model family is actually running, trust your own knowledge of your environment over promptify's guess and correct it.
+
+## License
+
+[MIT](LICENSE) © Albert Martinez
