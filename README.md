@@ -50,10 +50,24 @@ Invokes the skill to turn your rough idea into a polished prompt or `/goal` comp
 
 ## Install in Codex CLI
 
-Codex CLI has no plugin marketplace, so there are two ways to make the skill available:
+promptify currently ships to Codex as a direct agent skill. Codex scans `.agents/skills` from your current working directory up to the repo root, and it also scans `$HOME/.agents/skills`. Symlinked skill folders are supported.
 
-- **Project-scoped (auto-discovered):** clone or keep this repo checked out so that `.agents/skills/promptify/` sits inside your project tree. Codex CLI's repo-level directory walk scans for skills under `.agents/skills/`, so it will be picked up automatically for that project — no extra configuration needed.
-- **Global install:** copy or symlink `skills/promptify/` to `~/.codex/skills/promptify/`. This makes the skill available to Codex CLI across all projects, not just the one containing this repo.
+- **This repo:** no install step is needed. The checked-in `.agents/skills/promptify` symlink points at `skills/promptify`, so Codex picks it up when you start in this repo or one of its subfolders.
+- **Another project:** from this checkout, symlink it into that project's skill directory:
+
+  ```bash
+  mkdir -p /path/to/project/.agents/skills
+  ln -s "$(pwd)/skills/promptify" /path/to/project/.agents/skills/promptify
+  ```
+
+- **Global install:** from this checkout, symlink it into your user skill directory:
+
+  ```bash
+  mkdir -p ~/.agents/skills
+  ln -s "$(pwd)/skills/promptify" ~/.agents/skills/promptify
+  ```
+
+Use `cp -R skills/promptify ...` instead of `ln -s ...` if you want a fixed copy rather than live updates from this checkout. Invoke the skill in Codex with `$promptify`; if it does not appear immediately, restart Codex.
 
 ## Repo layout
 
