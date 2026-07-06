@@ -18,10 +18,13 @@ The reference files under `skills/promptify/references/` are condensed from the 
 
 **Claude:**
 - https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5
+- https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5
+- https://platform.claude.com/docs/en/about-claude/models/migration-guide — check the Fable/Mythos sections specifically for migration/API changes
+- https://platform.claude.com/docs/en/about-claude/models/overview — check model IDs, specs, availability, pricing, and NEW model-specific docs
 - https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-4-8
 - https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-sonnet-5
 - https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
-- https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview — check this one specifically for NEW dedicated model-specific pages that don't yet exist in `claude-families.md`
+- https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview — check this one specifically for NEW dedicated prompt-engineering model pages that don't yet exist in `claude-families.md`
 - https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions
 
 **OpenAI:**

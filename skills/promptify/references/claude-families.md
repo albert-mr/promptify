@@ -1,4 +1,4 @@
-Source: condensed from Anthropic's official prompt-engineering docs, research pass archived at /private/tmp/claude-501/-Users-albert/0865ef07-09e0-4a31-b5c6-31472d2fed27/tasks/wi9gw2xj5.output
+Source: condensed from Anthropic's official prompt-engineering and model docs, research pass archived at /private/tmp/claude-501/-Users-albert/0865ef07-09e0-4a31-b5c6-31472d2fed27/tasks/wi9gw2xj5.output
 
 # Claude Model-Family Prompting Quirks
 
@@ -8,7 +8,9 @@ The prompt-engineering nav has exactly **three** dedicated model-specific pages:
 
 - **Model IDs**: `claude-fable-5`, `claude-mythos-5` (Project Glasswing, limited availability), `claude-mythos-preview` (invitation-only). Bedrock: `anthropic.claude-fable-5`. Google Cloud: `claude-fable-5`.
 - **Doc URL**: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5
-- **STATUS — fully available (updated 2026-07-01)**: the June 12 suspension banner is gone from the live docs page. Fable 5 is now presented as fully available and actively recommended for hard, long-running, ambiguous work — no longer dormant. The doc adds a "Capability improvements" section (below) describing where it outperforms Opus 4.8.
+- **Release/API URL**: https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5
+- **STATUS — fully available (updated 2026-07-06)**: access has been restored. Fable 5 is generally available on the Claude API, Claude Platform on AWS, Amazon Bedrock, Google Cloud, and Microsoft Foundry; Mythos 5 is limited-availability Project Glasswing. Fable 5 is now presented as the highest-capability widely released model for hard, long-running, ambiguous work.
+- **Specs/pricing/retention**: 1M token context by default, up to 128k output tokens, $10 / input MTok and $50 / output MTok. Fable/Mythos require 30-day data retention and are not available under zero data retention.
 - **Capability improvements over Opus 4.8**:
   - Long-horizon autonomy: sustains productive output over multi-day, goal-directed runs with strong instruction retention.
   - First-shot correctness on complex, well-specified problems.
@@ -18,9 +20,13 @@ The prompt-engineering nav has exactly **three** dedicated model-specific pages:
   - Navigating ambiguity and multi-threaded requests.
   - Delegation: more dependable at dispatching and sustaining parallel subagents, with reliable ongoing communication to long-running subagents/peer agents.
 - **Rules/quirks**:
-  - Runs safety classifiers for offensive cybersecurity, bio/life-sciences content, and thinking-extraction; benign requests can still trigger `stop_reason: "refusal"` — configure a fallback to Opus 4.8.
-  - Thinking is **always on** (adaptive only); no manual extended-thinking budgets; `budget_tokens` returns a 400 error.
+  - Migration from Opus 4.8 is mostly drop-in: same Messages API, same tool-use patterns, same 1M context and 128k max output, and roughly unchanged token counts.
+  - Fable runs safety classifiers for offensive cybersecurity, bio/life-sciences content, and thinking-extraction; benign requests can still trigger `stop_reason: "refusal"` as an HTTP 200 response with `stop_details.category`. Configure fallback to Opus 4.8; server-side `fallbacks` is beta on the Claude API and Claude Platform on AWS, while Bedrock/Google Cloud/Microsoft Foundry need client-side fallback.
+  - Refusals before output are not billed; mid-stream classifier stops bill input plus already-streamed output, and the partial output should be discarded.
+  - Thinking is **always on** (adaptive only); omit the `thinking` field and use `output_config.effort` to steer depth. `thinking: {"type": "disabled"}` and manual `budget_tokens` both return 400 errors.
+  - Raw thinking is never returned. `thinking.display: "summarized"` returns readable summaries; default `"omitted"` returns empty thinking fields. Pass thinking blocks back unchanged on the same model, but strip them before replaying history on a different model unless following fallback-credit rules.
   - Effort levels: `high` = default for most tasks, `xhigh` for capability-sensitive work, `medium`/`low` for routine work. Lower efforts still often beat xhigh on prior models.
+  - Lower prompt caching minimum than Opus 4.8 on the Claude API: 512 tokens; Bedrock remains 1,024 tokens.
   - Longer turns by default — hard tasks can run many minutes to hours; adjust client timeouts/streaming; discourage overplanning ("when you have enough information, act").
   - Strong instruction-following: brief instructions steer broad behaviors; "lead with the outcome" style prevents elaboration/over-explaining.
   - Ground progress claims: instruct it to audit claims against actual tool-call evidence during long runs — nearly eliminates fabricated status reports.

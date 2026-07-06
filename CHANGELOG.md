@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.1.1] - 2026-07-06
+
+### Fixed
+- claude-families.md: folded in the new Fable/Mythos release and migration details now published outside the prompt-engineering page: general availability surfaces, 1M context / 128k output / $10+$50 pricing, 30-day retention requirement, always-on adaptive thinking behavior, summarized/omitted thinking output, refusal/fallback billing behavior, and the lower Claude API prompt-cache minimum.
+- MAINTAINING.md: added the Fable/Mythos release page, migration guide, and models overview to the Claude source-doc checklist so future freshness checks catch API and availability drift, not just prompt-engineering drift.
+
 ## [1.1.0] - 2026-07-01
 
 ### Changed
