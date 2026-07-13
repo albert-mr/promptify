@@ -28,6 +28,7 @@ The reference files under `skills/promptify/references/` are condensed from the 
 - https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions
 
 **OpenAI:**
+- https://developers.openai.com/api/docs/guides/latest-model — check for new model families and model-specific prompting or migration guidance
 - https://developers.openai.com/api/docs/guides/prompt-engineering
 - https://developers.openai.com/api/docs/guides/reasoning-best-practices
 - https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide
