@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.2.0] - 2026-07-13
+
+### Added
+- openai-families.md: added GPT-5.6 Sol, Terra, and Luna model IDs plus GPT-5.6-specific guidance for lean prompts, autonomy boundaries, reasoning effort, pro mode, and response verbosity.
+- MAINTAINING.md: added OpenAI's current model-guidance page to the freshness-check sources.
+
 ## [1.1.1] - 2026-07-06
 
 ### Fixed

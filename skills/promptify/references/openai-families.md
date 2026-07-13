@@ -1,5 +1,19 @@
 Source: condensed from OpenAI's official prompt-engineering docs and cookbook, research pass archived at /private/tmp/claude-501/-Users-albert/0865ef07-09e0-4a31-b5c6-31472d2fed27/tasks/wi9gw2xj5.output
 
+## GPT-5.6 series
+
+- **Model IDs**: `gpt-5.6-sol` (also available through the `gpt-5.6` alias), `gpt-5.6-terra`, `gpt-5.6-luna`
+- **Docs**: https://developers.openai.com/api/docs/guides/latest-model
+
+**Distinctive prompting rules:**
+
+- Use Sol for flagship capability, Terra for a balance of intelligence and cost, and Luna for efficient high-volume work. Do not invent a separate pro model slug: pro mode is `reasoning.mode: "pro"` on any GPT-5.6 model.
+- Prefer lean prompts: state each instruction once, expose only relevant tools, and retain examples or style rules only when they encode a requirement or fix a measured gap.
+- State safe autonomy and approval boundaries compactly so the model acts on in-scope local work but stops before external, destructive, costly, or scope-expanding actions.
+- GPT-5.6 supports `reasoning.effort` values `none`, `low`, `medium`, `high`, `xhigh`, and `max`, with `medium` as the default. Preserve the current effort when migrating from GPT-5.4/5.5, then test one level lower because GPT-5.6 is more token-efficient.
+- GPT-5.6 is more concise by default than GPT-5.5. Use `text.verbosity` (`low`, `medium`, or `high`) for a stable baseline, and keep prompt-level brevity instructions only when the product requires them.
+- Give domain context, hard constraints, approval boundaries, success criteria, and the ambiguities that require a question. Avoid prescribing every step when the intended outcome is enough.
+
 ## GPT-5.x general series
 
 - **Model IDs**: `gpt-5`, `gpt-5-mini`, `gpt-5-nano`, `gpt-5-pro`, `gpt-5.1`, `gpt-5.2`, `gpt-5.2-pro`, `gpt-5.4`, `gpt-5.4-mini`, `gpt-5.4-nano`, `gpt-5.4-pro`, `gpt-5.5`, `gpt-5.5-pro` (plus `gpt-5.3-chat-latest`)
