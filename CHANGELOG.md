@@ -4,7 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.2.0] - 2026-07-13
+## [1.3.0] - 2026-07-21
+
+### Added
+- claude-families.md: Mythos 5 has no safety classifiers (Fable-only behavior) and succeeds Mythos Preview; `stop_details.category` value set; SDK-middleware fallback + fallback credit; ZDR 400 error; Fable anti-tidying and checkpoint prompt patterns; memory bootstrap; launch feature list. Opus 4.8 specs block ($5/$25, 1M default, cache min 1,024, +30% tokenizer from 4.7), `high` effort default, sampling-params 400 generalized to Opus 4.7+/Fable, mid-conversation system messages, task budgets beta, high-res image handling, prompt-steerable adaptive-thinking triggering. Sonnet 5 intro pricing ($2/$10 through 2026-08-31), no Priority Tier, JSON-escaping nuance, softer design-default claim. Haiku 4.5 has no adaptive thinking (still `budget_tokens`); Opus 4.5 "think"-word sensitivity; serving-infrastructure drift note.
+- openai-families.md: GPT-5.6 `reasoning.context` param, per-effort use-case mapping, image detail settings, lean-prompt gains figures; Responses API `instructions` param; prompt-objects June 3, 2026 de-emphasis date. Codex guide refresh: gpt-5.3-codex current / gpt-5.1-codex-max legacy framing, `parallel_tool_calls: true`, ~10k-token tool-output truncation, `view_image`, apply_patch single-file scope, update_plan statuses, preamble cadence minimums, expanded AGENTS.md injection mechanics, stop-and-summarize rule.
+- MAINTAINING.md: added the Opus 4.8 / Sonnet 5 "what's new" pages to the Claude source list.
+
+### Changed
+- claude-families.md: best-practices migration cross-link now targets Sonnet 5 (was Sonnet 4.5→4.6).
+- MAINTAINING.md: Codex doc URLs moved to learn.chatgpt.com (old developers.openai.com/codex URLs are 308 redirects); "Claude Code: not automatic" qualified — opt-in per-marketplace auto-update exists (disabled by default for third-party marketplaces), and both update paths skip the plugin unless the pinned version changed, making the version bump load-bearing for propagation.
 
 ### Added
 - openai-families.md: added GPT-5.6 Sol, Terra, and Luna model IDs plus GPT-5.6-specific guidance for lean prompts, autonomy boundaries, reasoning effort, pro mode, and response verbosity.
