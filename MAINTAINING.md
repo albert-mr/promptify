@@ -26,6 +26,8 @@ The reference files under `skills/promptify/references/` are condensed from the 
 - https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
 - https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview — check this one specifically for NEW dedicated prompt-engineering model pages that don't yet exist in `claude-families.md`
 - https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions
+- https://platform.claude.com/docs/en/about-claude/models/whats-new-claude-4-8 — capability/API-change counterpart to the Opus 4.8 prompting page
+- https://platform.claude.com/docs/en/about-claude/models/whats-new-sonnet-5 — same, for Sonnet 5
 
 **OpenAI:**
 - https://developers.openai.com/api/docs/guides/latest-model — check for new model families and model-specific prompting or migration guidance
@@ -35,8 +37,8 @@ The reference files under `skills/promptify/references/` are condensed from the 
 - https://developers.openai.com/api/docs/models — check for new model IDs not yet listed
 
 **Codex CLI mechanism** (check less urgently, but still track):
-- https://developers.openai.com/codex/skills
-- https://developers.openai.com/codex/environment-variables
+- https://learn.chatgpt.com/docs/build-skills (moved 2026-07: the old developers.openai.com/codex/skills URL is now a 308 redirect here)
+- https://learn.chatgpt.com/docs/config-file/environment-variables (moved 2026-07: previously developers.openai.com/codex/environment-variables)
 
 **Claude Code packaging:**
 - https://code.claude.com/docs/en/plugin-marketplaces
@@ -60,7 +62,7 @@ Merging a PR does not update every installed copy of promptify the same way. The
 
 - **Codex CLI: automatic for symlinks.** The checked-in project install (`.agents/skills/promptify`) and any global symlink at `$HOME/.agents/skills/promptify` point into this repo's `skills/promptify/` directory. Once a PR is merged into `main`, any Codex CLI session using one of those symlinked install paths picks up the change immediately. A copied global install must be recopied after updates.
 
-- **Claude Code: not automatic.** The installed plugin is a cached git clone, not a symlink. After a PR is merged, the user must:
+- **Claude Code: not automatic by default.** The installed plugin is a cached git clone, not a symlink. Claude Code does have an opt-in background auto-update (per-marketplace, via `/plugin` → Marketplaces → Enable auto-update; it then prompts `/reload-plugins` after updating), but auto-update is **disabled by default for third-party marketplaces like this one**. Note also that both `/plugin update` and auto-update skip a plugin whose resolved `version` matches what's installed — the version bump mandated by the policy above is load-bearing for propagation, not just bookkeeping. Without auto-update enabled, after a PR is merged the user must:
   1. Run `claude plugin marketplace update promptify` to refresh the cached clone.
   2. Run `claude plugin update promptify@promptify` to update the installed plugin pointer (the bare plugin name alone fails with "Plugin not found" — verified live; the `plugin@marketplace` form is required here even though `install` accepts either).
   3. Restart the Claude Code session, or run `/reload-plugins`, for the change to take effect.
