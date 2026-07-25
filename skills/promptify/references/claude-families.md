@@ -44,7 +44,7 @@ There are exactly **four** dedicated model-specific prompt-engineering pages: Fa
   - Supports a custom `send_to_user` tool pattern for verbatim mid-task messages without ending its turn (must be paired with explicit elicitation instructions or it's rarely called).
   - **Never** instruct it to echo/transcribe its reasoning as response text — can trigger the `reasoning_extraction` refusal category and cause fallback to Opus 4.8.
   - Recommended scaffolding: assign harder tasks than you would to prior models; use fresh-context verifier subagents for self-checks at intervals; audit/loosen prior over-prescriptive skills, since Fable 5 needs less scaffolding (it's also good at updating skills on the fly based on what it learns from the task).
-  - Supported at launch: effort, task budgets (beta header `task-budgets-2026-03-13`), memory tool, code execution, programmatic tool calling, tool-result clearing via context editing (beta header `context-management-2025-06-27`), compaction, vision. Uses the tokenizer introduced with Opus 4.7. The **web fetch tool is not available** on Fable 5 / Mythos 5 (nor on Opus 5).
+  - Supported at launch: effort, task budgets (beta header `task-budgets-2026-03-13`), memory tool, code execution, programmatic tool calling, tool-result clearing via context editing (beta header `context-management-2025-06-27`), compaction, vision. Uses the tokenizer introduced with Opus 4.7. Web fetch **is** supported (Fable 5 and Mythos 5 are both in the `web_fetch_20260318` dynamic-filtering model list) — unlike Opus 5.
 
 ## Claude Opus 5
 
@@ -73,6 +73,7 @@ There are exactly **four** dedicated model-specific prompt-engineering pages: Fa
   - Instruction following, tool calling, and reasoning stay consistent across the full 1M window.
   - Mid-conversation tool changes (beta `mid-conversation-tool-changes-2026-07-01`): add/remove tools between turns while preserving the prompt cache.
   - `fallbacks` gains a `"default"` mode applying Anthropic's recommended fallback models per refusal category (beta `server-side-fallback-2026-07-01`; the older `-2026-06-01` header accepts explicit lists only).
+  - **Web fetch is not available on Opus 5** — the one server tool it drops relative to Opus 4.8/4.7 ("If you use web fetch, plan an alternative"). Fable 5, Mythos 5, Sonnet 5, and Opus 4.6/4.7/4.8 all support it.
   - `temperature`/`top_p`/`top_k` at any non-default value return 400 (stated in the migration guide, not on the Opus 5 pages — Opus 5 is named explicitly). Assistant prefill also 400s. Steer with prompting instead.
   - Literalism carries forward from Opus 4.7 (does not silently generalize an instruction across items) per the migration guide, but the Opus 5 page itself drops the topic — so still state per-item scope explicitly ("apply to every section, not just the first").
   - **No context awareness** — Opus 5, like all Opus 4.7+ models and Fable/Mythos, does *not* receive injected token-budget tags (contrast Sonnet 5/4.6/4.5 and Haiku 4.5, which do). Use task budgets (beta) to pace it instead of assuming it can see its remaining budget.

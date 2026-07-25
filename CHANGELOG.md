@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - MAINTAINING.md: Opus 5 prompting and what's-new pages added to the tracked source list.
 
 ### Changed
-- claude-families.md: dedicated model-page count corrected from three to four (Opus 5 added); Opus 4.8 marked legacy as of Opus 5's release; model self-knowledge sample prompts now quote Opus 5 per upstream; thinking-default rule extended to cover Opus 5 / Sonnet 5 default-on behavior; Priority Tier exclusion list corrected (Mythos 5, Mythos Preview, Opus 5, Sonnet 5 — and commitments no longer sold) instead of "Sonnet 5 only"; Fable 5's 512-token cache minimum no longer described as unique; web fetch tool noted as unavailable on Fable/Mythos/Opus 5.
+- claude-families.md: dedicated model-page count corrected from three to four (Opus 5 added); Opus 4.8 marked legacy as of Opus 5's release; model self-knowledge sample prompts now quote Opus 5 per upstream; thinking-default rule extended to cover Opus 5 / Sonnet 5 default-on behavior; Priority Tier exclusion list corrected (Mythos 5, Mythos Preview, Opus 5, Sonnet 5 — and commitments no longer sold) instead of "Sonnet 5 only"; Fable 5's 512-token cache minimum no longer described as unique; web fetch tool noted as unavailable on Opus 5 specifically — it is the one server tool Opus 5 drops, while Fable 5 and Mythos 5 both support it.
 - openai-families.md: lean-prompt gains now include the 33-67% cost reduction figure. No new OpenAI models — the GPT-5.6 trio is still the frontier line.
 - MAINTAINING.md: prompt-engineering overview page no longer enumerates per-model pages, so the best-practices page is now the authoritative list; regression scenario 3 retargeted from Opus 4.8 to Opus 5.
 

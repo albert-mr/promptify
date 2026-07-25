@@ -27,6 +27,8 @@ The reference files under `skills/promptify/references/` are condensed from the 
 - https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
 - https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview — historically the place to spot NEW dedicated prompt-engineering model pages; as of 2026-07-25 it no longer carries a per-model nav, so the authoritative enumeration is the model-differences list on the best-practices page above
 - https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions
+- https://platform.claude.com/docs/en/api/service-tiers — authoritative Priority Tier model-support list; `claude-families.md` reproduces its exclusion list, so re-check it here rather than trusting the per-model pages
+- https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-fetch-tool — authoritative web-fetch model-support list; same reason (the per-model prompting pages do not carry it)
 - https://platform.claude.com/docs/en/about-claude/models/whats-new-opus-5 — capability/API-change counterpart to the Opus 5 prompting page
 - https://platform.claude.com/docs/en/about-claude/models/whats-new-claude-4-8 — same, for Opus 4.8
 - https://platform.claude.com/docs/en/about-claude/models/whats-new-sonnet-5 — same, for Sonnet 5
