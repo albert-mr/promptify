@@ -2,7 +2,7 @@ Source: condensed from Anthropic's official prompt-engineering and model docs, r
 
 # Claude Model-Family Prompting Quirks
 
-The prompt-engineering nav has exactly **three** dedicated model-specific pages: Fable 5, Opus 4.8, Sonnet 5. Sonnet 4.6, Opus 4.6/4.7, and Haiku 4.5 have no dedicated page — they're covered only by the general best-practices page (confirmed by checking the full left-nav; not a missed link).
+There are exactly **four** dedicated model-specific prompt-engineering pages: Fable 5, Opus 5, Sonnet 5, Opus 4.8. Sonnet 4.6, Opus 4.6/4.7, and Haiku 4.5 have no dedicated page — they're covered only by the general best-practices page. Note (verified 2026-07-25) that the prompt-engineering *overview* page no longer carries a per-model nav at all; the four-page list is only enumerated on the best-practices page.
 
 ## Claude Fable 5 / Mythos 5
 
@@ -28,7 +28,7 @@ The prompt-engineering nav has exactly **three** dedicated model-specific pages:
   - Thinking is **always on** (adaptive only); omit the `thinking` field and use `output_config.effort` to steer depth. `thinking: {"type": "disabled"}` and manual `budget_tokens` both return 400 errors.
   - Raw thinking is never returned. `thinking.display: "summarized"` returns readable summaries; default `"omitted"` returns empty thinking fields. Pass thinking blocks back unchanged on the same model, but strip them before replaying history on a different model unless following fallback-credit rules.
   - Effort levels: `high` = default for most tasks, `xhigh` for capability-sensitive work, `medium`/`low` for routine work. Lower efforts still often beat xhigh on prior models.
-  - Lower prompt caching minimum than Opus 4.8 on the Claude API: 512 tokens; Bedrock remains 1,024 tokens.
+  - Prompt caching minimum on the Claude API is 512 tokens (same as Opus 5, lower than Opus 4.8's 1,024); Bedrock remains 1,024 tokens.
   - Longer turns by default — hard tasks can run many minutes to hours; adjust client timeouts/streaming; discourage overplanning ("when you have enough information, act").
   - At higher effort on *routine* work it can over-gather context and do unrequested tidying/refactoring — the doc ships an anti-overengineering snippet ("Don't add features, refactor, or introduce abstractions beyond what the task requires… Only validate at system boundaries…").
   - Checkpoint pattern: "Pause for the user only when the work genuinely requires them: a destructive or irreversible action, a real scope change, or input only they can provide… ask and end the turn, rather than ending on a promise."
@@ -44,10 +44,43 @@ The prompt-engineering nav has exactly **three** dedicated model-specific pages:
   - Supports a custom `send_to_user` tool pattern for verbatim mid-task messages without ending its turn (must be paired with explicit elicitation instructions or it's rarely called).
   - **Never** instruct it to echo/transcribe its reasoning as response text — can trigger the `reasoning_extraction` refusal category and cause fallback to Opus 4.8.
   - Recommended scaffolding: assign harder tasks than you would to prior models; use fresh-context verifier subagents for self-checks at intervals; audit/loosen prior over-prescriptive skills, since Fable 5 needs less scaffolding (it's also good at updating skills on the fly based on what it learns from the task).
-  - Supported at launch: effort, task budgets (beta header `task-budgets-2026-03-13`), memory tool, code execution, programmatic tool calling, tool-result clearing via context editing (beta header `context-management-2025-06-27`), compaction, vision. Uses the tokenizer introduced with Opus 4.7.
+  - Supported at launch: effort, task budgets (beta header `task-budgets-2026-03-13`), memory tool, code execution, programmatic tool calling, tool-result clearing via context editing (beta header `context-management-2025-06-27`), compaction, vision. Uses the tokenizer introduced with Opus 4.7. The **web fetch tool is not available** on Fable 5 / Mythos 5 (nor on Opus 5).
+
+## Claude Opus 5
+
+- **Model IDs**: `claude-opus-5`. Bedrock: `anthropic.claude-opus-5` (also reachable via `InvokeModel`; absent from the legacy ARN-versioned table). Google Cloud: `claude-opus-5`. Also on Microsoft Foundry.
+- **Doc URL**: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5
+- **Release/API URL**: https://platform.claude.com/docs/en/about-claude/models/whats-new-opus-5
+- **STATUS — released July 24, 2026 (verified 2026-07-25)**: the docs' new default recommendation ("start with Claude Opus 5") — frontier intelligence at half the cost of Fable 5. Opus 4.8 moved to the legacy-models list on its release.
+- **Specs/pricing**: $5 / input MTok, $25 / output MTok (unchanged from Opus 4.8); 1M context as both default *and* maximum (no smaller variant); 128k output; prompt-cache minimum lowered to 512 tokens. Knowledge cutoff May 2026. Fast mode (research preview) is Claude API only, priced $10 / $50 per MTok. Priority Tier is **not** available (same as Sonnet 5).
+- **Rules/quirks**:
+  - Mostly drop-in from Opus 4.8: existing Opus 4.8 prompts work well as-is; only the two thinking changes below need a code review.
+  - Thinking is **on by default** (adaptive) — the opposite of Opus 4.8. Revisit `max_tokens` for workloads that previously ran without thinking, since it caps thinking plus response text.
+  - **Breaking change**: `thinking: {"type": "disabled"}` is accepted only at effort `high` or below; pairing it with `xhigh`/`max` returns a 400.
+  - Effort default is `high`, ladder `low`…`max` — `max` is the genuine top tier here (no diminishing-returns warning, unlike Opus 4.8). Effort converts to quality more reliably than any earlier Opus, so re-run an effort sweep rather than carrying over prior defaults.
+  - `low`/`medium` give strong quality at a fraction of tokens/latency — the doc's recommended primary cost lever; `xhigh` for demanding coding/agentic work. At `xhigh`/`max` set a large `max_tokens` (~64k) and stream.
+  - Effort controls how much it *thinks*, not how much it *says* — lowering effort does not shorten the visible response. Default responses run longer than prior Opus models; prompt for conciseness explicitly, and in long system prompts repeat a short `<tone_preference>` reminder near the end.
+  - Files it writes to disk (reports, Markdown, summaries) are also longer — needs a separate explicit length instruction for written deliverables.
+  - Narrates readily during agentic work and announces what it's about to do. Tune by describing the update cadence and shape you want — positive examples beat "don't do X".
+  - Verifies its own work unprompted: **remove** carried-over verification scaffolding ("include a final verification step", "use a subagent to verify", "double-check your answer") — it causes over-verification with no quality gain.
+  - Can widen task scope, adding unrequested steps or reinterpreting the task. For narrow tasks the doc ships this snippet verbatim: *"Deliver what was asked, at the scope intended. Make routine judgment calls yourself, and check in only when different readings of the request would lead to materially different work. If the request seems mistaken or a better approach exists, say so in a sentence and continue with the task as asked rather than quietly narrowing, widening, or transforming it. Finish the whole task, and stop short of actions that are clearly beyond what was asked."*
+  - Delegates to subagents more readily than prior models (opposite of Opus 4.8's fewer-subagents default) — cap spawn counts or give explicit delegation criteria for cost-sensitive work. Coordinates subagent teams well (writer-verifier patterns, few overwrite collisions).
+  - With thinking disabled, two artifacts appear: it can write a tool call as plain text instead of a `tool_use` block (call never runs, and the leaked text pollutes later agentic turns), and it can emit `<thinking>` or other internal XML tags into visible output. Fix with one combined instruction — the general "no internal or system XML tags" form works better than naming thinking tags. Any system-prompt rule telling it *not* to think/reason increases tag leakage; remove it.
+  - Prefer thinking on at `low` effort over thinking disabled — better performance at similar cost.
+  - Same code-review-harness recall caveat as Opus 4.8 ("only report high severity" is followed literally) — ask for everything and filter downstream. Review accuracy holds at lower effort, so a cheap fast pass is viable.
+  - Completes full tasks rather than leaving stubs/placeholders; performs best given the complete spec up front and left to run.
+  - Re-validate prompt-side vision workarounds tuned for prior models — they may no longer be needed. Vision is strongest when paired with tools to crop and visually verify; tool use is a more cost-effective lever than thinking alone.
+  - Instruction following, tool calling, and reasoning stay consistent across the full 1M window.
+  - Mid-conversation tool changes (beta `mid-conversation-tool-changes-2026-07-01`): add/remove tools between turns while preserving the prompt cache.
+  - `fallbacks` gains a `"default"` mode applying Anthropic's recommended fallback models per refusal category (beta `server-side-fallback-2026-07-01`; the older `-2026-06-01` header accepts explicit lists only).
+  - `temperature`/`top_p`/`top_k` at any non-default value return 400 (stated in the migration guide, not on the Opus 5 pages — Opus 5 is named explicitly). Assistant prefill also 400s. Steer with prompting instead.
+  - Literalism carries forward from Opus 4.7 (does not silently generalize an instruction across items) per the migration guide, but the Opus 5 page itself drops the topic — so still state per-item scope explicitly ("apply to every section, not just the first").
+  - **No context awareness** — Opus 5, like all Opus 4.7+ models and Fable/Mythos, does *not* receive injected token-budget tags (contrast Sonnet 5/4.6/4.5 and Haiku 4.5, which do). Use task budgets (beta) to pace it instead of assuming it can see its remaining budget.
+  - **Nothing documented** about early stopping, ending a turn on a promise, fabricated progress claims, or autonomy reminders — all four are Fable 5-specific guidance. Do not port them here on the assumption they generalize; the only adjacent statement is that Opus 5 "completes full tasks rather than leaving stubs or placeholders" and performs best given the full spec up front.
 
 ## Claude Opus 4.8
 
+- **STATUS — legacy as of Opus 5's release (2026-07-24)**: moved to the docs' legacy-models list, but it keeps its dedicated prompting page and remains available.
 - **Model IDs**: `claude-opus-4-8`. Bedrock: `anthropic.claude-opus-4-8` (no `-v1` suffix — dropped starting Sonnet 4.6). Google Cloud: `claude-opus-4-8`.
 - **Doc URL**: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-4-8
 - **Specs/pricing**: $5 / input MTok, $25 / output MTok; 1M context by default (no beta header); 128k output; prompt-cache minimum 1,024 tokens; `stop_details` on refusals is public (no beta header). New tokenizer starting Opus 4.7: ~30% more tokens than Opus 4.6 for the same text.
@@ -75,7 +108,7 @@ The prompt-engineering nav has exactly **three** dedicated model-specific pages:
 
 - **Model IDs**: `claude-sonnet-5`. Bedrock: `anthropic.claude-sonnet-5`. Google Cloud: `claude-sonnet-5`.
 - **Doc URL**: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-sonnet-5
-- **Specs/pricing**: introductory $2 / input MTok and $10 / output MTok through Aug 31, 2026, then $3 / $15; 1M context; 128k output. Priority Tier is **not** available on Sonnet 5.
+- **Specs/pricing**: introductory $2 / input MTok and $10 / output MTok through Aug 31, 2026, then $3 / $15; 1M context; 128k output. Priority Tier is supported on all current models **except** Mythos 5, Mythos Preview, Opus 5, and Sonnet 5 — and Priority Tier capacity commitments are no longer sold at all.
 - **Rules/quirks**:
   - Same verbosity-calibration behavior as Opus 4.8 (length scales with perceived complexity).
   - Effort defaults to `high` (same default as Sonnet 4.6); `xhigh` for the hardest coding/agentic tasks; cross-model mapping: Sonnet 5 `medium` ≈ Sonnet 4.6 `high`; Sonnet 5 `high` ≈ Sonnet 4.6 `max` — match by observed thinking length, not effort label, when benchmarking.
@@ -97,7 +130,7 @@ The prompt-engineering nav has exactly **three** dedicated model-specific pages:
 - **Rules/quirks** (quirks called out specifically for these older models within the shared page):
   - Opus 4.5/4.6 are more responsive to system-prompt language than earlier models — aggressive tool-triggering phrasing ("CRITICAL: you MUST use this tool") now causes *overtriggering*; dial language back to normal ("use this tool when...").
   - Opus 4.6 does more upfront exploration/thoroughness than priors at high effort — replace blanket "default to using [tool]" with targeted "use [tool] when it would help"; remove "if in doubt, use [tool]" language; use effort as a fallback lever to reduce aggressiveness.
-  - Opus 4.6/4.7/4.8/Sonnet 4.6 use manual `thinking: {type: "adaptive"}` (opt-in) — off when the `thinking` param is omitted (contrast with Fable/Mythos always-on). Haiku 4.5 has **no adaptive thinking** at all — it's the only current model still on extended thinking (`budget_tokens`).
+  - Opus 4.6/4.7/4.8/Sonnet 4.6 use manual `thinking: {type: "adaptive"}` (opt-in) — off when the `thinking` param is omitted. Contrast: Fable/Mythos are always-on and cannot be disabled; Opus 5 and Sonnet 5 are on by default when the param is omitted (Opus 5 can only be disabled at effort ≤ `high`). Haiku 4.5 has **no adaptive thinking** at all — it's the only current model still on extended thinking (`budget_tokens`).
   - `budget_tokens` manual extended thinking still functions but is deprecated on Opus 4.6/Sonnet 4.6 (and remains fully functional on Haiku 4.5); returns 400 on Opus 4.7+ and Fable/Mythos.
   - Opus 4.5 with thinking disabled is particularly sensitive to the word "think" and its variants — use "consider", "evaluate", "reason through" instead.
   - Opus 4.6 has a strong predilection to over-spawn subagents even for simple tasks (e.g., using a subagent instead of a direct grep) — needs explicit "use subagents only when parallel/isolated-context work is needed" guidance.
@@ -115,8 +148,8 @@ The prompt-engineering nav has exactly **three** dedicated model-specific pages:
 
 Anthropic's documented position: **Claude does not reliably know its own precise model name/ID unless you tell it in the system prompt.** The docs give two literal sample prompts to inject:
 
-- For self-identification: *"The assistant is Claude, created by Anthropic. The current model is Claude Opus 4.8."*
-- For apps that need to emit a model string themselves: *"When an LLM is needed, please default to Claude Opus 4.8 unless the user requests otherwise. The exact model string for Claude Opus 4.8 is `claude-opus-4-8`."*
+- For self-identification: *"The assistant is Claude, created by Anthropic. The current model is Claude Opus 5."*
+- For apps that need to emit a model string themselves: *"When an LLM is needed, please default to Claude Opus 5 unless the user requests otherwise. The exact model string for Claude Opus 5 is `claude-opus-5`."*
 
 This implies a running Claude instance (via API) has no built-in ground truth for its own snapshot — a prompting tool should inject the current model name/ID explicitly rather than rely on introspection. No dedicated "how Claude Code exposes its own model ID" section was found on platform.claude.com/docs in this pass (would need Claude Code's own docs/CLI, e.g. `/model` command or the `model` field in Messages API responses, which are outside the prompt-engineering docs tree checked here) — flagging as a gap if that specific detail is needed.
 

@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.4.0] - 2026-07-25
+
+### Added
+- claude-families.md: new `## Claude Opus 5` section (released 2026-07-24) — model IDs, $5/$25 pricing, 1M context as default *and* max, 512-token cache minimum, Fast mode, no Priority Tier, and its prompting quirks: thinking on by default, `thinking: disabled` rejected above effort `high`, `max` as a genuine top tier, verbosity not controlled by effort, self-verification that makes carried-over verification scaffolding harmful, scope widening, eager subagent delegation, and the tool-call-as-text / leaked-`<thinking>`-tag artifacts that appear with thinking disabled. Also records four things the Opus 5 page itself does *not* say, each verified against the docs after a regression run surfaced them as gaps: sampling params and prefill 400 (documented only in the migration guide, where Opus 5 is named); literalism carries forward from Opus 4.7 though the Opus 5 page drops the topic; Opus 5 has **no** context awareness and should be paced with task budgets; and early-stopping / promise-ending / fabricated-progress guidance is Fable 5-specific and must not be ported to Opus 5.
+- MAINTAINING.md: Opus 5 prompting and what's-new pages added to the tracked source list.
+
+### Changed
+- claude-families.md: dedicated model-page count corrected from three to four (Opus 5 added); Opus 4.8 marked legacy as of Opus 5's release; model self-knowledge sample prompts now quote Opus 5 per upstream; thinking-default rule extended to cover Opus 5 / Sonnet 5 default-on behavior; Priority Tier exclusion list corrected (Mythos 5, Mythos Preview, Opus 5, Sonnet 5 — and commitments no longer sold) instead of "Sonnet 5 only"; Fable 5's 512-token cache minimum no longer described as unique; web fetch tool noted as unavailable on Fable/Mythos/Opus 5.
+- openai-families.md: lean-prompt gains now include the 33-67% cost reduction figure. No new OpenAI models — the GPT-5.6 trio is still the frontier line.
+- MAINTAINING.md: prompt-engineering overview page no longer enumerates per-model pages, so the best-practices page is now the authoritative list; regression scenario 3 retargeted from Opus 4.8 to Opus 5.
+
 ## [1.3.0] - 2026-07-21
 
 ### Added
