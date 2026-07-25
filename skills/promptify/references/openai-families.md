@@ -8,7 +8,7 @@ Source: condensed from OpenAI's official prompt-engineering docs and cookbook, r
 **Distinctive prompting rules:**
 
 - Use Sol for flagship capability, Terra for a balance of intelligence and cost, and Luna for efficient high-volume work. Do not invent a separate pro model slug: pro mode is `reasoning.mode: "pro"` on any GPT-5.6 model (default effort `medium` applies in both standard and pro modes).
-- Prefer lean prompts: state each instruction once, expose only relevant tools, and retain examples or style rules only when they encode a requirement or fix a measured gap (OpenAI cites 10-15% score improvement and 41-66% token reduction from leaner prompts).
+- Prefer lean prompts: state each instruction once, expose only relevant tools, and retain examples or style rules only when they encode a requirement or fix a measured gap (OpenAI cites 10-15% score improvement, 41-66% token reduction, and 33-67% cost reduction from leaner prompts).
 - State safe autonomy and approval boundaries compactly so the model acts on in-scope local work but stops before external, destructive, costly, or scope-expanding actions.
 - GPT-5.6 supports `reasoning.effort` values `none`, `low`, `medium`, `high`, `xhigh`, and `max`, with `medium` as the default. Use-case mapping: `none` = latency baseline, `low` = latency-sensitive, `medium` = balanced start, `high`/`xhigh` = measurable quality gains, `max` = hardest quality-first workloads. Preserve the current effort when migrating from GPT-5.4/5.5, then test one level lower because GPT-5.6 is more token-efficient.
 - New `reasoning.context` param controls persisted reasoning: `auto` (default), `all_turns`, `current_turn`. Use `all_turns` when task goals remain stable across turns; pair with `previous_response_id`.

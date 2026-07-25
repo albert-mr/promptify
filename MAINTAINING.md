@@ -21,12 +21,16 @@ The reference files under `skills/promptify/references/` are condensed from the 
 - https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5
 - https://platform.claude.com/docs/en/about-claude/models/migration-guide — check the Fable/Mythos sections specifically for migration/API changes
 - https://platform.claude.com/docs/en/about-claude/models/overview — check model IDs, specs, availability, pricing, and NEW model-specific docs
+- https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5
 - https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-4-8
 - https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-sonnet-5
 - https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
-- https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview — check this one specifically for NEW dedicated prompt-engineering model pages that don't yet exist in `claude-families.md`
+- https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview — historically the place to spot NEW dedicated prompt-engineering model pages; as of 2026-07-25 it no longer carries a per-model nav, so the authoritative enumeration is the model-differences list on the best-practices page above
 - https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions
-- https://platform.claude.com/docs/en/about-claude/models/whats-new-claude-4-8 — capability/API-change counterpart to the Opus 4.8 prompting page
+- https://platform.claude.com/docs/en/api/service-tiers — authoritative Priority Tier model-support list; `claude-families.md` reproduces its exclusion list, so re-check it here rather than trusting the per-model pages
+- https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-fetch-tool — authoritative web-fetch model-support list; same reason (the per-model prompting pages do not carry it)
+- https://platform.claude.com/docs/en/about-claude/models/whats-new-opus-5 — capability/API-change counterpart to the Opus 5 prompting page
+- https://platform.claude.com/docs/en/about-claude/models/whats-new-claude-4-8 — same, for Opus 4.8
 - https://platform.claude.com/docs/en/about-claude/models/whats-new-sonnet-5 — same, for Sonnet 5
 
 **OpenAI:**
@@ -77,7 +81,7 @@ Before merging any PR that changes a reference file, `SKILL.md`, or the version,
 
 2. **Claude Sonnet 5, goal-mode ask.** Pass if: the output is a single `/goal ...` line, at or under 4000 characters, containing a measurable end state, an exact check command, enumerated constraints, and a bound clause.
 
-3. **Claude Opus 4.8 override, goal-mode ask.** Pass if: the disclosure reflects the override to Opus 4.8, and the drafted condition reflects Opus 4.8's specific quirks — not a copy of Sonnet 5's guidance.
+3. **Claude Opus 5 override, goal-mode ask.** Pass if: the disclosure reflects the override to Opus 5, and the drafted condition reflects Opus 5's specific quirks (no carried-over "verify your work" scaffolding, explicit scope narrowing, explicit conciseness instruction) — not a copy of Sonnet 5's or Opus 4.8's guidance.
 
 4. **An ask naming a different target system entirely (e.g. "this is for GPT-5.2").** Pass if: the goal-vs-normal question is skipped entirely (never asked), and the output is always a normal prompt drafted per `openai-families.md`.
 
