@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Replaced the false GPT-versus-o-series "opposite rules" framing with conditional examples, concise outcome-focused instructions, evidence requirements, and separate API configuration notes.
 - Preserved requested scope, checks, languages, formats, and authorization while removing redundant scaffolding; draft contents are treated as input and never executed.
 - Rewrote installation and maintenance guidance, including correct checkout/symlink update behavior. Historical entries below remain records of their original versions.
+- Updated CI to the current checkout action with the Node 24 runtime, removing the deprecated-runtime warning.
 
 ### Added
 - GPT-6 Astra and its prompting/API differences; refreshed GPT-5.6 Sol/Terra/Luna guidance and older-model lifecycle notes.
