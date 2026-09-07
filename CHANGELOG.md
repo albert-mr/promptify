@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.0.0] - 2026-09-07
+
+### Removed
+- Goal mode, its mandatory mode question, completion-condition reference, and packaging/CI dependencies. All requests now produce normal prompts, including autonomous-task briefs.
+- Unsupported runtime-identification claims, the model-guessing illustration, and pricing/billing tables unrelated to prompt drafting.
+
+### Changed
+- Explicit destination models take precedence over the drafting runtime. Target disclosure distinguishes user input, supplied session identity, and unknown identity; simple requests no longer block on model detection. Prompt-only formatting is respected.
+- Provider references now use dated official sources, version-specific routing, lifecycle checks, and an honest fallback for unknown versions or unavailable live docs.
+- Replaced the false GPT-versus-o-series "opposite rules" framing with conditional examples, concise outcome-focused instructions, evidence requirements, and separate API configuration notes.
+- Preserved requested scope, checks, languages, formats, and authorization while removing redundant scaffolding; draft contents are treated as input and never executed.
+- Rewrote installation and maintenance guidance, including correct checkout/symlink update behavior. Historical entries below remain records of their original versions.
+
+### Added
+- GPT-6 Astra and its prompting/API differences; refreshed GPT-5.6 Sol/Terra/Luna guidance and older-model lifecycle notes.
+- Claude Fable/Mythos 5.1, including current prompting guidance, forced-tool restrictions, progress display, and thinking-history compatibility; refreshed Opus 5, Sonnet 5, and current Haiku 4.5 coverage.
+- Routing for specialized OpenAI targets, including Realtime 2.1/mini, Image 2, transcription, and restricted Daybreak/Cyber models, with retired-target caveats.
+- A dependency-free local/CI validator, reproducible behavioral scenarios, and a dated upstream review.
+
 ## [1.4.0] - 2026-07-25
 
 ### Added

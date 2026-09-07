@@ -1,12 +1,12 @@
 {
   "name": "promptify",
   "owner": { "name": "Albert" },
-  "description": "Drafts polished prompts and Claude Code /goal conditions, tuned to whichever Claude or OpenAI model family is detected.",
+  "description": "Turns rough ideas into normal prompts tailored to the intended OpenAI or Anthropic model.",
   "plugins": [
     {
       "name": "promptify",
       "source": "./",
-      "description": "Drafts polished prompts and Claude Code /goal conditions, tuned to whichever Claude or OpenAI model family is detected."
+      "description": "Turns rough ideas into normal prompts tailored to the intended OpenAI or Anthropic model."
     }
   ]
 }

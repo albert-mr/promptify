@@ -1,38 +1,33 @@
-# Detection Fallbacks
+# Resolve the target without inventing identity
 
-Reference for the `promptify` skill: how to infer which coding harness and model family is actually running, when no authoritative API for that exists.
+Last verified: 2026-09-07.
 
-## Harness detection (Claude Code vs Codex CLI)
+The **target** consumes the finished prompt. The **runtime** is where Promptify is drafting it. They can use different providers, models, and tools. A repository's packaging does not identify either one.
 
-There is no official "detect harness" API. What follows is a heuristic inferred from the environment a skill finds itself running in — signals observed at runtime, not a documented contract. Treat all of it as best-effort.
+## Resolution order
 
-**Claude Code signals:**
-- Env vars: `CLAUDECODE`, `CLAUDE_CODE_*` (e.g. `CLAUDE_EFFORT` — confirmed present on this machine, value like `"high"`)
-- Claude-Code-specific tools available in the session: `TodoWrite`, slash commands like `/goal`, `/model`
-- Filesystem conventions: `.claude/` directory, `.claude-plugin/` manifests, `.claude/skills/`
+1. **Explicit destination:** preserve the user's named model, version, alias, and deployment surface. "For Claude Fable 5.1" in Codex means a Claude-targeted prompt. A current-session identity does not override that destination.
+2. **Authoritative session evidence:** if no destination was specified, use model metadata explicitly supplied by the host or higher-priority session instructions. A model field from a request/response describes that request; it need not describe later turns or fallback requests.
+3. **Known family only:** use that family's shared guidance. Do not turn "Claude", "OpenAI", "Codex", or a model's unsupported self-description into an exact version.
+4. **Unknown:** draft using the common principles in `SKILL.md`. Ask about the destination only if its capabilities materially affect the deliverable, such as a tool-dependent integration.
 
-**Codex CLI signals:**
-- Env var: `CODEX_HOME`
-- Codex-specific tools: `apply_patch`, `shell_command`, `update_plan`
-- Filesystem conventions: `AGENTS.md`, `.agents/skills/`
+Do not inspect credentials, dump environment variables, read private transcripts, or modify settings to identify a model. Configured defaults can be overridden; inspect configuration only if the user asks for configuration help. Tool names, directory names, writing style, and model self-reports are not proof of identity. Never switch the user's model while drafting.
 
-If neither set of signals is conclusively present, do not force a guess — fall through to asking the user (see step 4 of the fallback chain below).
+## Target line
 
-## Model-family detection fallback chain
+Use a short, truthful line outside the copyable block:
 
-Apply these in strict priority order. Stop at the first one that resolves confidently.
+- `Target: Claude Fable 5.1 (user-specified).`
+- `Target: GPT-6 Astra (session-provided).`
+- `Target: OpenAI family (exact model unknown).`
+- `Target: unspecified; using general prompting guidance.`
 
-1. **CLI/env introspection, only if confirmed to exist.** If a later version of the current harness is confirmed to expose a model-identifying env var, config field, or hook payload field, use it. Do not assume such a mechanism exists — as of this writing, neither Claude Code nor Codex CLI exposes the pinned model ID or name anywhere a skill can read it. Claude Code exposes only `CLAUDE_EFFORT` (e.g. `"high"`), not the model name. Codex CLI's own docs confirm the identical gap: no env var, no `config.toml` field, and no hook payload field carries the active model name through to `AGENTS.md`, prompts, or skills.
-2. **The running model's self-report, as a soft signal only.** A model can be asked what it is, but this is explicitly non-authoritative per both providers' own docs — self-reports can be wrong, stale, or hedged. Use it only to inform a guess, never to assert a fact.
-3. **An explicit user override stated in the ask.** E.g. "I'm running Sonnet 5" or "this is for gpt-5.2-codex." This is the most reliable path available and should take precedence over any inference once given.
-4. **If still ambiguous, ask.** Pose one direct clarifying question to the user rather than silently guessing. Do not chain multiple questions or bury the ask — one question, then proceed.
+For an unverified version, keep the requested name and say its version-specific guidance is unverified. For "latest", identify the model selected from current official docs as a selection, not a detected runtime. Omit this line when the user requests prompt-only output.
 
-## Disclosure wording
+## What the harness docs actually establish
 
-Every promptify invocation outputs this exact one-line template before drafting, regardless of confidence level:
+Claude Code documents a model picker, launch flags, `ANTHROPIC_MODEL`, settings, and model aliases. Its hooks can expose model information, including at session start and model switches. These surfaces can supply evidence **when passed into the current session**; Promptify does not install hooks. Alias mappings can vary by provider and account. See [model configuration](https://code.claude.com/docs/en/model-config) and [hooks](https://code.claude.com/docs/en/hooks).
 
-```
-Detected: `<harness>`, `<family>` — say so if wrong.
-```
+Codex documents a `model` configuration setting and separate overrides. That establishes a configured preference, not a universal API for skills to discover the effective model on every request. Use supplied session metadata when available; otherwise retain uncertainty. See [configuration reference](https://learn.chatgpt.com/docs/config-file/config-reference).
 
-This line is shown even when confidence is high. It is never presented as certain — it is a disclosed best guess, and the user is explicitly invited to correct it before the draft proceeds.
+Claude's prompting docs demonstrate supplying model identity through instructions. That is useful evidence for an explicitly informed session, not proof that unaided self-identification is reliable. See [model self-knowledge](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#model-self-knowledge).
