@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 300" width="520" height="300" role="img" aria-label="A confused figure points at a butterfly, asking IS THIS SONNET 5? &#8212; a parody of the classic confused-man meme, illustrating promptify's disclosed best-guess model detection">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 300" width="520" height="300" role="img" aria-label="A confused figure points at a butterfly and asks: Is this Astra 6?">
   <!-- speech bubble -->
   <rect x="30" y="14" width="180" height="56" rx="16" fill="none" stroke="#c96442" stroke-width="4"/>
   <path d="M 90 70 L 78 96 L 112 72 Z" fill="none" stroke="#c96442" stroke-width="4" stroke-linejoin="round"/>
@@ -42,5 +42,5 @@
   <!-- tag hanging off the butterfly -->
   <line x1="375" y1="112" x2="392" y2="150" stroke="#c96442" stroke-width="2" stroke-dasharray="1 6"/>
   <rect x="356" y="150" width="118" height="42" rx="8" fill="none" stroke="#c96442" stroke-width="4"/>
-  <text x="415" y="177" font-family="Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#c96442" text-anchor="middle">SONNET 5?</text>
+  <text x="415" y="177" font-family="Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#c96442" text-anchor="middle">ASTRA 6?</text>
 </svg>

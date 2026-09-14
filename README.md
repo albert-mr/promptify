@@ -1,93 +1,96 @@
-<p align="center">
-  <img src="assets/is-this-sonnet-5.svg" width="420" alt="A figure points at a butterfly, asking IS THIS SONNET 5? — promptify's disclosed best-guess model detection, illustrated">
-</p>
+# promptify
 
-<h1 align="center">promptify</h1>
+![Is this Astra 6?](assets/is-this-astra-6.svg)
 
-<p align="center">
-  <em>It's pretty sure you're running Sonnet 5. It'll ask anyway.</em>
-</p>
+Turn a rough idea or an existing prompt into one clear, copyable prompt for **OpenAI or Anthropic** models. Works as a skill in Claude Code and Codex.
 
-<p align="center">
-  <img src="https://img.shields.io/github/stars/albert-mr/promptify?style=flat-square&color=c96442&label=stars" alt="Stars">
-  <img src="https://img.shields.io/badge/providers-Claude%20%2B%20OpenAI-c96442?style=flat-square" alt="Works with Claude and OpenAI models">
-  <img src="https://img.shields.io/badge/model%20ID%20detection-best--effort%2C%20always%20disclosed-c96442?style=flat-square" alt="Model detection is best-effort and disclosed">
-  <img src="https://img.shields.io/badge/license-MIT-c96442?style=flat-square" alt="MIT license">
-</p>
+Promptify preserves your intent, chooses guidance for the model you name, and makes missing inputs explicit. If you do not name a model, it uses authoritative session information when available and otherwise drafts with general guidance. It never executes the task inside the prompt.
 
----
+**Version 2 produces normal prompts only.** The mode picker and `/goal` completion-condition output have been removed. Autonomous tasks still get ordinary instructions with success criteria and stopping conditions.
 
-A skill that drafts polished prompts — or Claude Code `/goal` completion conditions, where applicable — tuned to whichever Claude or OpenAI model family is currently running. Neither Anthropic nor OpenAI gives a skill any reliable way to read the active model ID at runtime, and their own docs say so. promptify doesn't pretend otherwise: it guesses, tells you what it guessed, and takes a correction if you give one.
+## Example
 
-## Before / after
+> For GPT-6 Astra, turn this into a prompt: review my PR for security issues. Be thorough, but don't change code.
 
-You paste a rough idea into whatever session you happen to have open. The agent drafts something generic — maybe it reaches for a chain-of-thought instruction that actively hurts an o-series model, maybe it invents a `temperature` parameter that 400s on Sonnet 5, maybe it fabricates a `/goal` line for Codex CLI, which has no such mechanism.
+Target: GPT-6 Astra (user-specified).
 
-With promptify:
+```text
+Review the pull request for actionable security defects introduced or exposed by its changes. Inspect the diff and the affected callers and trust boundaries. Keep the work read-only.
 
-```
-Detected: Claude Code, Claude Sonnet 5 — say so if wrong.
+For each finding, give severity, file and line, the concrete failure or abuse path, supporting evidence, and a suggested fix. Distinguish confirmed issues from unresolved concerns. Omit style-only comments.
+
+Finish with any limits on coverage or checks you could not perform. If there are no actionable findings, say so directly. Keep the report concise while preserving the evidence needed to assess each finding.
 ```
 
-...then the actual drafting happens against that specific model family's rules — not a generic average of every model's prompting advice.
+Say "only the prompt" to omit the target line. Name a destination such as "for Claude Fable 5.1" even when drafting inside Codex; the destination takes precedence over the running model.
+
+## Model coverage
+
+References checked **2026-09-14** against official documentation:
+
+- **OpenAI:** GPT-6 Astra; GPT-5.6 Sol, Terra, and Luna.
+- **Anthropic:** Claude Fable 5.1, Opus 5, and Sonnet 5.
+
+Dedicated guidance covers these seven text models. Other OpenAI or Anthropic targets use disclosed general guidance. Requests for "latest" require a live official-doc check when browsing is available. API settings and availability are verified separately when integration advice is requested.
+
+See the [OpenAI reference](skills/promptify/references/openai-families.md), [Anthropic reference](skills/promptify/references/claude-families.md), and [latest upstream review](docs/upstream-review-2026-09-14.md) for sources and limitations. This is a prompt-writing skill, not a model selector or API client.
 
 ## Install in Claude Code
 
-```
+```text
 /plugin marketplace add albert-mr/promptify
-```
-Registers this repo as a plugin marketplace so Claude Code can find and install `promptify`.
-
-```
 /plugin install promptify@promptify
 ```
-Installs the `promptify` plugin from that marketplace into your Claude Code environment.
 
+Invoke with `/promptify:promptify` followed by your idea. These commands register the marketplace and install its plugin; see [Claude Code marketplaces](https://code.claude.com/docs/en/plugin-marketplaces).
+
+## Install in Codex
+
+This repository includes `.agents/skills/promptify`, a symlink to `skills/promptify`, so no installation is needed when working here. Invoke with `$promptify`.
+
+For another project, run from this checkout:
+
+```bash
+mkdir -p /path/to/project/.agents/skills
+ln -s "$(pwd)/skills/promptify" /path/to/project/.agents/skills/promptify
 ```
-/promptify:promptify
+
+For a global install:
+
+```bash
+mkdir -p ~/.agents/skills
+ln -s "$(pwd)/skills/promptify" ~/.agents/skills/promptify
 ```
-Invokes the skill to turn your rough idea into a polished prompt or `/goal` completion condition.
 
-## Install in Codex CLI
+Use `cp -R skills/promptify /path/to/destination` for a fixed copy instead of a symlink. Do not overwrite an existing installation without checking its location. Restart Codex if the skill does not appear. See [Codex skills](https://learn.chatgpt.com/docs/build-skills) for discovery rules.
 
-promptify currently ships to Codex as a direct agent skill. Codex scans `.agents/skills` from your current working directory up to the repo root, and it also scans `$HOME/.agents/skills`. Symlinked skill folders are supported.
+## Update and validate
 
-- **This repo:** no install step is needed. The checked-in `.agents/skills/promptify` symlink points at `skills/promptify`, so Codex picks it up when you start in this repo or one of its subfolders.
-- **Another project:** from this checkout, symlink it into that project's skill directory:
+Claude Code caches installed plugins. After an update is merged:
 
-  ```bash
-  mkdir -p /path/to/project/.agents/skills
-  ln -s "$(pwd)/skills/promptify" /path/to/project/.agents/skills/promptify
-  ```
+```bash
+claude plugin marketplace update promptify
+claude plugin update promptify@promptify
+```
 
-- **Global install:** from this checkout, symlink it into your user skill directory:
+Then run `/reload-plugins` or restart the session. A symlinked Codex install follows **its actual checkout**; fetch/pull that checkout to receive merged changes. Copied installs need recopying.
 
-  ```bash
-  mkdir -p ~/.agents/skills
-  ln -s "$(pwd)/skills/promptify" ~/.agents/skills/promptify
-  ```
+Run the same structural checks as CI:
 
-Use `cp -R skills/promptify ...` instead of `ln -s ...` if you want a fixed copy rather than live updates from this checkout. Invoke the skill in Codex with `$promptify`; if it does not appear immediately, restart Codex.
+```bash
+python3 scripts/validate.py
+```
 
-## Repo layout
+The [behavior scenarios](tests/scenarios.md) test drafting decisions separately; structural validation does not prove model behavior. See [MAINTAINING.md](MAINTAINING.md) for source checks, versioning, and review requirements.
 
-- `skills/promptify/SKILL.md` — the skill definition itself.
-- `skills/promptify/references/*.md` — supporting reference docs:
-  - `claude-families.md`
-  - `openai-families.md`
-  - `goal-vs-normal.md`
-  - `detection-fallbacks.md`
-- `.claude-plugin/` — Claude Code packaging metadata (marketplace + plugin manifest).
-- `.agents/skills/promptify` — symlink used for Codex CLI's repo-level skill discovery.
-- `.github/workflows/validate.yml` — CI check that validates the plugin manifests and skill files on every PR.
+## Layout
 
-## Scope and honesty notes
-
-- No provider (Anthropic or OpenAI) gives reliable runtime model-ID introspection — model-family detection here is best-effort and its guess is always disclosed and correctable, never asserted as fact.
-- Codex CLI has no equivalent of Claude Code's `/goal` completion-condition primitive, so goal-mode prompt drafting is Claude-Code-only; on Codex, promptify only produces normal (system/task/agent) prompts.
-- When in doubt about which model family is actually running, trust your own knowledge of your environment over promptify's guess and correct it.
-
-See [MAINTAINING.md](MAINTAINING.md) for the versioning policy, the update/PR process (including the monthly automated freshness check), and the regression checklist any change must pass.
+- `skills/promptify/SKILL.md`: drafting workflow.
+- `skills/promptify/references/`: provider guidance and target resolution.
+- `.claude-plugin/`: marketplace and plugin manifests.
+- `.agents/skills/promptify`: Codex discovery symlink.
+- `scripts/validate.py`: dependency-free structural validation used by CI.
+- `tests/scenarios.md`: behavioral regression cases.
 
 ## License
 

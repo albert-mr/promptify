@@ -1,6 +1,6 @@
 {
   "name": "promptify",
-  "version": "1.4.0",
-  "description": "Drafts polished prompts and Claude Code /goal conditions, tuned to whichever Claude or OpenAI model family is detected.",
+  "version": "2.1.1",
+  "description": "Turns rough ideas into normal prompts tailored to the intended OpenAI or Anthropic model.",
   "author": { "name": "Albert" }
 }

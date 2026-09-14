@@ -1,78 +1,53 @@
-Source: condensed from OpenAI's official prompt-engineering docs and cookbook, research pass archived at /private/tmp/claude-501/-Users-albert/0865ef07-09e0-4a31-b5c6-31472d2fed27/tasks/wi9gw2xj5.output
+# OpenAI prompting reference
 
-## GPT-5.6 series
+Last verified: 2026-09-14. Sources are linked beside the guidance they support.
 
-- **Model IDs**: `gpt-5.6-sol` (also available through the `gpt-5.6` alias), `gpt-5.6-terra`, `gpt-5.6-luna`
-- **Docs**: https://developers.openai.com/api/docs/guides/latest-model
+## Routing and freshness
 
-**Distinctive prompting rules:**
+Use the user's exact target. This is a dated reference, not live model discovery. For "latest", an unknown version, or API configuration, check the official [model catalog](https://developers.openai.com/api/docs/models), [current model guide](https://developers.openai.com/api/docs/guides/latest-model), and [deprecations](https://developers.openai.com/api/docs/deprecations), then open the relevant model's guide. Follow published links; do not construct a guide URL from a guessed name. If access fails, disclose that limitation and use verified family-level guidance without claiming freshness or substituting a version.
 
-- Use Sol for flagship capability, Terra for a balance of intelligence and cost, and Luna for efficient high-volume work. Do not invent a separate pro model slug: pro mode is `reasoning.mode: "pro"` on any GPT-5.6 model (default effort `medium` applies in both standard and pro modes).
-- Prefer lean prompts: state each instruction once, expose only relevant tools, and retain examples or style rules only when they encode a requirement or fix a measured gap (OpenAI cites 10-15% score improvement, 41-66% token reduction, and 33-67% cost reduction from leaner prompts).
-- State safe autonomy and approval boundaries compactly so the model acts on in-scope local work but stops before external, destructive, costly, or scope-expanding actions.
-- GPT-5.6 supports `reasoning.effort` values `none`, `low`, `medium`, `high`, `xhigh`, and `max`, with `medium` as the default. Use-case mapping: `none` = latency baseline, `low` = latency-sensitive, `medium` = balanced start, `high`/`xhigh` = measurable quality gains, `max` = hardest quality-first workloads. Preserve the current effort when migrating from GPT-5.4/5.5, then test one level lower because GPT-5.6 is more token-efficient.
-- New `reasoning.context` param controls persisted reasoning: `auto` (default), `all_turns`, `current_turn`. Use `all_turns` when task goals remain stable across turns; pair with `previous_response_id`.
-- Images: GPT-5.6 preserves original image dimensions with `original`/`auto` detail settings.
-- GPT-5.6 is more concise by default than GPT-5.5. Use `text.verbosity` (`low`, `medium`, or `high`) for a stable baseline, and keep prompt-level brevity instructions only when the product requires them.
-- Give domain context, hard constraints, approval boundaries, success criteria, and the ambiguities that require a question. Avoid prescribing every step when the intended outcome is enough.
+| Target | Guidance to load |
+| --- | --- |
+| `gpt-6-astra` | Shared principles + GPT-6 Astra |
+| `gpt-5.6-sol`, `gpt-5.6-terra`, `gpt-5.6-luna`; `gpt-5.6` aliases Sol | Shared principles + GPT-5.6 |
 
-## GPT-5.x general series
+These are the maintained text models. Other OpenAI targets receive general guidance with the coverage limit disclosed; do not restore removed model sections from historical documents. For a new model discovered through a live check, distinguish freshly verified guidance from bundled coverage.
 
-- **Model IDs**: `gpt-5`, `gpt-5-mini`, `gpt-5-nano`, `gpt-5-pro`, `gpt-5.1`, `gpt-5.2`, `gpt-5.2-pro`, `gpt-5.4`, `gpt-5.4-mini`, `gpt-5.4-nano`, `gpt-5.4-pro`, `gpt-5.5`, `gpt-5.5-pro` (plus `gpt-5.3-chat-latest`)
-- **Docs**:
-  - https://developers.openai.com/api/docs/guides/prompt-engineering
-  - https://developers.openai.com/cookbook/examples/gpt-5/gpt-5_prompting_guide
-  - https://developers.openai.com/cookbook/examples/gpt-5/gpt-5-1_prompting_guide
-  - https://developers.openai.com/cookbook/examples/gpt-5/gpt-5-2_prompting_guide
+A Codex harness does not establish the target model. Use supplied session evidence or the user's explicit destination.
 
-**Distinctive prompting rules:**
+## Shared principles
 
-- `reasoning_effort` controls thinking depth/tool-call persistence: `minimal`/`none` → `low` → `medium` (default in GPT-5) → `high` → `xhigh` (GPT-5.2 adds `none` as new default plus `xhigh`). Preserve existing effort settings when migrating between versions; only retune after evals.
-- `verbosity` is a separate param from reasoning effort — controls final-answer length independent of reasoning length; can be overridden per-context via natural language (e.g. "verbose for code blocks, terse otherwise").
-- Message hierarchy: `developer` role = highest-priority app instructions (replaces "system prompt" terminology); `user` = end-user input; `assistant` = model output. Think of developer+user like a function and its arguments. The Responses API also accepts an `instructions` parameter (high-level behavior/tone/goals, prioritized over prompt inputs) as an alternative to the developer role.
-- Recommended developer-message structure: **Identity → Instructions → Examples → Context**, using Markdown headers/lists and XML tags to delimit sections; keep static/reused content early for prompt-caching cost savings.
-- GPT-5 is unusually literal/"surgically precise" about instructions — contradictory instructions hurt it more than older models; explicitly resolve conflicts/hierarchies (OpenAI ships a Prompt Optimizer tool for this).
-- Agentic/tool-calling: use the **Responses API** (not Chat Completions) so reasoning items persist across tool calls (cited gains, e.g. Tau-Bench Retail 73.9%→78.2%). Calibrate tool "eagerness" via `reasoning_effort` plus explicit stop conditions/tool-call budgets. Use "tool preambles" — have the model state an upfront plan and short progress updates during long agentic rollouts.
-- Structured XML tags recommended for agent specs, e.g. `<context_understanding>`, `<persistence>`, `<tool_preambles>`, `<code_editing_rules>`.
-- Structured Outputs: supported via JSON-schema conformance (`strict` mode) for deterministic responses; distinguish required vs optional fields, use null for missing data rather than guessing.
-- GPT-5.1 specifics: `reasoning_effort: "none"` forces zero reasoning tokens (like GPT-4.1/4o) and enables hosted tools (web/file search); named tools `apply_patch` and `shell` reduce failure rates; be explicit about parallelizing tool calls; model is highly steerable on persona/tone/verbosity; encourage "bias for action" (proceed rather than re-ask when the answer is already yes) and periodic short progress updates (~every 6 steps / 1-2 sentences).
-- GPT-5.2 specifics: more deliberate default scaffolding, lower default verbosity, stronger conservative/grounding bias (prefers "I don't know" over fabrication); enforce strict scope discipline ("EXACTLY and ONLY what was requested," no invented UI/tokens); for >10k-token inputs, have the model build an internal outline and anchor claims to specific sections; flag ambiguous requests with 2-3 labeled interpretations rather than guessing.
-- Prompt-management best practice (applies across the family): treat prompts as code — store in named modules/version control, review changes in the same PR as the behavior, avoid relying on the deprecated hosted "Prompt objects" API (de-emphasized since June 3, 2026; `v1/prompts` shutdown Nov 30, 2026 — migrate to code-managed prompts with typed inputs).
+Specify the result, relevant context, constraints, evidence, and output contract. Resolve conflicting rules. Add examples when they clarify a real format or decision boundary; use the smallest useful set. Keep prompts lean while preserving the required context.
 
-## o-series reasoning models
+For API integrations, current models accept application instructions through `developer` messages or Responses `instructions`; these outrank user input, not provider/system instructions. Keep untrusted retrieved material in clearly delimited input, outside privileged instructions. Responses `instructions` must be supplied again on later requests; `previous_response_id` does not carry that field forward. See [prompt engineering](https://developers.openai.com/api/docs/guides/prompt-engineering).
 
-> **INVERTED RULES — do not reuse GPT-5.x guidance here.** The o-series was trained to need *less* prompt engineering, not more, and several GPT-5.x techniques actively hurt it. Treat this family as the opposite prompting regime from GPT-5.x.
+Keep runtime configuration separate from copyable prompt text. Reasoning effort, pro mode, Structured Outputs, tool availability, and image detail are not enabled by prose. A JSON-only instruction describes the desired result; a supported runtime schema enforces its structure. Preserve user-requested fields, evidence, and checks even when simplifying a prompt.
 
-- **Model IDs**: `o1`, `o1-mini`, `o1-preview`, `o1-pro`, `o3`, `o3-mini`, `o3-pro`, `o4-mini`
-- **Docs**:
-  - https://developers.openai.com/api/docs/guides/reasoning-best-practices
-  - https://developers.openai.com/cookbook/examples/o-series/o3o4-mini_prompting_guide
+## GPT-6 Astra
 
-**Distinctive prompting rules (inverted relative to GPT-5.x):**
+Use [Astra's prompting and migration guide](https://developers.openai.com/api/docs/guides/latest-model/gpt-6-astra) and [model page](https://developers.openai.com/api/docs/models/gpt-6-astra).
 
-- **No chain-of-thought prompting.** Do NOT say "think step by step" or "explain your reasoning" — these models already reason internally, and explicitly asking them to reason more can hurt performance. This is the opposite of general LLM/GPT-5.x-style prompting.
-- **Keep prompts simple and brief.** These models were trained to need less prompt engineering, not more — avoid the verbose, heavily-scaffolded prompt style that benefits GPT-5.x.
-- **Minimize/avoid few-shot examples.** Test zero-shot first — multiple examples can measurably degrade performance (the opposite of typical LLM guidance, including GPT-5.x's Identity→Instructions→Examples→Context structure). If one example is used, keep it minimal and highly relevant.
-- "Developer messages are the new system messages" as of `o1-2024-12-17` — instructions should be framed as developer-role directives per the model spec's chain-of-command (this part is shared terminology with GPT-5.x, but the content/density of what you put in that developer message should stay brief per the inverted rules above).
-- Reasoning models suppress Markdown formatting by default; to re-enable it, put the literal string **"Formatting re-enabled"** as the first line of the developer message.
-- Use clear delimiters (Markdown headers, XML tags, section titles) to separate prompt sections; state explicit constraints/budgets and clear success criteria rather than open-ended asks.
-- Function/tool calling: these models are trained to invoke tools natively as part of their internal chain of thought. Best practices: explicitly order required calls ("check X exists before creating Y"), forbid promising future calls ("Do NOT promise to call a function later — if a call is required, emit it now"), enable `strict: true` for schema-conformant args, and give few-shot examples inside function *descriptions* (not the main prompt) if needed.
-- No hard cap on tool count, but keep to roughly <100 tools / <20 args per tool for reliable in-distribution behavior; ambiguous/overlapping tool descriptions cause misfires or tool-call avoidance — write precise, disambiguated tool descriptions and decision rules for overlapping tools.
-- Use the Responses API with `store: true` (or `include=["reasoning.encrypted_content"]`) to persist reasoning items across turns/tool calls — improves both quality and token efficiency versus reconstructing reasoning via Chat Completions.
-- Filter available MCP/tool lists via `allowed_tools` to reduce payload bloat and cross-tool confusion.
+- For action requests, describe the full deliverable and which routine decisions the agent should make itself. Ask only about ambiguity or authorization that changes the work; carry on with independent authorized work while awaiting an answer.
+- Audit loaded skills and repository instructions for contradictory process requirements. Do not add approval gates for work the user already authorized. Preserve the actual instruction hierarchy.
+- Specify the writing style, structure, and length needed by the product; Astra can otherwise produce lengthy, heavily formatted replies.
+- When delegation is available and warranted, give concrete criteria for independent work. Do not assume the harness supports subagents or mandate delegation for every task.
+- Scope validation to the change and required checks. Once those pass, repeat or broaden testing only for new changes, failures, or unresolved concerns.
 
-## GPT-5-Codex series
+**Integration only:** Astra supports `low`, `medium`, `high`, `xhigh`, and `max` reasoning effort, not `none` or `minimal`. When migrating from those unsupported values, begin at `low`. Remove `temperature`, `top_p`, and log-probability options as specified in the migration guide. Tool calling requires Responses even though text-only Chat Completions is supported. Async tool calling and mid-turn steering require application support; a prompt cannot create either. Keep corrections and side questions connected to the original task unless the user changes it.
 
-- **Model family**: specialized agentic-coding variant, distinct guide from general GPT-5
-- **Model IDs**: `gpt-5.3-codex` (current, recommended); `gpt-5.1-codex-max` (legacy reference implementation); older: `gpt-5-codex`, `gpt-5.1-codex`, `gpt-5.1-codex-mini`, `gpt-5.2-codex`
-- **Docs**: https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide
+## GPT-5.6 Sol, Terra, Luna
 
-**Distinctive prompting rules:**
+Read the dedicated [GPT-5.6 prompting guide](https://developers.openai.com/api/docs/guides/prompt-guidance-gpt-5p6) and [version-specific model guide](https://developers.openai.com/api/docs/guides/latest-model/gpt-5.6). The unqualified latest-model URL now describes Astra.
 
-- Accessed via the Responses API; `reasoning_effort: "medium"` recommended for interactive coding, `"high"`/`"xhigh"` for long-running autonomous tasks. Set `parallel_tool_calls: true` in Responses API requests.
-- Preferred/optimized tools: `apply_patch` (structured diff format — use exactly as specified, don't reinvent; scope it to single-file edits, not auto-generated or bulk search-replace operations), `shell_command` (pass command as a string, not a list; always set `workdir`), `update_plan` (statuses `pending`/`in_progress`/`completed`; update after completing sub-tasks; don't leave items in-progress at turn end; skip plans for straightforward tasks and avoid single-step plans), `view_image` (attach local filesystem images by path).
-- Must batch parallel exploration/reads via `multi_tool_use.parallel` — batch all needed reads upfront, tool calls first then outputs grouped, ordered by importance; truncate tool responses to ~10k tokens (preserve beginning/end, cut the middle).
-- GPT-5.3-Codex introduces a required `phase` field on assistant output items (`null | "commentary" | "final_answer"`) that must be preserved when reconstructing conversation history, or performance degrades.
-- Preamble cadence: acknowledgement + 2-3 sentence plan before tool calls, updates every 1-3 execution steps, minimum every 6 steps or 10 tool calls — without ceremonial logging of every action. The guide ships two named personality presets ("Friendly" and "Pragmatic").
-- Biased toward autonomous action with reasonable assumptions over asking clarifying questions; instruct it to stop and summarize if it's re-reading/re-editing without making progress.
-- `AGENTS.md` handling: files are auto-enumerated from `~/.codex` and repo directories root-to-CWD, later directories overriding earlier; each is injected as a separate user-role message prefixed `# AGENTS.md instructions for <directory>`, before the user prompt. Prefers dedicated tools over raw shell commands when available.
+- State each requirement once. Remove repeated process, irrelevant tools, and examples that add no useful behavior; retain domain constraints, evidence, completion criteria, and failure handling.
+- Separate personality from collaboration: tone controls wording; collaboration rules govern asking, acting, checking, and stopping. Preserve requested facts, genre, language, and length in rewrites.
+- Define tool prerequisites and when empty or partial retrieval warrants another attempt. Parallelize independent reads; keep dependent decisions sequential. Programmatic tool calling suits bounded data reduction, not every multi-tool task.
+- Require citations to retrieved evidence and distinguish missing evidence from a factual negative. Do not sacrifice required evidence merely to reduce tool calls.
+
+**Integration only:** `reasoning.effort` supports `none`, `low`, `medium`, `high`, `xhigh`, `max`; default `medium`. On migration, compare the existing setting and one level lower. Pro mode uses `reasoning.mode: "pro"` on the selected model, not a made-up `gpt-5.6-pro` slug. `text.verbosity` is independent of reasoning. Persisted reasoning defaults to `all_turns` (`auto` resolves to it); use `current_turn` when prior assumptions no longer apply. Preserve response items and assistant phase values when manually replaying history. Configure these in the client, not the generated prompt.
+
+## Agent runtimes
+
+For coding tasks, give the agent the task, repository constraints, required checks, and completion/reporting expectations. Let it inspect existing patterns before editing. Preserve local tools and their actual schemas; do not invent harness commands or mandate a fixed progress cadence.
+
+The [Agents API](https://developers.openai.com/api/docs/guides/agents-api/overview) supplies a managed Codex harness. Model, instructions, tools, and environment are configured separately. A prompt does not provision a sandbox or durable session.
