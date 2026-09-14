@@ -26,7 +26,7 @@ Start discovery with these indexes, even when the existing references appear cur
 
 For each update:
 
-1. Discover new models and dedicated guides, including specialized/restricted models; check lifecycle before calling a catalog entry available. Distinguish product aliases, exact IDs, API access, and partner-platform differences.
+1. Discover new broadly available text models and dedicated guides; check lifecycle before calling a catalog entry available. Keep the maintained scope focused on the models listed in README. Do not restore older, specialized, or restricted model sections during routine freshness updates. Distinguish product aliases, exact IDs, API access, and partner-platform differences.
 2. Read the exact model's prompting guide and relevant migration/capability pages. Treat old cookbook recommendations as version-specific. Do not copy every model's workaround into shared guidance.
 3. Preserve user requirements over general optimization advice. Remove unsupported universals, redundant process, and operational details that do not affect prompt drafting. Link to current pricing/tool-support docs rather than maintaining unrelated tables.
 4. Record the review date and sources in affected references. If a source is inaccessible or contradictory, record the gap; a successful HTTP status alone does not verify a claim. Do not mark an unread page verified.

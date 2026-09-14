@@ -1,5 +1,7 @@
 # promptify
 
+![Is this Astra 6?](assets/is-this-astra-6.svg)
+
 Turn a rough idea or an existing prompt into one clear, copyable prompt for **OpenAI or Anthropic** models. Works as a skill in Claude Code and Codex.
 
 Promptify preserves your intent, chooses guidance for the model you name, and makes missing inputs explicit. If you do not name a model, it uses authoritative session information when available and otherwise drafts with general guidance. It never executes the task inside the prompt.
@@ -26,10 +28,10 @@ Say "only the prompt" to omit the target line. Name a destination such as "for C
 
 References checked **2026-09-14** against official documentation:
 
-- **OpenAI:** GPT-6 Astra; GPT-5.6 Sol, Terra, and Luna; GPT-Live 1; Image 2.5 Sunburst/Flare; Rosalind; older GPT and o-series targets; coding-model guidance; specialized audio, research, and restricted cyber targets.
-- **Anthropic:** Claude Fable/Mythos 5.1, Opus 5, Sonnet 5, Haiku 4.5, and earlier supported versions.
+- **OpenAI:** GPT-6 Astra; GPT-5.6 Sol, Terra, and Luna.
+- **Anthropic:** Claude Fable 5.1, Opus 5, and Sonnet 5.
 
-Current, older, restricted, and retired models are distinguished in the references. Unknown versions use disclosed general guidance. Requests for "latest" require a live official-doc check when browsing is available. API settings and availability are verified separately when integration advice is requested.
+Dedicated guidance covers these seven text models. Other OpenAI or Anthropic targets use disclosed general guidance. Requests for "latest" require a live official-doc check when browsing is available. API settings and availability are verified separately when integration advice is requested.
 
 See the [OpenAI reference](skills/promptify/references/openai-families.md), [Anthropic reference](skills/promptify/references/claude-families.md), and [latest upstream review](docs/upstream-review-2026-09-14.md) for sources and limitations. This is a prompt-writing skill, not a model selector or API client.
 

@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.1.1] - 2026-09-14
+
+### Changed
+- Focused model-specific guidance on GPT-6 Astra, GPT-5.6 Sol/Terra/Luna, Claude Fable 5.1, Opus 5, and Sonnet 5. Removed older and specialized model sections, including Haiku 4.5 and GPT-5.3 Codex; other OpenAI/Anthropic targets retain an explicit general-guidance fallback.
+- Restored the README illustration as `assets/is-this-astra-6.svg` with “IS THIS ASTRA 6?” text and updated accessible description.
+- Updated maintenance scope and regression cases to match the focused model list. Historical review documents record their original coverage.
+
 ## [2.1.0] - 2026-09-14
 
 ### Added

@@ -1,26 +1,20 @@
 # Anthropic prompting reference
 
-Last verified: 2026-09-14. Sources are linked beside the guidance they support. The current lineup and dedicated prompting guides are unchanged since the September 7 review.
+Last verified: 2026-09-14. Sources are linked beside the guidance they support.
 
 ## Routing and freshness
 
-Preserve the requested target. For "latest", an unknown version, or API configuration, check the [model overview](https://platform.claude.com/docs/en/models/overview), [prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices), and [model deprecations](https://platform.claude.com/docs/en/about-claude/model-deprecations); follow their links to the exact model's guidance. The [migration index](https://platform.claude.com/docs/en/about-claude/models/migration-guide) now routes to separate per-model pages. Do not guess URLs, assert a permanent number of guides, or equate a legacy listing with retirement. If live verification fails, disclose it and use shared guidance without inventing model-specific behavior.
+Preserve the requested target. For "latest", an unknown version, or API configuration, check the [model overview](https://platform.claude.com/docs/en/models/overview), [prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices), and [model deprecations](https://platform.claude.com/docs/en/about-claude/model-deprecations); follow their links to the exact model's guidance. The [migration index](https://platform.claude.com/docs/en/about-claude/models/migration-guide) now routes to separate per-model pages. Do not guess URLs or assert a permanent number of guides. If live verification fails, disclose it and use shared guidance without inventing model-specific behavior.
 
-| Target | Status / routing at this review |
+| Target | Guidance to load |
 | --- | --- |
-| `claude-fable-5-1` | Current highest-capability broadly available line; Fable 5.1 section |
-| `claude-mythos-5-1` | Same-generation specialized model; Project Glasswing access only; Fable 5.1 guidance with API distinctions below |
-| `claude-opus-5` | Current default recommendation for most workloads; Opus 5 section |
-| `claude-sonnet-5` | Current speed/intelligence option; Sonnet 5 section |
-| `claude-haiku-4-5-20251001` / `claude-haiku-4-5` | Current fast tier; Haiku section, not a legacy default |
-| `claude-fable-5`, `claude-mythos-5` | Earlier generation; Mythos remains access-gated; Fable 5 section |
-| `claude-opus-4-8`, `claude-opus-4-7`, `claude-opus-4-6`, `claude-sonnet-4-6` | Older, still active in the lifecycle table; use their specific guidance |
-| Opus 4.5 / Sonnet 4.5 | Earlier supported targets; use dated IDs or documented aliases and check lifecycle |
-| `claude-mythos-preview` | Deprecated invitation-only predecessor; verify access and lifecycle, never select by default |
+| `claude-fable-5-1` | Shared principles + Fable 5.1 |
+| `claude-opus-5` | Shared principles + Opus 5 |
+| `claude-sonnet-5` | Shared principles + Sonnet 5 |
 
-Opus 4.1, Opus 4, Sonnet 4, Sonnet 3.7, Haiku 3.5, and Haiku 3 have retired on the Claude API. Partner-platform retirement schedules can differ. A requested retired target should receive a clear availability note, not a silent model substitution. See [deprecations](https://platform.claude.com/docs/en/about-claude/model-deprecations).
+These are the maintained text models. Other Anthropic targets receive general guidance with the coverage limit disclosed; do not restore removed model sections from historical documents. For a new model discovered through a live check, distinguish freshly verified guidance from bundled coverage.
 
-Claude 4.6 and later use dateless pinned IDs such as `claude-fable-5-1`; these are not moving aliases. Earlier models use dated snapshots and short aliases. Claude Code aliases such as `fable` or `opus` are a separate harness mechanism. See [IDs and versioning](https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions).
+These dateless API IDs are pinned versions. Claude Code aliases such as `fable` or `opus` are a separate harness mechanism. See [IDs and versioning](https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions).
 
 ## Shared principles
 
@@ -30,7 +24,7 @@ Examples should demonstrate the actual task and edge cases. A few diverse exampl
 
 Use the matching model section selectively. A conversational rewrite does not need tool orchestration, test budgets, or autonomy clauses. A coding prompt should name the intended scope and required validation without inventing commands. A review request does not authorize edits. Preserve the user's severity threshold even when an upstream example recommends broader finding collection.
 
-## Claude Fable 5.1 / Mythos 5.1
+## Claude Fable 5.1
 
 Read [Fable 5.1 prompting](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1).
 
@@ -44,11 +38,11 @@ Read [Fable 5.1 prompting](https://platform.claude.com/docs/en/build-with-claude
 
 **Integration only:** [What's new](https://platform.claude.com/docs/en/models/fable-5-1/whats-new-fable-5-1) documents always-on adaptive thinking, no manual `budget_tokens`, no assistant prefill, and rejection of non-default sampling parameters. Forced `tool_choice` values `any` and `tool` are rejected; use `auto` with explicit tool instructions, supported strict tools, or Structured Outputs.
 
-Preserve assistant turns and thinking blocks unchanged. Fable 5.1 enforces prefix binding by default for accounts created on/after 2026-08-31, and for older accounts when a request sets `thinking.block_binding.prefix_mismatch_behavior`: changing earlier messages, system instructions, or tools can invalidate later thinking blocks. Mythos 5.1 does not enforce that check. Older models cannot read 5.1 thinking blocks. Follow the [migration guide](https://platform.claude.com/docs/en/models/fable-5-1/migration-guide) and [preserved-thinking guide](https://platform.claude.com/docs/en/build-with-claude/preserved-thinking) for supported history edits and fallback handling; do not blanket-strip thinking on every model switch.
+Preserve assistant turns and thinking blocks unchanged. Fable 5.1 enforces prefix binding by default for accounts created on/after 2026-08-31, and for older accounts when a request sets `thinking.block_binding.prefix_mismatch_behavior`: changing earlier messages, system instructions, or tools can invalidate later thinking blocks. Older models cannot read 5.1 thinking blocks. Follow the [migration guide](https://platform.claude.com/docs/en/models/fable-5-1/migration-guide) and [preserved-thinking guide](https://platform.claude.com/docs/en/build-with-claude/preserved-thinking) for supported history edits and fallback handling; do not blanket-strip thinking on every model switch.
 
 Effort defaults to `high`; evaluate `low`, `medium`, `xhigh`, and `max` for the workload. The [thinking guide](https://platform.claude.com/docs/en/build-with-claude/thinking) documents `thinking.display: "updates"` with beta header `thinking-display-updates-2026-08-18`; the default `omitted` display hides progress text. Prompting for updates alone does not make a client render them. Raw private reasoning is not a deliverable.
 
-For changing effort during a conversation, the [per-message effort beta](https://platform.claude.com/docs/en/build-with-claude/effort#change-effort-mid-conversation) supports Fable 5.1, Mythos 5.1, and Opus 5 on the Claude API and Google Cloud. With `mid-conversation-output-config-2026-07-01`, append a `role: "system"` message with empty `content` and `output_config.effort`; it applies from the next user turn while preserving the cached prefix. This is client configuration, not an instruction to think harder. Earlier Fable 5 does not support it. The [Fable 5.1 migration guide](https://platform.claude.com/docs/en/models/fable-5-1/migration-guide) now clarifies that the tokenizer is unchanged; that does not promise unchanged token usage or latency.
+For changing effort during a conversation, the [per-message effort beta](https://platform.claude.com/docs/en/build-with-claude/effort#change-effort-mid-conversation) supports Fable 5.1 and Opus 5 among the maintained targets on the Claude API and Google Cloud. With `mid-conversation-output-config-2026-07-01`, append a `role: "system"` message with empty `content` and `output_config.effort`; it applies from the next user turn while preserving the cached prefix. This is client configuration, not an instruction to think harder. Verify support before applying this mechanism to another model.
 
 ## Claude Opus 5
 
@@ -75,18 +69,6 @@ Read [Sonnet 5 prompting](https://platform.claude.com/docs/en/build-with-claude/
 - In code review, use a concrete reporting bar and retain the user's requested severity/scope filters.
 
 **Integration only:** adaptive thinking defaults on, effort defaults to `high`, and manual `budget_tokens` is removed. Non-default `temperature`, `top_p`, and `top_k` fail; steer tone in the prompt. Revisit total `max_tokens` and parse typed blocks rather than assuming the first block is text. See [Sonnet 5 migration](https://platform.claude.com/docs/en/models/sonnet-5/migration-guide).
-
-## Claude Haiku 4.5
-
-Haiku remains the current fast tier. Use clear task boundaries, necessary context, and representative examples for repeated formatting or classification. Do not apply Fable/Opus-specific autonomy or verbosity fixes by default.
-
-Haiku uses extended thinking with `budget_tokens`, not adaptive thinking or the effort parameter. When giving API advice, do not set both `temperature` and `top_p`. See [Haiku overview](https://platform.claude.com/docs/en/models/haiku-4-5/overview) and [migration guide](https://platform.claude.com/docs/en/models/haiku-4-5/migration-guide).
-
-## Earlier Claude targets
-
-- **Fable 5 / Mythos 5:** use [Fable 5 prompting](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5). Ground progress claims in actual results, define scope and authorized persistence, and avoid unnecessary planning or tidying. Do not transfer 5.1-only forced-tool or prefix-binding rules to 5. Thinking is always adaptive; the [Fable 5 migration guide](https://platform.claude.com/docs/en/models/fable-5/migration-guide) covers API differences and gated Mythos access.
-- **Opus 4.8:** use its [dedicated guide](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-4-8). Be explicit about per-item scope and design direction. It tends to delegate less than Opus 5. Thinking is opt-in; effort labels should be re-evaluated across versions, and `max` can overthink routine work.
-- **Opus 4.7/4.6, Sonnet 4.6, Opus/Sonnet 4.5:** use the [shared guide's model-specific notes](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices). Older Opus can overreact to aggressive tool-use language and over-delegate; conditional tool rules are preferable. Preserve the exact model's thinking/sampling support. Manual thinking is deprecated on 4.6 and removed on Opus 4.7+, while Haiku 4.5 still supports it.
 
 ## Integration boundaries
 

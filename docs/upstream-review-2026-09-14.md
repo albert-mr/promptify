@@ -1,5 +1,7 @@
 # Upstream review — 2026-09-14
 
+> This report records the version 2.1.0 audit. Version 2.1.1 subsequently narrows maintained guidance to seven text models; see the [current model list](../README.md#model-coverage). The source findings and validation results below describe the earlier audit, not the current coverage.
+
 Version 2.1 refreshes both providers after the [September 7 review](upstream-review-2026-09-07.md). Normal prompts remain the only output mode. Research compared fresh official catalogs, release notes, lifecycle pages, prompting guides, and migration docs with the previous captures, then followed published links for new models. Saved sources, diffs, and drafting evaluations live in this workspace's ignored `.context/` directory.
 
 ## Findings and changes
