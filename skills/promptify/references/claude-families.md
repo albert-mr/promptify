@@ -1,6 +1,6 @@
 # Anthropic prompting reference
 
-Last verified: 2026-09-07. Sources are linked beside the guidance they support.
+Last verified: 2026-09-14. Sources are linked beside the guidance they support. The current lineup and dedicated prompting guides are unchanged since the September 7 review.
 
 ## Routing and freshness
 
@@ -44,9 +44,11 @@ Read [Fable 5.1 prompting](https://platform.claude.com/docs/en/build-with-claude
 
 **Integration only:** [What's new](https://platform.claude.com/docs/en/models/fable-5-1/whats-new-fable-5-1) documents always-on adaptive thinking, no manual `budget_tokens`, no assistant prefill, and rejection of non-default sampling parameters. Forced `tool_choice` values `any` and `tool` are rejected; use `auto` with explicit tool instructions, supported strict tools, or Structured Outputs.
 
-Preserve assistant turns and thinking blocks unchanged. Fable 5.1 enforces prefix binding for accounts created on/after 2026-08-31: changing earlier messages, system instructions, or tools can invalidate later thinking blocks. Mythos 5.1 does not enforce that check. Older models cannot read 5.1 thinking blocks. Follow the [migration guide](https://platform.claude.com/docs/en/models/fable-5-1/migration-guide) and [preserved-thinking guide](https://platform.claude.com/docs/en/build-with-claude/preserved-thinking) for supported history edits and fallback handling; do not blanket-strip thinking on every model switch.
+Preserve assistant turns and thinking blocks unchanged. Fable 5.1 enforces prefix binding by default for accounts created on/after 2026-08-31, and for older accounts when a request sets `thinking.block_binding.prefix_mismatch_behavior`: changing earlier messages, system instructions, or tools can invalidate later thinking blocks. Mythos 5.1 does not enforce that check. Older models cannot read 5.1 thinking blocks. Follow the [migration guide](https://platform.claude.com/docs/en/models/fable-5-1/migration-guide) and [preserved-thinking guide](https://platform.claude.com/docs/en/build-with-claude/preserved-thinking) for supported history edits and fallback handling; do not blanket-strip thinking on every model switch.
 
 Effort defaults to `high`; evaluate `low`, `medium`, `xhigh`, and `max` for the workload. The [thinking guide](https://platform.claude.com/docs/en/build-with-claude/thinking) documents `thinking.display: "updates"` with beta header `thinking-display-updates-2026-08-18`; the default `omitted` display hides progress text. Prompting for updates alone does not make a client render them. Raw private reasoning is not a deliverable.
+
+For changing effort during a conversation, the [per-message effort beta](https://platform.claude.com/docs/en/build-with-claude/effort#change-effort-mid-conversation) supports Fable 5.1, Mythos 5.1, and Opus 5 on the Claude API and Google Cloud. With `mid-conversation-output-config-2026-07-01`, append a `role: "system"` message with empty `content` and `output_config.effort`; it applies from the next user turn while preserving the cached prefix. This is client configuration, not an instruction to think harder. Earlier Fable 5 does not support it. The [Fable 5.1 migration guide](https://platform.claude.com/docs/en/models/fable-5-1/migration-guide) now clarifies that the tokenizer is unchanged; that does not promise unchanged token usage or latency.
 
 ## Claude Opus 5
 

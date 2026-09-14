@@ -1,6 +1,6 @@
 # OpenAI prompting reference
 
-Last verified: 2026-09-07. Sources are linked beside the guidance they support.
+Last verified: 2026-09-14. Sources are linked beside the guidance they support.
 
 ## Routing and freshness
 
@@ -19,7 +19,7 @@ Use the user's exact target. This is a dated reference, not live model discovery
 
 GPT-6 Astra is the catalog's flagship recommendation; Terra and Luna retain their cost/latency roles. That recommendation does not override an explicit older target. `chat-latest` is a moving ChatGPT Instant alias, not a pinned Astra snapshot. Catalog presence alone does not establish availability: retired entries remain listed. For example, `o1-preview`, `o1-mini`, `codex-mini-latest`, and `chatgpt-4o-latest` have shutdown entries in the deprecations page.
 
-**Lifecycle at this review:** GPT-5/5.1/5.2 Codex-suffixed models and both dedicated deep-research models retired on 2026-07-23; GPT-5.2/5.3 chat aliases retired on 2026-08-10. Sora 2 and the Videos API are scheduled to shut down on 2026-09-24. Several older GPT/o-series snapshots retire on 2026-10-23, and GPT-5/o3 snapshots on 2026-12-11. Check the exact ID and date before recommending deployment. Historical prompt adaptation can preserve an explicitly requested target while disclosing its status.
+**Lifecycle at this review:** GPT-5/5.1/5.2 Codex-suffixed models and both dedicated deep-research models retired on 2026-07-23; GPT-5.2/5.3 chat aliases retired on 2026-08-10. Sora 2 and the Videos API are scheduled to shut down on 2026-09-24. GPT-5.4-Cyber is deprecated and shuts down on 2026-10-01; the documented replacement is GPT-5.6-Cyber. Several older GPT/o-series snapshots retire on 2026-10-23, and GPT-5/o3 snapshots on 2026-12-11. Check the exact ID and date before recommending deployment. Historical prompt adaptation can preserve an explicitly requested target while disclosing its status.
 
 ## Shared principles
 
@@ -72,7 +72,7 @@ The [Codex prompting guide](https://developers.openai.com/cookbook/examples/gpt-
 
 Give the agent the task, repository constraints, relevant checks, and completion/reporting expectations. Let it inspect existing patterns before editing. Preserve local tools and their actual schemas; guide-specific examples such as parallel wrappers, shell tools, or patch functions are not universally available commands. Do not hard-code a guide's sample progress cadence into every coding prompt. Preserve assistant `phase` metadata in API history; instructions alone cannot repair a replay bug.
 
-A Codex harness may run Astra, GPT-5.6, or another model. Use that model's guidance, not automatically the Codex-suffixed model guide.
+A Codex harness may run Astra, GPT-5.6, or another model. Use that model's guidance, not automatically the Codex-suffixed model guide. The new [Agents API](https://developers.openai.com/api/docs/guides/agents-api/overview) supplies a managed Codex harness; it is not a model name. Model, instructions, tools, and environment are configured separately. A prompt does not provision a sandbox or durable session.
 
 ## Non-reasoning models
 
@@ -84,11 +84,32 @@ These still receive ordinary prompt text. Load the relevant linked guide when th
 
 | Target | Prompting distinction and source |
 | --- | --- |
-| `gpt-realtime-2.1`, `gpt-realtime-2.1-mini`, earlier Realtime models | Define spoken response length, turn-taking, uncertain audio/identifiers, tool triggers, confirmation boundaries, and recovery. The [Realtime guide](https://developers.openai.com/api/docs/guides/realtime-models-prompting) still describes Realtime 2; confirm version-specific controls on [2.1](https://developers.openai.com/api/docs/models/gpt-realtime-2.1) or [2.1 mini](https://developers.openai.com/api/docs/models/gpt-realtime-2.1-mini). Do not assume its effort table transfers unchanged. |
+| `gpt-live-1` | Continuous voice conversation with a separately configured backend; use the GPT-Live section below. |
+| `gpt-realtime-2.1`, `gpt-realtime-2.1-mini`, earlier Realtime models | Define spoken response length, turn-taking, uncertain audio/identifiers, tool triggers, confirmation boundaries, and recovery. The relocated [Realtime guide](https://developers.openai.com/api/docs/guides/voice-prompting) still centers Realtime 2/1.5; confirm version-specific controls on [2.1](https://developers.openai.com/api/docs/models/gpt-realtime-2.1) or [2.1 mini](https://developers.openai.com/api/docs/models/gpt-realtime-2.1-mini). Do not assume its effort table transfers unchanged. |
 | `gpt-audio-1.5`, `gpt-transcribe`, `gpt-live-transcribe`, and TTS models | Keep spoken instructions distinct from transcription hints and reference transcripts; check the exact model's accepted inputs in the [catalog](https://developers.openai.com/api/docs/models). Earlier Whisper/4o transcription models have announced retirements; consult the lifecycle source above. |
-| `gpt-image-2`, earlier GPT Image models | Describe subject, composition, style, exact visible text, and edits versus preserved elements. Inputs and output settings are client configuration. For Image 2, omit `input_fidelity`; it processes inputs at high fidelity. See [image generation](https://developers.openai.com/api/docs/guides/image-generation). |
+| `gpt-image-2.5-sunburst`, `gpt-image-2.5-flare`, `gpt-image-2`, earlier GPT Image models | Use the image section below. Preserve the exact target and distinguish image generation from an agent using an image tool. |
 | `sora-2`, `sora-2-pro` | Deprecated; shutdown scheduled for 2026-09-24. For an explicit existing target, describe a coherent scene, subject action, camera, timing, and audio. See [video generation](https://developers.openai.com/api/docs/guides/video-generation). |
 | `o3-deep-research`, `o4-mini-deep-research` | Retired; historical adaptation only. The [old research guide](https://developers.openai.com/api/docs/guides/deep-research) requires a complete brief up front because these API models did not ask clarifying questions. For a new research agent, select a supported model with configured research tools. |
+| `gpt-rosalind-research` | Life-sciences research through trusted access for approved organizations and internal workflows; API access excludes customer-facing products and external commercial applications. Give a specific research question, evidence requirements, and locations of available data. For large datasets, request focused analysis over files/databases instead of pasting raw data into context. Use only provisioned tools and distinguish hypotheses from supported findings. See [Rosalind's research and access guidance](https://help.openai.com/en/articles/20001193-gpt-rosalind-for-life-sciences-research). |
 | `gpt-daybreak-blue-latest`, `gpt-daybreak-red-latest`, `gpt-5.6-cyber` | Restricted/provisioned cybersecurity targets. Blue currently points to Sol; Red to Cyber. Preserve the authorized task scope and check access; do not infer availability from a model name. See [Blue](https://developers.openai.com/api/docs/models/gpt-daybreak-blue-latest), [Red](https://developers.openai.com/api/docs/models/gpt-daybreak-red-latest), and [Cyber](https://developers.openai.com/api/docs/models/gpt-5.6-cyber). |
 
 Open-weight `gpt-oss` deployments require their own model/runtime documentation; do not assume OpenAI API controls. Embeddings and moderation endpoints are not conversational prompt targets. Model discovery includes these categories, but Promptify does not configure or invoke them.
+
+### GPT-Live 1
+
+Read the [Live prompting guide](https://developers.openai.com/api/docs/guides/live-prompting) and [model page](https://developers.openai.com/api/docs/models/gpt-live-1). Keep the voice prompt short: role, tone, pace, and concrete handoff conditions. Detailed procedures and tool-call instructions belong in the backend prompt, adapted to that backend's model. Draft for the requested component; do not silently combine both prompts into one session instruction.
+
+- Retain the guide's labels: `Backchannel policy`, `Interruption policy`, and `Delegation policy`, with `Backend tools`, `Delegate to the backend when`, and `Do not delegate to the backend when` under delegation. List actual backend capabilities, not invented frontend function calls.
+- Define handoffs for requests requiring backend work, careful reasoning, or corrections to an active task; greetings, brief clarifications, and still-current results need not trigger new work. Wait for a confirmed result before stating its outcome.
+- Stop speaking and listen on interruption. Relay changes or cancellations to the backend; stopping speech does not cancel its task. Use moderate listening acknowledgments when appropriate; a blanket ban on speaking over the user can suppress those too.
+- Preserve required wording and business constraints while simplifying inherited turn scripts. Add language, pronunciation, unclear-identifier, and length rules when relevant; voice choice alone does not guarantee an accent or verbatim speech.
+
+**Integration only:** Live uses its own session API. Choose the backend independently, through Responses delegation or client delegation. Permissions, function execution, confirmation checks, cancellation, and durable task state belong to the application. Client delegation events contain metadata, not the task text; the application must assemble context from transcripts and state. See [delegation](https://developers.openai.com/api/docs/guides/live-delegation) and [migration](https://developers.openai.com/api/docs/guides/live-migration). Do not apply Realtime session fields or mainline reasoning controls directly to the voice model.
+
+### GPT Image 2.5 and earlier image models
+
+Read the [image prompting guide](https://developers.openai.com/api/docs/guides/image-prompting). [Sunburst](https://developers.openai.com/api/docs/models/gpt-image-2.5-sunburst) favors demanding quality and precise editing; [Flare](https://developers.openai.com/api/docs/models/gpt-image-2.5-flare) favors speed. Honor an explicit choice. When asked to choose or migrate, compare representative prompts and inputs; a higher quality setting or model label does not guarantee a better result.
+
+Describe the subject, intended use, composition, medium, lighting, and constraints. Quote exact visible text and specify placement and repetitions. Assign each reference image a role. For edits, state exactly what should change and which identities, geometry, layout, colors, and text must remain. Restate critical constraints across edits. Prompt instructions cannot guarantee pixel-identical preservation; workflows that require it need compositing and output inspection.
+
+**Integration only:** In the Image API, select the image model directly. In Responses, use a supported mainline model at the top level and select Sunburst/Flare in the `image_generation` tool's `model` field. Both add `xhigh` and `max` quality, with `auto` the default; these are image settings, not reasoning effort. Transparent output needs `background: "transparent"` and PNG/WebP; inspect the alpha channel. For Image 2 specifically, omit `input_fidelity`; do not transfer that older-model rule to 2.5 without exact-endpoint verification. See [image generation](https://developers.openai.com/api/docs/guides/image-generation). Image 1 retires on 2026-10-23; Image 1.5, Image 1 mini, and `chatgpt-image-latest` on 2026-12-01.

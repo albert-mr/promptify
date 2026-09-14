@@ -21,7 +21,7 @@ Start discovery with these indexes, even when the existing references appear cur
 | Provider | Discovery sources |
 | --- | --- |
 | OpenAI | [Models](https://developers.openai.com/api/docs/models), [latest model](https://developers.openai.com/api/docs/guides/latest-model), [prompt engineering](https://developers.openai.com/api/docs/guides/prompt-engineering), [API changelog](https://developers.openai.com/api/docs/changelog), [deprecations](https://developers.openai.com/api/docs/deprecations) |
-| Anthropic | [Models](https://platform.claude.com/docs/en/models/overview), [prompting overview](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview), [best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices), [migration index](https://platform.claude.com/docs/en/about-claude/models/migration-guide), [release notes](https://platform.claude.com/docs/en/release-notes/api), [deprecations](https://platform.claude.com/docs/en/about-claude/model-deprecations) |
+| Anthropic | [Models](https://platform.claude.com/docs/en/models/overview), [prompting overview](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview), [best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices), [migration index](https://platform.claude.com/docs/en/about-claude/models/migration-guide), [release notes](https://platform.claude.com/docs/en/release-notes/overview), [deprecations](https://platform.claude.com/docs/en/about-claude/model-deprecations) |
 | Installation | [Codex skills](https://learn.chatgpt.com/docs/build-skills), [Claude Code marketplaces](https://code.claude.com/docs/en/plugin-marketplaces) |
 
 For each update:
@@ -35,7 +35,7 @@ For each update:
 
 A monthly freshness routine has historically been configured outside this repository. This repo does not schedule or prove the status of that external automation. If it is running, use the procedure above and report write-access failures rather than bypassing them.
 
-The [2026-09-07 review](docs/upstream-review-2026-09-07.md) records the rationale and source caveats for version 2. Historical changelog and design documents describe their original releases; they are not runtime guidance.
+The [2026-09-14 review](docs/upstream-review-2026-09-14.md) records the latest changes and source caveats; the [2026-09-07 review](docs/upstream-review-2026-09-07.md) records the version 2 workflow changes. Historical changelog and design documents describe their original releases; they are not runtime guidance.
 
 ## Validation
 

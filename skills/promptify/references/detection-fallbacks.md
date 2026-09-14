@@ -1,6 +1,6 @@
 # Resolve the target without inventing identity
 
-Last verified: 2026-09-07.
+Last verified: 2026-09-14.
 
 The **target** consumes the finished prompt. The **runtime** is where Promptify is drafting it. They can use different providers, models, and tools. A repository's packaging does not identify either one.
 
@@ -26,7 +26,7 @@ For an unverified version, keep the requested name and say its version-specific 
 
 ## What the harness docs actually establish
 
-Claude Code documents a model picker, launch flags, `ANTHROPIC_MODEL`, settings, and model aliases. Its hooks can expose model information, including at session start and model switches. These surfaces can supply evidence **when passed into the current session**; Promptify does not install hooks. Alias mappings can vary by provider and account. See [model configuration](https://code.claude.com/docs/en/model-config) and [hooks](https://code.claude.com/docs/en/hooks).
+Claude Code documents a model picker, launch flags, `ANTHROPIC_MODEL`, settings, and model aliases. Its hooks can expose model information **when passed into the current session**; Promptify does not install hooks. `SessionStart.model` is optional. `PreModelSwitch` describes a requested change that may be blocked; `PostModelSwitch` records a completed session-model change. Neither guarantees the model used for every later request or fallback. Alias mappings can vary by provider, account, and harness version, so preserve an unresolved alias instead of expanding it from memory. See [model configuration](https://code.claude.com/docs/en/model-config) and [hooks](https://code.claude.com/docs/en/hooks).
 
 Codex documents a `model` configuration setting and separate overrides. That establishes a configured preference, not a universal API for skills to discover the effective model on every request. Use supplied session metadata when available; otherwise retain uncertainty. See [configuration reference](https://learn.chatgpt.com/docs/config-file/config-reference).
 

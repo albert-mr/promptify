@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.1.0] - 2026-09-14
+
+### Added
+- GPT-Live 1 guidance for conversation/backend separation, handoff policies, interruptions, and confirmed outcomes.
+- GPT Image 2.5 Sunburst/Flare prompting guidance, reference-image roles, edit preservation, transparency, and correct Responses tool-model selection.
+- GPT-Rosalind routing for approved internal life-sciences research and focused analysis of large datasets.
+- Regression scenarios for the new targets, Claude effort changes, both online and offline Anthropic freshness, and blocked model switches.
+
+### Changed
+- Rechecked both providers' catalogs, prompting guides, migrations, and lifecycle notices. GPT-6 Astra and the Claude Fable/Mythos 5.1, Opus 5, Sonnet 5, and Haiku 4.5 lineup remain current; their existing drafting guidance is retained.
+- Added GPT-5.4-Cyber's October 1 shutdown, image-model retirement dates, and the managed Agents API's distinction from a model target.
+- Clarified Claude per-message effort support, tokenizer versus token-usage changes, optional prefix binding on older accounts, and pending versus completed Claude Code model switches.
+- Replaced the broken Realtime prompting URL and redirected Anthropic release-note URL. Normal-prompt-only behavior remains unchanged.
+
 ## [2.0.0] - 2026-09-07
 
 ### Removed
