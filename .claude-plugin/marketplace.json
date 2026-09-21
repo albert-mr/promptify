@@ -1,12 +1,12 @@
 {
   "name": "promptify",
   "owner": { "name": "Albert" },
-  "description": "Turns rough ideas into normal prompts tailored to the intended OpenAI or Anthropic model.",
+  "description": "Turns rough ideas into OpenAI or Anthropic prompts, or native TypeSafe/Jev request templates.",
   "plugins": [
     {
       "name": "promptify",
       "source": "./",
-      "description": "Turns rough ideas into normal prompts tailored to the intended OpenAI or Anthropic model."
+      "description": "Turns rough ideas into OpenAI or Anthropic prompts, or native TypeSafe/Jev request templates."
     }
   ]
 }

@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [3.0.0] - 2026-09-21
+
+### Added
+- Explicit TypeSafe/Jev authoring support: native JSON request templates with Choice, Noul, and Score questions, a dated provider reference, and behavioral regression scenarios.
+- JSON syntax checks for bundled examples in the existing dependency-free validator.
+
+### Changed
+- Expanded the output contract: OpenAI/Anthropic destinations still receive normal prompts; explicit TypeSafe/Jev destinations receive request templates. Prompts about building with TypeSafe retain their named generative destination.
+- Updated target resolution, packaging, and maintenance for the third provider, including offline/unknown-version disclosures and incompatible-request handling. Promptify drafts only; it does not call inference APIs, install SDKs, or require API keys.
+
 ## [2.1.1] - 2026-09-14
 
 ### Changed

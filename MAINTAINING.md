@@ -1,6 +1,6 @@
 # Maintaining Promptify
 
-Promptify drafts normal prompts for OpenAI and Anthropic models. Its product is the instruction text and its references; source accuracy and drafting behavior both need review.
+Promptify drafts normal prompts for OpenAI/Anthropic and native JSON request templates for explicitly requested TypeSafe/Jev destinations. Its product is the authored artifact and its references; source accuracy and drafting behavior both need review. It does not execute inference requests.
 
 ## Versioning
 
@@ -14,7 +14,7 @@ Keep plugin and marketplace names/descriptions consistent. The marketplace deleg
 
 ## Source review
 
-The source inventories are the official links in the [OpenAI reference](skills/promptify/references/openai-families.md), [Anthropic reference](skills/promptify/references/claude-families.md), and [target-resolution reference](skills/promptify/references/detection-fallbacks.md). Fetch their current contents, not search snippets. Append `.md` where the provider supports it; follow redirects and links rather than guessing new model URLs.
+The source inventories are the official links in the [OpenAI reference](skills/promptify/references/openai-families.md), [Anthropic reference](skills/promptify/references/claude-families.md), [TypeSafe reference](skills/promptify/references/typesafe.md), and [target-resolution reference](skills/promptify/references/detection-fallbacks.md). Fetch their current contents, not search snippets. Append `.md` where the provider supports it; fall back to normal pages when Markdown fails, and follow published links rather than guessing URLs.
 
 Start discovery with these indexes, even when the existing references appear current:
 
@@ -22,11 +22,12 @@ Start discovery with these indexes, even when the existing references appear cur
 | --- | --- |
 | OpenAI | [Models](https://developers.openai.com/api/docs/models), [latest model](https://developers.openai.com/api/docs/guides/latest-model), [prompt engineering](https://developers.openai.com/api/docs/guides/prompt-engineering), [API changelog](https://developers.openai.com/api/docs/changelog), [deprecations](https://developers.openai.com/api/docs/deprecations) |
 | Anthropic | [Models](https://platform.claude.com/docs/en/models/overview), [prompting overview](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview), [best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices), [migration index](https://platform.claude.com/docs/en/about-claude/models/migration-guide), [release notes](https://platform.claude.com/docs/en/release-notes/overview), [deprecations](https://platform.claude.com/docs/en/about-claude/model-deprecations) |
+| TypeSafe | [Index](https://docs.typesafe.ai/llms.txt), [models](https://docs.typesafe.ai/models), [API](https://docs.typesafe.ai/api), [primitives](https://docs.typesafe.ai/primitives), [confidence](https://docs.typesafe.ai/confidence), [known limitations](https://docs.typesafe.ai/model-jaggedness/jev-1.13) |
 | Installation | [Codex skills](https://learn.chatgpt.com/docs/build-skills), [Claude Code marketplaces](https://code.claude.com/docs/en/plugin-marketplaces) |
 
 For each update:
 
-1. Discover new broadly available text models and dedicated guides; check lifecycle before calling a catalog entry available. Keep the maintained scope focused on the models listed in README. Do not restore older, specialized, or restricted model sections during routine freshness updates. Distinguish product aliases, exact IDs, API access, and partner-platform differences.
+1. Discover new in-scope text models and Jev versions and their dedicated guides; check lifecycle before calling a catalog entry available. Keep the maintained scope focused on the models listed in README. Do not restore older, specialized, or restricted model sections during routine freshness updates. Distinguish product aliases, exact IDs, API access, and partner-platform differences.
 2. Read the exact model's prompting guide and relevant migration/capability pages. Treat old cookbook recommendations as version-specific. Do not copy every model's workaround into shared guidance.
 3. Preserve user requirements over general optimization advice. Remove unsupported universals, redundant process, and operational details that do not affect prompt drafting. Link to current pricing/tool-support docs rather than maintaining unrelated tables.
 4. Record the review date and sources in affected references. If a source is inaccessible or contradictory, record the gap; a successful HTTP status alone does not verify a claim. Do not mark an unread page verified.
@@ -35,7 +36,7 @@ For each update:
 
 A monthly freshness routine has historically been configured outside this repository. This repo does not schedule or prove the status of that external automation. If it is running, use the procedure above and report write-access failures rather than bypassing them.
 
-The [2026-09-14 review](docs/upstream-review-2026-09-14.md) records the latest changes and source caveats; the [2026-09-07 review](docs/upstream-review-2026-09-07.md) records the version 2 workflow changes. Historical changelog and design documents describe their original releases; they are not runtime guidance.
+The [2026-09-14 review](docs/upstream-review-2026-09-14.md) records the latest OpenAI/Anthropic source review; the [TypeSafe reference](skills/promptify/references/typesafe.md) records its 2026-09-21 sources. The [2026-09-07 review](docs/upstream-review-2026-09-07.md) records the version 2 workflow changes. Historical changelog and design documents describe their original releases; they are not runtime guidance.
 
 ## Validation
 
@@ -43,7 +44,7 @@ The [2026-09-14 review](docs/upstream-review-2026-09-14.md) records the latest c
 python3 scripts/validate.py
 ```
 
-CI runs this same command. It checks manifest consistency, version/changelog pairing, skill frontmatter, reference reachability, relative documentation links, the discovery symlink, and removal of the old mode from shipped skill instructions. It needs no network, model API, or third-party Python package.
+CI runs this same command. It checks manifest consistency, version/changelog pairing, skill frontmatter, reference reachability, JSON example syntax, relative documentation links, the discovery symlink, and removal of the old mode from shipped skill instructions. JSON parsing checks syntax, not provider compatibility or semantic correctness. It needs no network, model API, or third-party Python package.
 
 Run the [behavior scenarios](tests/scenarios.md) in fresh evaluation contexts after workflow changes; for a reference-only correction, select the affected model cases plus cross-provider and unknown-target cases. Review actual outputs, not just wording matches. Save the baseline, revised outputs, and pass/fail notes in the PR or `.context/` for local review. Never execute the task inside a regression prompt. API compatibility claims require source review or real integration tests; a drafting simulation does not validate a provider endpoint.
 
