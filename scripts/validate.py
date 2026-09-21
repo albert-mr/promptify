@@ -39,13 +39,21 @@ if frontmatter:
     check(description is not None and len(description[1]) <= 1024, "Invalid skill description")
 
 refs = set((SKILL / "references").glob("*.md"))
-check({p.name for p in refs} == {"claude-families.md", "openai-families.md", "detection-fallbacks.md"}, "Unexpected or missing skill reference")
+check({p.name for p in refs} == {"claude-families.md", "openai-families.md", "detection-fallbacks.md", "typesafe.md"}, "Unexpected or missing skill reference")
 for path in [SKILL / "SKILL.md", *refs]:
     check(not re.search(r"/goal\b", path.read_text()), f"Removed mode remains in {path.relative_to(ROOT)}")
 for path in (ROOT / ".claude-plugin").glob("*.json"):
     check(not re.search(r"/goal\b", path.read_text()), f"Removed mode remains in {path.relative_to(ROOT)}")
 for path in refs:
     check(f"references/{path.name}" in entrypoint, f"Unreachable reference: {path.name}")
+
+# Syntax only: behavior scenarios and official docs cover the request contract.
+for path in [SKILL / "SKILL.md", *sorted(refs), ROOT / "README.md"]:
+    for example in re.findall(r"```json\n(.*?)\n```", path.read_text(), re.S):
+        try:
+            json.loads(example)
+        except json.JSONDecodeError as error:
+            check(False, f"Invalid JSON example in {path.relative_to(ROOT)}: {error}")
 
 discovery = ROOT / ".agents/skills/promptify"
 check(discovery.is_symlink() and discovery.resolve() == SKILL, "Broken Codex discovery symlink")

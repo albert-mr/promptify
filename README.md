@@ -2,11 +2,11 @@
 
 ![Is this Astra 6?](assets/is-this-astra-6.svg)
 
-Turn a rough idea or an existing prompt into one clear, copyable prompt for **OpenAI or Anthropic** models. Works as a skill in Claude Code and Codex.
+Turn a rough idea or existing instructions into a clear, copyable **OpenAI or Anthropic prompt**, or a native **TypeSafe/Jev request template**. Works as a skill in Claude Code and Codex.
 
-Promptify preserves your intent, chooses guidance for the model you name, and makes missing inputs explicit. If you do not name a model, it uses authoritative session information when available and otherwise drafts with general guidance. It never executes the task inside the prompt.
+Promptify preserves your intent, chooses guidance for the destination you name, and makes missing inputs explicit. If you do not name a destination, it drafts a normal prompt using authoritative session information when available and general guidance otherwise. It never executes the drafted task or calls an inference API.
 
-**Version 2 produces normal prompts only.** The mode picker and `/goal` completion-condition output have been removed. Autonomous tasks still get ordinary instructions with success criteria and stopping conditions.
+**Version 3 adds native Jev authoring.** OpenAI/Anthropic destinations still receive normal prompts. Explicit TypeSafe/Jev destinations receive JSON request templates. There is no mode picker; autonomous tasks still get ordinary instructions with success criteria and stopping conditions, without `/goal` command output.
 
 ## Example
 
@@ -24,16 +24,27 @@ Finish with any limits on coverage or checks you could not perform. If there are
 
 Say "only the prompt" to omit the target line. Name a destination such as "for Claude Fable 5.1" even when drafting inside Codex; the destination takes precedence over the running model.
 
+## TypeSafe / Jev
+
+> For Jev, turn this into a reusable request: detect whether a customer ticket asks for a refund and whether it asks to cancel a subscription. Both can apply.
+
+Promptify produces a JSON template with `model`, `state`, and `questions`, using two independent Noul questions. It also supports Choice categories and descriptive Score rubrics. See the [TypeSafe reference and copyable example](skills/promptify/references/typesafe.md).
+
+"For Claude, write a prompt to build a TypeSafe router" still produces a Claude prompt. Jev cannot generate customer replies or free-text explanations; Promptify identifies incompatible requests instead of inventing support. Say "only the JSON" to omit the target line, or explicitly request just the `questions` object.
+
+This feature needs no TypeSafe key, SDK, or plugin. It drafts requests without evaluating them. Application thresholds and execution policy belong in separately requested integration notes; templates do not prove classification accuracy or calibrated routing.
+
 ## Model coverage
 
-References checked **2026-09-14** against official documentation:
+References checked against official documentation:
 
-- **OpenAI:** GPT-6 Astra; GPT-5.6 Sol, Terra, and Luna.
-- **Anthropic:** Claude Fable 5.1, Opus 5, and Sonnet 5.
+- **OpenAI (2026-09-14):** GPT-6 Astra; GPT-5.6 Sol, Terra, and Luna.
+- **Anthropic (2026-09-14):** Claude Fable 5.1, Opus 5, and Sonnet 5.
+- **TypeSafe (2026-09-21):** Jev `jev-1.13.0`; explicitly requested aliases are preserved without assuming their current mapping.
 
-Dedicated guidance covers these seven text models. Other OpenAI or Anthropic targets use disclosed general guidance. Requests for "latest" require a live official-doc check when browsing is available. API settings and availability are verified separately when integration advice is requested.
+Other OpenAI or Anthropic targets use disclosed general guidance. Unknown Jev versions retain their requested ID with unverified-compatibility disclosure. Requests for "latest" require a live official-doc check when browsing is available; offline Jev drafting discloses its dated guidance. API settings and availability are verified separately when integration advice is requested.
 
-See the [OpenAI reference](skills/promptify/references/openai-families.md), [Anthropic reference](skills/promptify/references/claude-families.md), and [latest upstream review](docs/upstream-review-2026-09-14.md) for sources and limitations. This is a prompt-writing skill, not a model selector or API client.
+See the [OpenAI reference](skills/promptify/references/openai-families.md), [Anthropic reference](skills/promptify/references/claude-families.md), [TypeSafe reference](skills/promptify/references/typesafe.md), and [OpenAI/Anthropic upstream review](docs/upstream-review-2026-09-14.md) for sources and limitations. Promptify authors artifacts; it does not switch your running model or provide an API client.
 
 ## Install in Claude Code
 

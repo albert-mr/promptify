@@ -2,7 +2,9 @@
 
 Last verified: 2026-09-14.
 
-The **target** consumes the finished prompt. The **runtime** is where Promptify is drafting it. They can use different providers, models, and tools. A repository's packaging does not identify either one.
+The **target** consumes the finished artifact. The **runtime** is where Promptify drafts it. The **subject** is what the artifact discusses. They can differ: "For Claude, implement an app using TypeSafe" targets Claude and produces a normal prompt; "For Jev, classify these tickets" targets TypeSafe and produces a native request template. A repository's packaging does not identify the target or runtime.
+
+TypeSafe routing added 2026-09-21: only an explicit TypeSafe/Jev destination selects native request output. Follow [TypeSafe requests](typesafe.md) for model selection and freshness. Merely mentioning Jev or asking a GPT/Claude classifier for JSON does not change the artifact to a Jev request.
 
 ## Resolution order
 
@@ -21,8 +23,9 @@ Use a short, truthful line outside the copyable block:
 - `Target: GPT-6 Astra (session-provided).`
 - `Target: OpenAI family (exact model unknown).`
 - `Target: unspecified; using general prompting guidance.`
+- `Target: TypeSafe Jev (jev-1.13.0; bundled selection, 2026-09-21); request template.`
 
-For an unverified version, keep the requested name and say its version-specific guidance is unverified. For "latest", identify the model selected from current official docs as a selection, not a detected runtime. Omit this line when the user requests prompt-only output.
+For an unverified version, keep the requested name and say its version-specific guidance is unverified. For "latest", identify the model selected from current official docs as a selection, not a detected runtime. Omit this line when the user requests prompt-only or JSON-only output.
 
 ## What the harness docs actually establish
 

@@ -1,6 +1,6 @@
 {
   "name": "promptify",
-  "version": "2.1.1",
-  "description": "Turns rough ideas into normal prompts tailored to the intended OpenAI or Anthropic model.",
+  "version": "3.0.0",
+  "description": "Turns rough ideas into OpenAI or Anthropic prompts, or native TypeSafe/Jev request templates.",
   "author": { "name": "Albert" }
 }
