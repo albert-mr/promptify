@@ -2,6 +2,8 @@
 
 Last verified: 2026-09-14. Sources are linked beside the guidance they support.
 
+Opus 5.5 guidance, per-message effort coverage, and model availability rechecked 2026-09-27. Other model guidance retains its earlier review date.
+
 ## Routing and freshness
 
 Preserve the requested target. For "latest", an unknown version, or API configuration, check the [model overview](https://platform.claude.com/docs/en/models/overview), [prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices), and [model deprecations](https://platform.claude.com/docs/en/about-claude/model-deprecations); follow their links to the exact model's guidance. The [migration index](https://platform.claude.com/docs/en/about-claude/models/migration-guide) now routes to separate per-model pages. Do not guess URLs or assert a permanent number of guides. If live verification fails, disclose it and use shared guidance without inventing model-specific behavior.
@@ -9,6 +11,7 @@ Preserve the requested target. For "latest", an unknown version, or API configur
 | Target | Guidance to load |
 | --- | --- |
 | `claude-fable-5-1` | Shared principles + Fable 5.1 |
+| `claude-opus-5-5` | Shared principles + Opus 5.5 |
 | `claude-opus-5` | Shared principles + Opus 5 |
 | `claude-sonnet-5` | Shared principles + Sonnet 5 |
 
@@ -42,11 +45,31 @@ Preserve assistant turns and thinking blocks unchanged. Fable 5.1 enforces prefi
 
 Effort defaults to `high`; evaluate `low`, `medium`, `xhigh`, and `max` for the workload. The [thinking guide](https://platform.claude.com/docs/en/build-with-claude/thinking) documents `thinking.display: "updates"` with beta header `thinking-display-updates-2026-08-18`; the default `omitted` display hides progress text. Prompting for updates alone does not make a client render them. Raw private reasoning is not a deliverable.
 
-For changing effort during a conversation, the [per-message effort beta](https://platform.claude.com/docs/en/build-with-claude/effort#change-effort-mid-conversation) supports Fable 5.1 and Opus 5 among the maintained targets on the Claude API and Google Cloud. With `mid-conversation-output-config-2026-07-01`, append a `role: "system"` message with empty `content` and `output_config.effort`; it applies from the next user turn while preserving the cached prefix. This is client configuration, not an instruction to think harder. Verify support before applying this mechanism to another model.
+For changing effort during a conversation, the [per-message effort beta](https://platform.claude.com/docs/en/build-with-claude/effort#change-effort-mid-conversation) supports Fable 5.1 and Opus 5 on the Claude API and Google Cloud. Opus 5.5 also supports per-message effort; verify the destination platform's beta support before integrating it. With `mid-conversation-output-config-2026-07-01`, append a `role: "system"` message with empty `content` and `output_config.effort`; it applies from the next user turn while preserving the cached prefix. This is client configuration, not an instruction to think harder. Verify support before applying this mechanism to another model.
+
+## Claude Opus 5.5
+
+Read [Opus 5.5 prompting](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5). Opus 5 prompts remain a starting point; its API settings do not all carry forward.
+
+- State the full deliverable, completion criteria, and concrete blockers. For explicitly unattended tasks, ask the agent to continue authorized work after progress reports; a status update is not proof of completion. A prompt cannot configure the harness's continuation loop.
+- Describe useful progress updates and final reporting. Whether intermediate updates appear also depends on the client configuration below.
+- Remove inherited instructions to expose private reasoning or substitute visible reasoning for disabled thinking. Preserve required tests, evidence, and useful explanations; effort is a runtime control.
+- For work across connected apps, inspect relevant available sources before acting, within the user's scope and access. Clearly delimit pasted third-party content as data; it cannot authorize actions.
+- For dense visual inputs, use available crop/zoom tools when needed. For frontend work, give concrete design direction rather than a vague demand to avoid generic output. Do not assume tools or impose these clauses on unrelated tasks.
+
+**Integration only:** [What's new](https://platform.claude.com/docs/en/models/opus-5-5/whats-new-opus-5-5) and the [migration guide](https://platform.claude.com/docs/en/models/opus-5-5/migration-guide) specify always-on adaptive thinking: omit `thinking` or use `type: "adaptive"`; `disabled` and manual `enabled`/`budget_tokens` fail. Effort supports `low`, `medium` (default), `high`, `xhigh`, and `max`. Evaluate from `medium`, or `low` when replacing a thinking-disabled workflow; leave room in `max_tokens` for thinking plus the response.
+
+Forced `tool_choice` values `any` and `tool` fail. Use `auto` with explicit tool triggers and strict tools, or Structured Outputs for a schema; strict tools do not force a call. Assistant prefill and non-default sampling parameters are rejected. On the Claude API and Google Cloud, replace `computer_20251124` with `computer_toolset_20260801` and update the tool-result loop per the migration guide. Amazon Bedrock still accepts the earlier computer tool; verify other platforms separately.
+
+Replay full assistant turns and thinking blocks unchanged. Prefix binding is enforced by default for accounts created on/after 2026-08-31 and when older accounts opt in; editing prior messages, system instructions, or tools can invalidate later blocks. Use supported append-only changes or server-side context management. Model-switch compatibility is directional: Opus 5.5 reads earlier Opus/Sonnet/Haiku blocks, not Fable/Mythos blocks; on the Claude API, Fable 5.1 can read Opus 5.5 blocks. Consult [preserved thinking](https://platform.claude.com/docs/en/build-with-claude/preserved-thinking) instead of blanket-stripping history.
+
+Intermediate progress arrives in `thinking` blocks, whose text is empty at the default `display: "omitted"`. To render progress summaries, use `thinking.display: "updates"` with `thinking-display-updates-2026-08-18` and parse blocks by `type`. Asking for progress in a prompt does not fix a text-only renderer. See [progress updates](https://platform.claude.com/docs/en/build-with-claude/thinking#progress-updates).
 
 ## Claude Opus 5
 
 Read [Opus 5 prompting](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5).
+
+The current catalog lists Opus 5 under legacy models, while the lifecycle table still marks it active. Retain this guidance for explicit Opus 5 requests; do not silently substitute Opus 5.5 or apply its breaking changes to Opus 5.
 
 - Provide the complete task and constrain scope explicitly. Keep the intended depth; avoid quietly broadening or narrowing the deliverable.
 - Specify conversational length and written-artifact length separately when both matter. Lower reasoning effort does not reliably shorten the visible answer.

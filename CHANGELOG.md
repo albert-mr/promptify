@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [3.1.0] - 2026-09-27
+
+### Added
+- GPT-6 Sol and Luna guidance, including their support for reasoning effort `none`, conditional sampling, and Chat Completions function calling.
+- Claude Opus 5.5 guidance for task completion, progress updates, adaptive thinking, tool selection, history replay, and computer-use migration.
+- Dated official-source review and regression scenarios for the new targets and their API differences.
+
+### Changed
+- Updated GPT-6 family routing and model coverage while retaining explicit GPT-5.6 and Opus 5 destinations. API configuration remains separate from prompt text.
+
 ## [3.0.0] - 2026-09-21
 
 ### Added

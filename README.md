@@ -38,13 +38,13 @@ This feature needs no TypeSafe key, SDK, or plugin. It drafts requests without e
 
 References checked against official documentation:
 
-- **OpenAI (2026-09-14):** GPT-6 Astra; GPT-5.6 Sol, Terra, and Luna.
-- **Anthropic (2026-09-14):** Claude Fable 5.1, Opus 5, and Sonnet 5.
+- **OpenAI:** GPT-6 Astra, Sol, and Luna (2026-09-27); GPT-5.6 Sol, Terra, and Luna (2026-09-14 guidance retained).
+- **Anthropic:** Claude Opus 5.5 (2026-09-27); Claude Fable 5.1, Opus 5, and Sonnet 5 (2026-09-14 guidance retained).
 - **TypeSafe (2026-09-21):** Jev `jev-1.13.0`; explicitly requested aliases are preserved without assuming their current mapping.
 
 Other OpenAI or Anthropic targets use disclosed general guidance. Unknown Jev versions retain their requested ID with unverified-compatibility disclosure. Requests for "latest" require a live official-doc check when browsing is available; offline Jev drafting discloses its dated guidance. API settings and availability are verified separately when integration advice is requested.
 
-See the [OpenAI reference](skills/promptify/references/openai-families.md), [Anthropic reference](skills/promptify/references/claude-families.md), [TypeSafe reference](skills/promptify/references/typesafe.md), and [OpenAI/Anthropic upstream review](docs/upstream-review-2026-09-14.md) for sources and limitations. Promptify authors artifacts; it does not switch your running model or provide an API client.
+See the [OpenAI reference](skills/promptify/references/openai-families.md), [Anthropic reference](skills/promptify/references/claude-families.md), [TypeSafe reference](skills/promptify/references/typesafe.md), and [latest model review](docs/upstream-review-2026-09-27.md) for sources and limitations. Promptify authors artifacts; it does not switch your running model or provide an API client.
 
 ## Install in Claude Code
 
