@@ -2,13 +2,16 @@
 
 Last verified: 2026-09-14. Sources are linked beside the guidance they support.
 
+GPT-6 family guidance and model availability rechecked 2026-09-27; added Sol and Luna. GPT-5.6 guidance retains its earlier review date.
+
 ## Routing and freshness
 
 Use the user's exact target. This is a dated reference, not live model discovery. For "latest", an unknown version, or API configuration, check the official [model catalog](https://developers.openai.com/api/docs/models), [current model guide](https://developers.openai.com/api/docs/guides/latest-model), and [deprecations](https://developers.openai.com/api/docs/deprecations), then open the relevant model's guide. Follow published links; do not construct a guide URL from a guessed name. If access fails, disclose that limitation and use verified family-level guidance without claiming freshness or substituting a version.
 
 | Target | Guidance to load |
 | --- | --- |
-| `gpt-6-astra` | Shared principles + GPT-6 Astra |
+| `gpt-6-astra` | Shared principles + GPT-6 family; Astra integration rules |
+| `gpt-6-sol`, `gpt-6-luna` | Shared principles + GPT-6 family; Sol/Luna integration rules |
 | `gpt-5.6-sol`, `gpt-5.6-terra`, `gpt-5.6-luna`; `gpt-5.6` aliases Sol | Shared principles + GPT-5.6 |
 
 These are the maintained text models. Other OpenAI targets receive general guidance with the coverage limit disclosed; do not restore removed model sections from historical documents. For a new model discovered through a live check, distinguish freshly verified guidance from bundled coverage.
@@ -23,9 +26,9 @@ For API integrations, current models accept application instructions through `de
 
 Keep runtime configuration separate from copyable prompt text. Reasoning effort, pro mode, Structured Outputs, tool availability, and image detail are not enabled by prose. A JSON-only instruction describes the desired result; a supported runtime schema enforces its structure. Preserve user-requested fields, evidence, and checks even when simplifying a prompt.
 
-## GPT-6 Astra
+## GPT-6 Astra, Sol, Luna
 
-Use [Astra's prompting and migration guide](https://developers.openai.com/api/docs/guides/latest-model/gpt-6-astra) and [model page](https://developers.openai.com/api/docs/models/gpt-6-astra).
+Use the [GPT-6 prompting and migration guide](https://developers.openai.com/api/docs/guides/latest-model) and exact model pages for [Astra](https://developers.openai.com/api/docs/models/gpt-6-astra), [Sol](https://developers.openai.com/api/docs/models/gpt-6-sol), and [Luna](https://developers.openai.com/api/docs/models/gpt-6-luna). The guide offers Astra-derived prompting patterns as a starting point across GPT-6; evaluate them for the chosen model and task rather than asserting identical behavior. GPT-6 Sol and Luna are distinct from their GPT-5.6 namesakes; preserve the requested version.
 
 - For action requests, describe the full deliverable and which routine decisions the agent should make itself. Ask only about ambiguity or authorization that changes the work; carry on with independent authorized work while awaiting an answer.
 - Audit loaded skills and repository instructions for contradictory process requirements. Do not add approval gates for work the user already authorized. Preserve the actual instruction hierarchy.
@@ -33,11 +36,15 @@ Use [Astra's prompting and migration guide](https://developers.openai.com/api/do
 - When delegation is available and warranted, give concrete criteria for independent work. Do not assume the harness supports subagents or mandate delegation for every task.
 - Scope validation to the change and required checks. Once those pass, repeat or broaden testing only for new changes, failures, or unresolved concerns.
 
-**Integration only:** Astra supports `low`, `medium`, `high`, `xhigh`, and `max` reasoning effort, not `none` or `minimal`. When migrating from those unsupported values, begin at `low`. Remove `temperature`, `top_p`, and log-probability options as specified in the migration guide. Tool calling requires Responses even though text-only Chat Completions is supported. Async tool calling and mid-turn steering require application support; a prompt cannot create either. Keep corrections and side questions connected to the original task unless the user changes it.
+**Astra integration only:** Astra supports `low`, `medium`, `high`, `xhigh`, and `max` reasoning effort, not `none` or `minimal`. When migrating from those unsupported values, begin at `low`. Remove `temperature`, `top_p`, and log-probability options as specified in the migration guide. Tool calling requires Responses even though text-only Chat Completions is supported.
+
+**Sol/Luna integration only:** Both support `none`, `low`, `medium` (default), `high`, `xhigh`, and `max`. Preserve a supported effort setting; do not replace `none` merely because Astra rejects it. Chat Completions supports function calling only with `reasoning_effort: "none"`; use Responses for reasoning with tools or built-in tools. Sampling parameters such as `temperature` and `top_p` can remain at `none`. At any other effort, remove them and the log-probability options specified in the migration guide. `minimal` is unsupported; start at `low` when migrating from it.
+
+Async tool calling and mid-turn steering require application support; a prompt cannot create either. Keep corrections and side questions connected to the original task unless the user changes it. The [September 25 fix](https://developers.openai.com/api/docs/changelog) corrects degraded image encoding in Sol/Luna; when advising an existing image-input integration, recommend rerunning affected evaluations rather than adding prompt workarounds.
 
 ## GPT-5.6 Sol, Terra, Luna
 
-Read the dedicated [GPT-5.6 prompting guide](https://developers.openai.com/api/docs/guides/prompt-guidance-gpt-5p6) and [version-specific model guide](https://developers.openai.com/api/docs/guides/latest-model/gpt-5.6). The unqualified latest-model URL now describes Astra.
+Read the dedicated [GPT-5.6 prompting guide](https://developers.openai.com/api/docs/guides/prompt-guidance-gpt-5p6) and [version-specific model guide](https://developers.openai.com/api/docs/guides/latest-model/gpt-5.6). The unqualified latest-model URL now describes the GPT-6 family.
 
 - State each requirement once. Remove repeated process, irrelevant tools, and examples that add no useful behavior; retain domain constraints, evidence, completion criteria, and failure handling.
 - Separate personality from collaboration: tone controls wording; collaboration rules govern asking, acting, checking, and stopping. Preserve requested facts, genre, language, and length in rewrites.

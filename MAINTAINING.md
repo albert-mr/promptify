@@ -36,7 +36,7 @@ For each update:
 
 A monthly freshness routine has historically been configured outside this repository. This repo does not schedule or prove the status of that external automation. If it is running, use the procedure above and report write-access failures rather than bypassing them.
 
-The [2026-09-14 review](docs/upstream-review-2026-09-14.md) records the latest OpenAI/Anthropic source review; the [TypeSafe reference](skills/promptify/references/typesafe.md) records its 2026-09-21 sources. The [2026-09-07 review](docs/upstream-review-2026-09-07.md) records the version 2 workflow changes. Historical changelog and design documents describe their original releases; they are not runtime guidance.
+The [2026-09-27 review](docs/upstream-review-2026-09-27.md) records the latest model discovery and GPT-6/Opus 5.5 additions. The [2026-09-14 review](docs/upstream-review-2026-09-14.md) records the earlier OpenAI/Anthropic audit; the [TypeSafe reference](skills/promptify/references/typesafe.md) records its 2026-09-21 guidance. The [2026-09-07 review](docs/upstream-review-2026-09-07.md) records the version 2 workflow changes. Historical changelog and design documents describe their original releases; they are not runtime guidance.
 
 ## Validation
 
