@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [3.2.0] - 2026-09-30
+
+### Added
+- GPT-6.1 Sol guidance. It shares Astra's API rules (no `none`/`minimal` effort, sampling removed, Responses for tool calling) and stays distinct from GPT-6 Sol and GPT-5.6 Sol.
+- Claude Sonnet 5.5 guidance for scope, check-ins, verification, search, reasoning-heavy JSON, and progress updates, with separate notes for recalibrated effort, `between_tools`, rejected forced tools, model- and account-bound thinking replay, and computer-use migration.
+- Dated official-source review and regression scenarios for both models.
+
+### Changed
+- GPT-6 routing now separates Astra/6.1 Sol from GPT-6 Sol/Luna integration rules. Per-message effort coverage includes Sonnet 5.5. Sonnet 5 is noted as catalog-legacy but active; explicit GPT-6 Sol and Sonnet 5 destinations are retained.
+
 ## [3.1.0] - 2026-09-27
 
 ### Added
