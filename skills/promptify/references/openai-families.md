@@ -2,7 +2,7 @@
 
 Last verified: 2026-09-14. Sources are linked beside the guidance they support.
 
-GPT-6 family guidance (Astra, 6.1 Sol, 6 Sol, Luna) and model availability rechecked 2026-09-30; added GPT-6.1 Sol (6 Sol and Luna added 2026-09-27). GPT-5.6 guidance retains its earlier review date.
+GPT-6 family guidance (Astra, 6.1 Sol, 6 Sol, Luna) and model availability rechecked 2026-09-30; added GPT-6.1 Sol (6 Sol and Luna added 2026-09-27). Model availability rechecked and Decisions API routing added 2026-10-12; GPT-6 prompting guidance unchanged. GPT-5.6 guidance retains its earlier review date.
 
 ## Routing and freshness
 
@@ -15,6 +15,8 @@ Use the user's exact target. This is a dated reference, not live model discovery
 | `gpt-5.6-sol`, `gpt-5.6-terra`, `gpt-5.6-luna`; `gpt-5.6` aliases Sol | Shared principles + GPT-5.6 |
 
 These are the maintained text models. Other OpenAI targets receive general guidance with the coverage limit disclosed; do not restore removed model sections from historical documents. For a new model discovered through a live check, distinguish freshly verified guidance from bundled coverage.
+
+The [Decisions API](https://developers.openai.com/api/docs/guides/decisions) (`POST /v1/decisions`, beta since 2026-10-06, `gpt-6-luna` only) takes typed `predicate`, `choice`, and `score` questions rather than a prompt. Promptify does not author Decisions requests: a Luna prompt targets Responses or Chat Completions. If the user explicitly names the Decisions API as the destination, say it is unsupported and ask whether a normal Luna prompt or a TypeSafe/Jev template fits; do not reshape a Jev template for it.
 
 A Codex harness does not establish the target model. Use supplied session evidence or the user's explicit destination.
 
