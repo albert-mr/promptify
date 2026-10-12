@@ -14,6 +14,17 @@ Version 3.3 adds Claude Haiku 5.5 and corrects Anthropic thinking-replay and per
 | OpenAI's [October changelog](https://developers.openai.com/api/docs/changelog) adds the beta [Decisions API](https://developers.openai.com/api/docs/guides/decisions) (`gpt-6-luna` only), Ultrafast mode for GPT-6.1 Sol, a `chat-latest` refresh, and three usage tiers. GPT-6 model-page and guide diffs cover only rate tiers and Fast/Ultrafast data residency. | No new text-model target or prompting change. Decisions takes typed questions rather than a prompt, so an explicit Decisions destination is reported as unsupported instead of drafted as a Luna prompt. |
 | The TypeSafe [index](https://docs.typesafe.ai/llms.txt) and [model page](https://docs.typesafe.ai/models) still list only `jev-1.13.0`. | No change. |
 
+## Pruned coverage
+
+Agents typically read the whole provider reference for any Anthropic or OpenAI target, so superseded sections cost context on every draft. This review removed them:
+
+| Removed | Evidence | Fallback |
+| --- | --- | --- |
+| Claude Opus 5 and Sonnet 5 | The [catalog](https://platform.claude.com/docs/en/models/overview) lists both as legacy; Opus 5.5 and Sonnet 5.5 succeed them. | General guidance with disclosure. Newer models' API rules are not transferred, so integration notes need live verification. |
+| GPT-5.6 Sol, Terra, Luna | The [catalog](https://developers.openai.com/api/docs/models) features only GPT-6 models, and OpenAI recommends the GPT-6 family for production. | Same. |
+
+GPT-6 Sol is retained. It belongs to the current generation, was released 2026-09-22, and shares its integration paragraph with Luna, so removing it would save little context. Its section also keeps the documented `none` and sampling differences from 6.1 Sol explicit. Together with the Haiku 5.5 addition, the Anthropic reference shrank from 3,086 to about 2,680 words and the OpenAI reference from 1,176 to about 980. N4 and N8 now test legacy targets: each keeps its name with a coverage disclosure and no silent upgrade. A4, A6, A7, B1, B2, and C7 were retargeted to maintained models.
+
 ## Scope and source limitations
 
 - The catalog lists Fable 5 as legacy. It remains outside maintained coverage. Haiku 4.5 also remains outside coverage, so explicit Haiku 4.5 requests keep the general-guidance disclosure.

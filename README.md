@@ -38,8 +38,8 @@ This feature needs no TypeSafe key, SDK, or plugin. It drafts requests without e
 
 References checked against official documentation:
 
-- **OpenAI:** GPT-6 Astra, GPT-6.1 Sol, GPT-6 Sol, and GPT-6 Luna (2026-09-30); GPT-5.6 Sol, Terra, and Luna (2026-09-14 guidance retained).
-- **Anthropic:** Claude Haiku 5.5 (2026-10-12); Claude Sonnet 5.5 (2026-09-30, replay notes rechecked 2026-10-12); Claude Opus 5.5 (2026-09-27); Claude Fable 5.1, Opus 5, and Sonnet 5 (2026-09-14 guidance retained).
+- **OpenAI:** GPT-6 Astra, GPT-6.1 Sol, GPT-6 Sol, and GPT-6 Luna (2026-09-30).
+- **Anthropic:** Claude Haiku 5.5 (2026-10-12); Claude Sonnet 5.5 (2026-09-30, replay notes rechecked 2026-10-12); Claude Opus 5.5 (2026-09-27); Claude Fable 5.1 (2026-09-14 guidance retained).
 - **TypeSafe (2026-09-21):** Jev `jev-1.13.0`; explicitly requested aliases are preserved without assuming their current mapping.
 
 Other OpenAI or Anthropic targets use disclosed general guidance. Unknown Jev versions retain their requested ID with unverified-compatibility disclosure. Requests for "latest" require a live official-doc check when browsing is available; offline Jev drafting discloses its dated guidance. API settings and availability are verified separately when integration advice is requested.
