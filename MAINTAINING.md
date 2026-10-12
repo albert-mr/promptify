@@ -27,7 +27,7 @@ Start discovery with these indexes, even when the existing references appear cur
 
 For each update:
 
-1. Discover new in-scope text models and Jev versions and their dedicated guides; check lifecycle before calling a catalog entry available. Keep the maintained scope focused on the models listed in README. Do not restore older, specialized, or restricted model sections during routine freshness updates. Distinguish product aliases, exact IDs, API access, and partner-platform differences.
+1. Discover new in-scope text models and Jev versions and their dedicated guides; check lifecycle before calling a catalog entry available. Keep the maintained scope focused on the models listed in README. Do not restore older, specialized, or restricted model sections during routine freshness updates. Remove a model's section once the provider labels it legacy or previous-generation, or a same-tier successor supersedes it in the catalog; agents typically read the whole provider reference, so superseded sections cost context on every draft. Distinguish product aliases, exact IDs, API access, and partner-platform differences.
 2. Read the exact model's prompting guide and relevant migration/capability pages. Treat old cookbook recommendations as version-specific. Do not copy every model's workaround into shared guidance.
 3. Preserve user requirements over general optimization advice. Remove unsupported universals, redundant process, and operational details that do not affect prompt drafting. Link to current pricing/tool-support docs rather than maintaining unrelated tables.
 4. Record the review date and sources in affected references. If a source is inaccessible or contradictory, record the gap; a successful HTTP status alone does not verify a claim. Do not mark an unread page verified.
@@ -36,7 +36,7 @@ For each update:
 
 A monthly freshness routine has historically been configured outside this repository. This repo does not schedule or prove the status of that external automation. If it is running, use the procedure above and report write-access failures rather than bypassing them.
 
-The [2026-09-30 review](docs/upstream-review-2026-09-30.md) records the latest model discovery and GPT-6.1 Sol/Sonnet 5.5 additions. The [2026-09-27 review](docs/upstream-review-2026-09-27.md) records the GPT-6 Sol/Luna and Opus 5.5 additions. The [2026-09-14 review](docs/upstream-review-2026-09-14.md) records the earlier OpenAI/Anthropic audit; the [TypeSafe reference](skills/promptify/references/typesafe.md) records its 2026-09-21 guidance. The [2026-09-07 review](docs/upstream-review-2026-09-07.md) records the version 2 workflow changes. Historical changelog and design documents describe their original releases; they are not runtime guidance.
+The [2026-10-12 review](docs/upstream-review-2026-10-12.md) records the latest model discovery and the Haiku 5.5 addition. The [2026-09-30 review](docs/upstream-review-2026-09-30.md) records the GPT-6.1 Sol/Sonnet 5.5 additions. The [2026-09-27 review](docs/upstream-review-2026-09-27.md) records the GPT-6 Sol/Luna and Opus 5.5 additions. The [2026-09-14 review](docs/upstream-review-2026-09-14.md) records the earlier OpenAI/Anthropic audit; the [TypeSafe reference](skills/promptify/references/typesafe.md) records its 2026-09-21 guidance. The [2026-09-07 review](docs/upstream-review-2026-09-07.md) records the version 2 workflow changes. Historical changelog and design documents describe their original releases; they are not runtime guidance.
 
 ## Validation
 

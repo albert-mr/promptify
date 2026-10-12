@@ -2,7 +2,7 @@
 
 Last verified: 2026-09-14. Sources are linked beside the guidance they support.
 
-Sonnet 5.5 guidance, per-message effort coverage, and model availability rechecked 2026-09-30; Opus 5.5 guidance added 2026-09-27. Other model guidance retains its earlier review date.
+Haiku 5.5 guidance added, legacy Opus 5 and Sonnet 5 sections removed, and Sonnet 5.5/Opus 5.5 thinking-replay, per-message effort coverage, and model availability rechecked 2026-10-12; Sonnet 5.5 guidance added 2026-09-30; Opus 5.5 guidance added 2026-09-27. Other model guidance retains its earlier review date.
 
 ## Routing and freshness
 
@@ -12,11 +12,10 @@ Preserve the requested target. For "latest", an unknown version, or API configur
 | --- | --- |
 | `claude-fable-5-1` | Shared principles + Fable 5.1 |
 | `claude-opus-5-5` | Shared principles + Opus 5.5 |
-| `claude-opus-5` | Shared principles + Opus 5 |
 | `claude-sonnet-5-5` | Shared principles + Sonnet 5.5 |
-| `claude-sonnet-5` | Shared principles + Sonnet 5 |
+| `claude-haiku-5-5` | Shared principles + Haiku 5.5 |
 
-These are the maintained text models. Other Anthropic targets receive general guidance with the coverage limit disclosed; do not restore removed model sections from historical documents. For a new model discovered through a live check, distinguish freshly verified guidance from bundled coverage.
+These are the maintained text models. Other Anthropic targets, including the legacy Opus 5 and Sonnet 5, receive general guidance with the coverage limit disclosed; do not restore removed model sections from historical documents. Never transfer a newer model's API rules to an older target: its supported settings can differ, so integration notes for it need live verification. For a new model discovered through a live check, distinguish freshly verified guidance from bundled coverage.
 
 These dateless API IDs are pinned versions. Claude Code aliases such as `fable` or `opus` are a separate harness mechanism. See [IDs and versioning](https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions).
 
@@ -60,24 +59,9 @@ Read [Opus 5.5 prompting](https://platform.claude.com/docs/en/build-with-claude/
 
 Forced `tool_choice` values `any` and `tool` fail. Use `auto` with explicit tool triggers and strict tools, or Structured Outputs for a schema; strict tools do not force a call. Assistant prefill and non-default sampling parameters are rejected. On the Claude API and Google Cloud, replace `computer_20251124` with `computer_toolset_20260801` and update the tool-result loop per the migration guide. Amazon Bedrock still accepts the earlier computer tool; verify other platforms separately.
 
-Replay full assistant turns and thinking blocks unchanged. Prefix binding is enforced by default for accounts created on/after 2026-08-31 and when older accounts opt in; editing prior messages, system instructions, or tools can invalidate later blocks. Use supported append-only changes or server-side context management. Model-switch compatibility is directional: Opus 5.5 reads earlier Opus/Sonnet/Haiku blocks, not Fable/Mythos blocks; on the Claude API, Fable 5.1 can read Opus 5.5 blocks. Consult [preserved thinking](https://platform.claude.com/docs/en/build-with-claude/preserved-thinking) instead of blanket-stripping history.
+Replay full assistant turns and thinking blocks unchanged. Prefix binding is enforced by default for accounts created on/after 2026-08-31 and when older accounts opt in; editing prior messages, system instructions, or tools can invalidate later blocks. Use supported append-only changes or server-side context management. Model-switch compatibility is directional: Opus 5.5 reads earlier Opus/Sonnet/Haiku blocks and, on the Claude API and Google Cloud, Sonnet 5.5 and Haiku 5.5 blocks; it does not read Fable/Mythos blocks. On the Claude API, Fable 5.1 can read Opus 5.5 blocks. Consult [preserved thinking](https://platform.claude.com/docs/en/build-with-claude/preserved-thinking) instead of blanket-stripping history.
 
 Intermediate progress arrives in `thinking` blocks, whose text is empty at the default `display: "omitted"`. To render progress summaries, use `thinking.display: "updates"` with `thinking-display-updates-2026-08-18` and parse blocks by `type`. Asking for progress in a prompt does not fix a text-only renderer. See [progress updates](https://platform.claude.com/docs/en/build-with-claude/thinking#progress-updates).
-
-## Claude Opus 5
-
-Read [Opus 5 prompting](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5).
-
-The current catalog lists Opus 5 under legacy models, while the lifecycle table still marks it active. Retain this guidance for explicit Opus 5 requests; do not silently substitute Opus 5.5 or apply its breaking changes to Opus 5.
-
-- Provide the complete task and constrain scope explicitly. Keep the intended depth; avoid quietly broadening or narrowing the deliverable.
-- Specify conversational length and written-artifact length separately when both matter. Lower reasoning effort does not reliably shorten the visible answer.
-- Tune progress cadence with a positive description of useful updates. Avoid forcing narration for every tool call.
-- Remove inherited self-check rituals and mandatory verifier agents: Opus 5 already verifies readily. **Keep checks and evidence explicitly required by the user or task.**
-- Delegate only where sizeable independent work justifies it and the harness supports it.
-- For reviews, define the reporting threshold concretely; literal filtering can hide findings the user actually wanted.
-
-**Integration only:** adaptive thinking is on by default. Disabling it is allowed only at effort `high` or below; `xhigh`/`max` plus disabled thinking fails. Prefer lower effort with thinking enabled where quality holds. Thinking-off tool workflows can emit tool calls as plain text or leak internal tags; that is not tool execution. Parse response blocks by `type`, not position, and preserve full assistant turns for replay. See [Opus 5 migration](https://platform.claude.com/docs/en/models/opus-5/migration-guide).
 
 ## Claude Sonnet 5.5
 
@@ -92,30 +76,32 @@ Read [Sonnet 5.5 prompting](https://platform.claude.com/docs/en/build-with-claud
 
 **Integration only:** [What's new](https://platform.claude.com/docs/en/models/sonnet-5-5/whats-new-sonnet-5-5) and the [migration guide](https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide) specify adaptive thinking on by default and effort default `high`. Effort levels are recalibrated: rerun an effort sweep rather than carrying over Sonnet 5 settings. Start agentic coding at `medium` (`high` for harder or longer tasks) and chat or latency-sensitive work at `medium` or `low`. Leave room in `max_tokens` for thinking plus the response.
 
-`disabled` and manual `budget_tokens` fail. The lowest setting is `thinking: {"type": "between_tools"}`, accepted only at `high` effort or below, with no `display`, `budget_tokens`, or `block_binding` field and no per-message effort change. Without tools it answers without thinking, so use adaptive thinking for reasoning tasks. Forced `tool_choice` values `any` and `tool`, assistant prefill, and non-default sampling parameters fail. Use `auto` with explicit tool triggers and strict tools, or Structured Outputs; strict tools do not force a call. With Structured Outputs, treat `stop_reason: "max_tokens"` as a failed response.
+`disabled` and manual `budget_tokens` fail. The lowest setting is `thinking: {"type": "between_tools"}`, accepted only at `high` effort or below, with no `display`, `budget_tokens`, or `block_binding` field and no per-message effort change. Without tools it answers without thinking, so use adaptive thinking for reasoning tasks. Forced `tool_choice` values `any` and `tool`, assistant prefill, and non-default sampling parameters fail. Use `auto` with explicit tool triggers and strict tools, or Structured Outputs; strict tools do not force a call. With Structured Outputs, treat `stop_reason: "max_tokens"` as a failed response. Structured Outputs are unavailable for Sonnet 5.5 on Amazon Bedrock; there, describe the format in the prompt or use a non-strict tool, and validate in code.
 
-Replay full assistant turns and thinking blocks unchanged and keep history append-only. Prefix binding is enforced by default for accounts created on/after 2026-08-31 and when older accounts opt in with adaptive thinking; editing prior messages, system instructions, or tools can invalidate later blocks. Sonnet 5.5 blocks also work only in the producing or a linked account. It reads Sonnet 5, Opus 4.8, Haiku 4.5, and earlier blocks, not Opus 5/5.5, Fable, or Mythos blocks; no other model reads its blocks, so switching away, including server-side fallback, drops that reasoning. See [preserved thinking](https://platform.claude.com/docs/en/build-with-claude/preserved-thinking). On the Claude API and Google Cloud, replace `computer_20251124` with `computer_toolset_20260801`. Advisor-tool pairings changed; check the advisor compatibility list.
+Replay full assistant turns and thinking blocks unchanged and keep history append-only. Prefix binding is enforced by default for accounts created on/after 2026-08-31 and when older accounts opt in with adaptive thinking; editing prior messages, system instructions, or tools can invalidate later blocks. Sonnet 5.5 blocks also work only in the producing or a linked account. It reads Sonnet 5, Opus 4.8, Haiku 4.5, and earlier blocks, plus Haiku 5.5 blocks on the Claude API and Google Cloud; not Opus 5/5.5, Fable, or Mythos blocks. Only Opus 5.5 reads its blocks, on the Claude API and Google Cloud; switching to any other model drops that reasoning. See [preserved thinking](https://platform.claude.com/docs/en/build-with-claude/preserved-thinking). On the Claude API and Google Cloud, replace `computer_20251124` with `computer_toolset_20260801`. Advisor-tool pairings changed; check the advisor compatibility list.
 
 Text between tool calls arrives in `thinking` blocks, empty at the default `display: "omitted"`. Render it with `thinking.display: "updates"` and `thinking-display-updates-2026-08-18` under adaptive thinking; `between_tools` returns the text without a `display` field. Deliver mid-turn user input as user text after the last `tool_result`, never inside one; otherwise the model can treat it as injected text.
 
-## Claude Sonnet 5
+## Claude Haiku 5.5
 
-Read [Sonnet 5 prompting](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-sonnet-5).
+Read [Haiku 5.5 prompting](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-haiku-5-5). It targets high-volume, latency-sensitive work such as classification, routing, extraction, and subagent tasks. Haiku 4.5 prompts remain a starting point; its API settings do not all carry forward.
 
-The current catalog lists Sonnet 5 under legacy models, while the lifecycle table still marks it active. Retain this guidance for explicit Sonnet 5 requests; do not silently substitute Sonnet 5.5 or apply its breaking changes to Sonnet 5.
+- When the destination provides search, give the current date as a placeholder such as `{{current_date}}`. For long system prompts or low effort, add the guide's scoped instruction to search before answering about facts that may have changed (records, office holders, prices, versions, rules, anything "latest"), not facts that cannot change. Avoid blanket "always search" rules; they add searches without improving answers.
+- For long agent prompts, state the whole deliverable: keep working until done, stop to ask only when the work cannot continue without the user or before a risky step, then stop and report once the requested work is checked. Mention unrequested features, docs, or refactors instead of doing them.
+- For runnable code changes, require a real existing check that exercises the change, or a statement of which check could not run and why. The guide's sample also permits installing declared dependencies; include that only if the user allows installs, and never add it against a no-new-dependencies or offline constraint.
+- For chatbots and support assistants, state that the system prompt's rules hold for the whole conversation, including when a user argues, gives a sympathetic reason, asks for just a small part, claims an exception was approved, or keeps asking. Preserve the deployment's actual rules and escalation path.
+- When the user says thinking is off and the model must call tools before a JSON answer, the guide's line "The JSON output format applies to your final answer only. When you need a tool, call it first, with no text before the call, and write the JSON once you have the results." helps. Omit it otherwise.
+- Reasoning-like text in user-facing replies is a runtime symptom of thinking off or `low` effort; the guide's fix is adaptive thinking at `medium`, not added prompt rules.
 
-- State whether instructions apply to every item/section. Sonnet follows scope literally, especially at lower effort.
-- Response length scales with task complexity; give explicit length and voice requirements when they matter.
-- Use precise tool triggers. Thinking-off workflows may need an explicit retrieval instruction; raising effort can improve shallow work.
-- Remove rigid inherited progress-message schedules unless the product needs them.
-- For design work, give concrete visual direction and existing design-system constraints. Ask for alternative directions when the user wants exploration, not as an obligatory approval step.
-- In code review, use a concrete reporting bar and retain the user's requested severity/scope filters.
+**Integration only:** [What's new](https://platform.claude.com/docs/en/models/haiku-5-5/whats-new-haiku-5-5) and the [migration guide](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide) specify adaptive thinking on by default and effort `low` through `max`, default `medium`. Effort, not prompt text, controls thinking: start at `medium`; use `low` for chat, short tool tasks, and simple high-volume requests, but `high` for knowledge work, longer agent tasks, and chatbots where strict system-prompt adherence matters most; compare `xhigh`/`max` against Sonnet 5.5. `thinking: {"type": "disabled"}` works only at `high` or below. At `xhigh` in multi-turn chat, check for empty visible replies. Thinking counts toward `max_tokens`; size it for thinking plus the response.
 
-**Integration only:** adaptive thinking defaults on, effort defaults to `high`, and manual `budget_tokens` is removed. Non-default `temperature`, `top_p`, and `top_k` fail; steer tone in the prompt. Revisit total `max_tokens` and parse typed blocks rather than assuming the first block is text. See [Sonnet 5 migration](https://platform.claude.com/docs/en/models/sonnet-5/migration-guide).
+Manual `budget_tokens`, assistant prefill, non-default sampling parameters, and `computer_20250124` fail. Use `computer_toolset_20260801` on the Claude API and Google Cloud, or `computer_20251124` on Amazon Bedrock. Forced `tool_choice` is accepted but skips thinking before the call; prefer `auto` with explicit tool triggers. Structured Outputs are unavailable on Amazon Bedrock. Thinking text is omitted by default; set `display: "summarized"` to receive it. Safety classifiers can return `stop_reason: "refusal"` with no server-side fallback, so handle refusals in the client.
+
+Replay full assistant turns and thinking blocks unchanged and keep history append-only; prefix binding applies as for Sonnet 5.5, and blocks work only in the producing or a linked account. Add new system-prompt text to new conversations only, or put changed instructions in the newest turn. Likewise, render a date placeholder once when the conversation starts; on a later day, give the new date in the newest turn rather than re-rendering `system` or tool descriptions. It reads Sonnet 5, Opus 4.8, Haiku 4.5, and earlier blocks; Opus 5.5 and Sonnet 5.5 read its blocks on the Claude API and Google Cloud. Deliver mid-turn user input as user text after the last `tool_result`, never inside one.
 
 ## Integration boundaries
 
-For changing effort during a conversation, the [per-message effort beta](https://platform.claude.com/docs/en/build-with-claude/effort#change-effort-mid-conversation) supports Fable 5.1 and Opus 5 on the Claude API and Google Cloud. Opus 5.5 and Sonnet 5.5 also support it, Sonnet 5.5 only with adaptive thinking rather than `between_tools`; for these two, verify the destination platform's beta support before integrating it. With beta header `mid-conversation-output-config-2026-07-01`, append a `role: "system"` message with empty `content` and `output_config.effort`; it applies from the next user turn while preserving the cached prefix. This is client configuration, not an instruction to think harder. Verify support before applying this mechanism to another model.
+For changing effort during a conversation, the [per-message effort beta](https://platform.claude.com/docs/en/build-with-claude/effort#change-effort-mid-conversation) supports Fable 5.1, Opus 5.5, Opus 5, Sonnet 5.5, and Haiku 5.5 on the Claude API and Google Cloud; on Amazon Bedrock, only Fable 5.1 and Opus 5.5. It needs adaptive thinking on Sonnet 5.5 (not `between_tools`) and Haiku 5.5 (not `disabled`). With beta header `mid-conversation-output-config-2026-07-01`, append a `role: "system"` message with empty `content` and `output_config.effort`; it applies from the next user turn while preserving the cached prefix. This is client configuration, not an instruction to think harder. Verify support before applying this mechanism to another model.
 
 The [thinking](https://platform.claude.com/docs/en/build-with-claude/thinking) and [effort](https://platform.claude.com/docs/en/build-with-claude/effort) references govern API controls. Effort is not a word budget, and `max_tokens` includes thinking plus response text. Prefill, tool choice, thinking display, and replay rules differ by model.
 
