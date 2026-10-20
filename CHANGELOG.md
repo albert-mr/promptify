@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [3.3.0] - 2026-10-20
+
+### Added
+- Claude Haiku 5.5 guidance for search grounding, early stopping in long agent prompts, real verification, chatbot rule adherence, and thinking-off JSON with tools, with separate notes for medium default effort, thinking off only at `high` or below, accepted-but-thinkless forced tools, refusals without server-side fallback, and account-bound replay.
+- Dated official-source review and regression scenarios for Haiku 5.5.
+- TypeSafe `jev-1.14.0` preview, experimental image input through `assets`, and Box questions on explicit request; `jev-1.13.0` remains the stable default.
+
+### Removed
+- Legacy Claude Opus 5 and Sonnet 5 sections and the previous-generation GPT-5.6 Sol/Terra/Luna section. Explicit requests keep their target with a general-guidance disclosure. Agents typically read the whole provider reference, so this cuts context for current-model drafts. Maintenance now prunes superseded models routinely.
+
+### Changed
+- Corrected thinking-replay compatibility: Opus 5.5 now reads Sonnet 5.5 and Haiku 5.5 blocks on the Claude API and Google Cloud, so switching from Sonnet 5.5 to Opus 5.5 keeps its reasoning.
+- Per-message effort coverage now lists Haiku 5.5 and the Amazon Bedrock subset.
+- OpenAI's beta Decisions API is identified as an unsupported destination rather than drafted as a prompt.
+
 ## [3.2.0] - 2026-09-30
 
 ### Added
