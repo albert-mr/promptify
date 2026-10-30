@@ -2,7 +2,7 @@
 
 Last verified: 2026-09-14. Sources are linked beside the guidance they support.
 
-Haiku 5.5 guidance added, legacy Opus 5 and Sonnet 5 sections removed, and Sonnet 5.5/Opus 5.5 thinking-replay, per-message effort coverage, and model availability rechecked 2026-10-12; Sonnet 5.5 guidance added 2026-09-30; Opus 5.5 guidance added 2026-09-27. Other model guidance retains its earlier review date.
+Haiku 5.5 guidance added, legacy Opus 5 and Sonnet 5 sections removed, and Sonnet 5.5/Opus 5.5 thinking-replay, per-message effort coverage, and model availability rechecked 2026-10-12; API version `2026-10-21` and Google Cloud naming added 2026-10-30; Sonnet 5.5 guidance added 2026-09-30; Opus 5.5 guidance added 2026-09-27. Other model guidance retains its earlier review date.
 
 ## Routing and freshness
 
@@ -102,6 +102,10 @@ Replay full assistant turns and thinking blocks unchanged and keep history appen
 ## Integration boundaries
 
 For changing effort during a conversation, the [per-message effort beta](https://platform.claude.com/docs/en/build-with-claude/effort#change-effort-mid-conversation) supports Fable 5.1, Opus 5.5, Opus 5, Sonnet 5.5, and Haiku 5.5 on the Claude API and Google Cloud; on Amazon Bedrock, only Fable 5.1 and Opus 5.5. It needs adaptive thinking on Sonnet 5.5 (not `between_tools`) and Haiku 5.5 (not `disabled`). With beta header `mid-conversation-output-config-2026-07-01`, append a `role: "system"` message with empty `content` and `output_config.effort`; it applies from the next user turn while preserving the cached prefix. This is client configuration, not an instruction to think harder. Verify support before applying this mechanism to another model.
+
+In this reference, "Google Cloud" means Claude Models on Google Cloud (Google managed). The Anthropic-managed Google Cloud offering (2026-10-22) is separate; verify its feature support before applying platform-specific notes.
+
+API version `2026-10-21`, the default in current SDKs, rejects `temperature`, `top_p`, and `top_k` on every model, even at their defaults. Integration notes should omit them rather than only resetting them to defaults. See [the migration guide](https://platform.claude.com/docs/en/api/migration-2026-10-21).
 
 The [thinking](https://platform.claude.com/docs/en/build-with-claude/thinking) and [effort](https://platform.claude.com/docs/en/build-with-claude/effort) references govern API controls. Effort is not a word budget, and `max_tokens` includes thinking plus response text. Prefill, tool choice, thinking display, and replay rules differ by model.
 
