@@ -14,9 +14,9 @@ Keep plugin and marketplace names/descriptions consistent. The marketplace deleg
 
 ## Source review
 
-The source inventories are the official links in the [OpenAI reference](skills/promptify/references/openai-families.md), [Anthropic reference](skills/promptify/references/claude-families.md), [TypeSafe reference](skills/promptify/references/typesafe.md), and [target-resolution reference](skills/promptify/references/detection-fallbacks.md). Fetch their current contents, not search snippets. Append `.md` where the provider supports it; fall back to normal pages when Markdown fails, and follow published links rather than guessing URLs.
+The source inventories are the official links in the [OpenAI reference](skills/promptify/references/openai-families.md), [Anthropic reference](skills/promptify/references/claude-families.md), [Anthropic integration notes](skills/promptify/references/claude-integration.md), [TypeSafe reference](skills/promptify/references/typesafe.md), and the target-resolution sources below. Fetch their current contents, not search snippets. Append `.md` where the provider supports it; fall back to normal pages when Markdown fails, and follow published links rather than guessing URLs.
 
-Start discovery with these indexes, even when the existing references appear current:
+Start with `python3 scripts/check_upstream.py`, which reports new model IDs, new changelog entries, and changed guide pages since the committed snapshot. It does not explain a change, so still read what it flags. After review, run it with `--update` and commit the snapshot in the same PR. A full review also starts from these indexes, even when the existing references appear current:
 
 | Provider | Discovery sources |
 | --- | --- |
@@ -30,13 +30,21 @@ For each update:
 1. Discover new in-scope text models and Jev versions and their dedicated guides; check lifecycle before calling a catalog entry available. Keep the maintained scope focused on the models listed in README. Do not restore older, specialized, or restricted model sections during routine freshness updates. Remove a model's section once the provider labels it legacy or previous-generation, or a same-tier successor supersedes it in the catalog; agents typically read the whole provider reference, so superseded sections cost context on every draft. Distinguish product aliases, exact IDs, API access, and partner-platform differences.
 2. Read the exact model's prompting guide and relevant migration/capability pages. Treat old cookbook recommendations as version-specific. Do not copy every model's workaround into shared guidance.
 3. Preserve user requirements over general optimization advice. Remove unsupported universals, redundant process, and operational details that do not affect prompt drafting. Link to current pricing/tool-support docs rather than maintaining unrelated tables.
-4. Record the review date and sources in affected references. If a source is inaccessible or contradictory, record the gap; a successful HTTP status alone does not verify a claim. Do not mark an unread page verified.
+4. Update the model's Reviewed date only after a full read of its guide, and record the review in the [upstream log](docs/upstream-log.md). If a source is inaccessible or contradictory, record the gap; a successful HTTP status alone does not verify a claim. Do not mark an unread page verified.
 5. Update affected behavior, metadata, examples, validation, and changelog together. Run structural checks and relevant behavior scenarios, then inspect the complete diff.
 6. Submit a PR against `main`; never commit directly to or automatically merge into `main`. Manual and automated updates use the same review path.
 
-A monthly freshness routine has historically been configured outside this repository. This repo does not schedule or prove the status of that external automation. If it is running, use the procedure above and report write-access failures rather than bypassing them.
+The [Upstream docs check](.github/workflows/upstream.yml) workflow runs weekly and opens one issue when the snapshot is out of date. Resolve that issue with the procedure above. Keep each provider reference to prompt-drafting guidance: API and migration detail for Claude belongs in the integration notes, so ordinary drafts do not load it.
 
-The [2026-10-12 review](docs/upstream-review-2026-10-12.md) records the latest model discovery and the Haiku 5.5 addition. The [2026-09-30 review](docs/upstream-review-2026-09-30.md) records the GPT-6.1 Sol/Sonnet 5.5 additions. The [2026-09-27 review](docs/upstream-review-2026-09-27.md) records the GPT-6 Sol/Luna and Opus 5.5 additions. The [2026-09-14 review](docs/upstream-review-2026-09-14.md) records the earlier OpenAI/Anthropic audit; the [TypeSafe reference](skills/promptify/references/typesafe.md) records its 2026-09-21 guidance. The [2026-09-07 review](docs/upstream-review-2026-09-07.md) records the version 2 workflow changes. Historical changelog and design documents describe their original releases; they are not runtime guidance.
+The [upstream log](docs/upstream-log.md) records past reviews. Historical changelog and log entries describe their original releases; they are not runtime guidance.
+
+## Target-resolution sources
+
+Claude Code documents a model picker, launch flags, `ANTHROPIC_MODEL`, settings, and model aliases. Its hooks can expose model information **when passed into the current session**; Promptify does not install hooks. `SessionStart.model` is optional. `PreModelSwitch` describes a requested change that may be blocked; `PostModelSwitch` records a completed session-model change. Neither guarantees the model used for every later request or fallback. Alias mappings can vary by provider, account, and harness version, so preserve an unresolved alias instead of expanding it from memory. See [model configuration](https://code.claude.com/docs/en/model-config) and [hooks](https://code.claude.com/docs/en/hooks).
+
+Codex documents a `model` configuration setting and separate overrides. That establishes a configured preference, not a universal API for skills to discover the effective model on every request. Use supplied session metadata when available; otherwise retain uncertainty. See [configuration reference](https://learn.chatgpt.com/docs/config-file/config-reference).
+
+Claude's prompting docs demonstrate supplying model identity through instructions. That is useful evidence for an explicitly informed session, not proof that unaided self-identification is reliable. See [model self-knowledge](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#model-self-knowledge).
 
 ## Validation
 

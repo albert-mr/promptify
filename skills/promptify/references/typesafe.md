@@ -1,6 +1,6 @@
 # TypeSafe / Jev request authoring
 
-Last verified: 2026-09-21; models, API, images, Box, Choice, and Score rechecked 2026-11-09. This reference authors templates; it does not run inference.
+Reviewed: models, API, images, Box, Choice, and Score 2026-11-09; other pages 2026-09-21. This reference authors templates; it does not run inference.
 
 ## Target and freshness
 

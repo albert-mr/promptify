@@ -1,6 +1,19 @@
 {
   "name": "promptify",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "description": "Turns rough ideas into OpenAI or Anthropic prompts, or native TypeSafe/Jev request templates.",
-  "author": { "name": "Albert" }
+  "author": {
+    "name": "Albert"
+  },
+  "homepage": "https://github.com/albert-mr/promptify",
+  "repository": "https://github.com/albert-mr/promptify",
+  "license": "MIT",
+  "keywords": [
+    "prompt-engineering",
+    "prompts",
+    "claude",
+    "openai",
+    "typesafe",
+    "jev"
+  ]
 }

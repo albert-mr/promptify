@@ -2,11 +2,30 @@
 
 ![Is this Astra 6?](assets/is-this-astra-6.svg)
 
-Turn a rough idea or existing instructions into a clear, copyable **OpenAI or Anthropic prompt**, or a native **TypeSafe/Jev request template**. Works as a skill in Claude Code and Codex.
+Turn a rough idea or existing instructions into a clear, copyable prompt tuned for **OpenAI and Anthropic** models, or a native **TypeSafe/Jev request template**. Works as a skill in Claude Code and Codex.
 
-Promptify preserves your intent, chooses guidance for the destination you name, and makes missing inputs explicit. If you do not name a destination, it drafts a normal prompt using authoritative session information when available and general guidance otherwise. It never executes the drafted task or calls an inference API.
+Promptify preserves your intent, uses guidance for the destination you name, and makes missing inputs explicit. It never executes the drafted task or calls an inference API.
 
-**Version 3 adds native Jev authoring.** OpenAI/Anthropic destinations still receive normal prompts. Explicit TypeSafe/Jev destinations receive JSON request templates. There is no mode picker; autonomous tasks still get ordinary instructions with success criteria and stopping conditions, without `/goal` command output.
+## Install
+
+**Claude Code**
+
+```text
+/plugin marketplace add albert-mr/promptify
+/plugin install promptify@promptify
+```
+
+Invoke it with `/promptify:promptify` followed by your idea, or ask for a prompt in plain language. See [Discover plugins](https://code.claude.com/docs/en/discover-plugins).
+
+**Codex**
+
+```bash
+git clone https://github.com/albert-mr/promptify.git ~/promptify
+mkdir -p ~/.agents/skills
+ln -s ~/promptify/skills/promptify ~/.agents/skills/promptify
+```
+
+Invoke it with `$promptify`, and restart Codex if the skill does not appear. For a single project, link it into that project's `.agents/skills/` instead. Inside this repository no install is needed. See [Codex skills](https://learn.chatgpt.com/docs/build-skills).
 
 ## Example
 
@@ -22,7 +41,7 @@ For each finding, give severity, file and line, the concrete failure or abuse pa
 Finish with any limits on coverage or checks you could not perform. If there are no actionable findings, say so directly. Keep the report concise while preserving the evidence needed to assess each finding.
 ```
 
-Say "only the prompt" to omit the target line. Name a destination such as "for Claude Fable 5.1" even when drafting inside Codex; the destination takes precedence over the running model.
+Say "only the prompt" to omit the target line. Name a destination such as "for Claude Fable 5.1" even when drafting inside Codex; the destination takes precedence over the running model. Ask for API or migration notes when you want them; they stay separate from the prompt.
 
 ## TypeSafe / Jev
 
@@ -30,78 +49,38 @@ Say "only the prompt" to omit the target line. Name a destination such as "for C
 
 Promptify produces a JSON template with `model`, `state`, and `questions`, using two independent Noul questions. It also supports Choice categories and descriptive Score rubrics. See the [TypeSafe reference and copyable example](skills/promptify/references/typesafe.md).
 
-"For Claude, write a prompt to build a TypeSafe router" still produces a Claude prompt. Jev cannot generate customer replies or free-text explanations; Promptify identifies incompatible requests instead of inventing support. Say "only the JSON" to omit the target line, or explicitly request just the `questions` object.
+"For Claude, write a prompt to build a TypeSafe router" still produces a Claude prompt. Jev cannot generate customer replies or free-text explanations, so Promptify identifies incompatible requests instead of inventing support. Say "only the JSON" to omit the target line, or request just the `questions` object.
 
-This feature needs no TypeSafe key, SDK, or plugin. It drafts requests without evaluating them. Application thresholds and execution policy belong in separately requested integration notes; templates do not prove classification accuracy or calibrated routing.
+This feature needs no TypeSafe key, SDK, or plugin. Templates are drafts: they are not evaluated and do not prove classification accuracy.
 
 ## Model coverage
 
-References checked against official documentation:
+- **OpenAI:** GPT-6 Astra, GPT-6.1 Sol, GPT-6.1 Terra, and GPT-6 Luna.
+- **Anthropic:** Claude Fable 5.1, Opus 5.5, Sonnet 5.5, and Haiku 5.5.
+- **TypeSafe:** Jev `jev-1.14.0` (default) and `jev-1.13.0`, with experimental image input and Box questions on explicit request.
 
-- **OpenAI:** GPT-6.1 Terra (2026-10-30); GPT-6 Astra, GPT-6.1 Sol, and GPT-6 Luna (2026-09-30).
-- **Anthropic:** Claude Haiku 5.5 (2026-10-12); Claude Sonnet 5.5 (2026-09-30, replay notes rechecked 2026-10-12); Claude Opus 5.5 (2026-09-27); Claude Fable 5.1 (2026-09-14 guidance retained).
-- **TypeSafe (2026-11-09):** Jev `jev-1.14.0` (stable default) and `jev-1.13.0`; experimental image input and Box questions on explicit request. Requested aliases are preserved without assuming their current mapping.
+Any other model, including other providers such as Gemini, gets a normal prompt with general guidance and a note saying so. Requests for "latest" check official docs when browsing is available. Each reference lists when its guidance was reviewed: [OpenAI](skills/promptify/references/openai-families.md), [Anthropic](skills/promptify/references/claude-families.md), and [TypeSafe](skills/promptify/references/typesafe.md).
 
-Other OpenAI or Anthropic targets use disclosed general guidance. Unknown Jev versions retain their requested ID with unverified-compatibility disclosure. Requests for "latest" require a live official-doc check when browsing is available; offline Jev drafting discloses its dated guidance. API settings and availability are verified separately when integration advice is requested.
+## Update
 
-See the [OpenAI reference](skills/promptify/references/openai-families.md), [Anthropic reference](skills/promptify/references/claude-families.md), [TypeSafe reference](skills/promptify/references/typesafe.md), and [latest model review](docs/upstream-review-2026-10-12.md) for sources and limitations. Promptify authors artifacts; it does not switch your running model or provide an API client.
-
-## Install in Claude Code
-
-```text
-/plugin marketplace add albert-mr/promptify
-/plugin install promptify@promptify
-```
-
-Invoke with `/promptify:promptify` followed by your idea. These commands register the marketplace and install its plugin; see [Discover plugins](https://code.claude.com/docs/en/discover-plugins).
-
-## Install in Codex
-
-This repository includes `.agents/skills/promptify`, a symlink to `skills/promptify`, so no installation is needed when working here. Invoke with `$promptify`.
-
-For another project, run from this checkout:
-
-```bash
-mkdir -p /path/to/project/.agents/skills
-ln -s "$(pwd)/skills/promptify" /path/to/project/.agents/skills/promptify
-```
-
-For a global install:
-
-```bash
-mkdir -p ~/.agents/skills
-ln -s "$(pwd)/skills/promptify" ~/.agents/skills/promptify
-```
-
-Use `cp -R skills/promptify /path/to/destination` for a fixed copy instead of a symlink. Do not overwrite an existing installation without checking its location. Restart Codex if the skill does not appear. See [Codex skills](https://learn.chatgpt.com/docs/build-skills) for discovery rules.
-
-## Update and validate
-
-Claude Code caches installed plugins. After an update is merged:
+Claude Code keeps an installed plugin on its version until you update it. Third-party marketplaces have auto-update off by default; turn it on in `/plugin` under **Marketplaces**, or update manually:
 
 ```bash
 claude plugin marketplace update promptify
 claude plugin update promptify@promptify
 ```
 
-Then run `/reload-plugins` or restart the session. A symlinked Codex install follows **its actual checkout**; fetch/pull that checkout to receive merged changes. Copied installs need recopying.
+Then run `/reload-plugins`. For Codex, run `git -C ~/promptify pull`.
 
-Run the same structural checks as CI:
+## Contributing
+
+See [MAINTAINING.md](MAINTAINING.md) for source checks, versioning, and review requirements. Run the same structural checks as CI with:
 
 ```bash
 python3 scripts/validate.py
 ```
 
-The [behavior scenarios](tests/scenarios.md) test drafting decisions separately; structural validation does not prove model behavior. See [MAINTAINING.md](MAINTAINING.md) for source checks, versioning, and review requirements.
-
-## Layout
-
-- `skills/promptify/SKILL.md`: drafting workflow.
-- `skills/promptify/references/`: provider guidance and target resolution.
-- `.claude-plugin/`: marketplace and plugin manifests.
-- `.agents/skills/promptify`: Codex discovery symlink.
-- `scripts/validate.py`: dependency-free structural validation used by CI.
-- `tests/scenarios.md`: behavioral regression cases.
+Structural validation does not prove model behavior; the [behavior scenarios](tests/scenarios.md) cover drafting decisions.
 
 ## License
 

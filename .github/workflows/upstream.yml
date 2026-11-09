@@ -1,0 +1,32 @@
+name: Upstream docs check
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - id: check
+        run: |
+          code=0
+          python3 scripts/check_upstream.py > report.txt || code=$?
+          cat report.txt
+          [ "$code" -le 1 ] || exit "$code"
+          echo "changed=$code" >> "$GITHUB_OUTPUT"
+      - if: steps.check.outputs.changed == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Upstream docs changed"
+          open=$(gh issue list --state open --search "in:title \"$title\"" --json number --jq length)
+          if [ "$open" = "0" ]; then
+            gh issue create --title "$title" --body-file report.txt
+          fi
