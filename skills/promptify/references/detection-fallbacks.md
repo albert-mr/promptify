@@ -23,7 +23,7 @@ Use a short, truthful line outside the copyable block:
 - `Target: GPT-6 Astra (session-provided).`
 - `Target: OpenAI family (exact model unknown).`
 - `Target: unspecified; using general prompting guidance.`
-- `Target: TypeSafe Jev (jev-1.14.0; bundled selection, 2026-10-30); request template.`
+- `Target: TypeSafe Jev (jev-1.14.0; bundled selection, 2026-11-09); request template.`
 
 For an unverified version, keep the requested name and say its version-specific guidance is unverified. For "latest", identify the model selected from current official docs as a selection, not a detected runtime. Omit this line when the user requests prompt-only or JSON-only output.
 
