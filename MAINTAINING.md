@@ -16,7 +16,7 @@ Keep plugin and marketplace names/descriptions consistent. The marketplace deleg
 
 The source inventories are the official links in the [OpenAI reference](skills/promptify/references/openai-families.md), [Anthropic reference](skills/promptify/references/claude-families.md), [Anthropic integration notes](skills/promptify/references/claude-integration.md), [TypeSafe reference](skills/promptify/references/typesafe.md), and the target-resolution sources below. Fetch their current contents, not search snippets. Append `.md` where the provider supports it; fall back to normal pages when Markdown fails, and follow published links rather than guessing URLs.
 
-Start with `python3 scripts/check_upstream.py`, which reports new text model IDs and changed prompting guides since the committed snapshot. It does not explain a change and does not watch changelogs, so still read what it flags and check the indexes below during a full review. After review, run it with `--update` and commit the snapshot in the same PR. A full review also starts from these indexes, even when the existing references appear current:
+Start with `python3 scripts/check_upstream.py`, which reports new text model IDs and changed prompting, effort, and preserved-thinking pages since the committed snapshot. It does not explain a change and does not watch changelogs, so still read what it flags and check the indexes below during a full review. After review, run it with `--update` and commit the snapshot in the same PR. A full review also starts from these indexes, even when the existing references appear current:
 
 | Provider | Discovery sources |
 | --- | --- |
@@ -52,7 +52,7 @@ Claude's prompting docs demonstrate supplying model identity through instruction
 python3 scripts/validate.py
 ```
 
-CI runs this same command. It checks manifest consistency, version/changelog pairing, skill frontmatter, reference reachability, JSON example syntax, relative documentation links, the discovery symlink, and removal of the old mode from shipped skill instructions. JSON parsing checks syntax, not provider compatibility or semantic correctness. It needs no network, model API, or third-party Python package.
+CI runs this same command, plus `python3 scripts/test_check_upstream.py` for the upstream check's logic. It checks manifest consistency, version/changelog pairing, skill frontmatter, reference reachability, JSON example syntax, relative documentation links, the discovery symlink, and removal of the old mode from shipped skill instructions. JSON parsing checks syntax, not provider compatibility or semantic correctness. It needs no network, model API, or third-party Python package.
 
 Run the [behavior scenarios](tests/scenarios.md) in fresh evaluation contexts after workflow changes; for a reference-only correction, select the affected model cases plus cross-provider and unknown-target cases. Review actual outputs, not just wording matches. Save the baseline, revised outputs, and pass/fail notes in the PR or `.context/` for local review. Never execute the task inside a regression prompt. API compatibility claims require source review or real integration tests; a drafting simulation does not validate a provider endpoint.
 
