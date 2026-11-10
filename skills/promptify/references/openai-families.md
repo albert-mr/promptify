@@ -1,6 +1,6 @@
 # OpenAI prompting reference
 
-Catalog and lifecycle checked 2026-11-09. Sources are linked beside the guidance they support. For a dated offline disclosure, cite the target's Reviewed date below: the last full review of that model's guidance.
+Catalog and lifecycle checked 2026-11-10. Sources are linked beside the guidance they support. For a dated offline disclosure, cite the target's Reviewed date below: the last full review of that model's guidance.
 
 ## Routing and freshness
 
@@ -8,9 +8,9 @@ Use the user's exact target. This is a dated reference, not live model discovery
 
 | Target | Guidance to load | Reviewed |
 | --- | --- | --- |
-| `gpt-6-astra`, `gpt-6.1-sol` | Shared principles + GPT-6 family; Astra/6.1 Sol integration rules | 2026-09-30 |
-| `gpt-6-luna` | Shared principles + GPT-6 family; Luna integration rules | 2026-09-30 |
-| `gpt-6.1-terra` | Shared principles + GPT-6 family; 6.1 Terra integration rules | 2026-10-30 |
+| `gpt-6-astra`, `gpt-6.1-sol` | Shared principles + GPT-6 family; Astra/6.1 Sol integration rules | 2026-11-10 |
+| `gpt-6-luna` | Shared principles + GPT-6 family; Luna integration rules | 2026-11-10 |
+| `gpt-6.1-terra` | Shared principles + GPT-6 family; 6.1 Terra integration rules | 2026-11-10 |
 
 These are the maintained text models. Other OpenAI targets, including GPT-6 Sol and the previous-generation GPT-5.6 Sol, Terra, and Luna, receive general guidance with the coverage limit disclosed; do not restore removed model sections from historical documents. Never transfer GPT-6 API rules to an older target; integration notes for it need live verification. For a new model discovered through a live check, distinguish freshly verified guidance from bundled coverage.
 
@@ -20,7 +20,7 @@ A Codex harness does not establish the target model. Use supplied session eviden
 
 ## Shared principles
 
-Specify the result, relevant context, constraints, evidence, and output contract. Resolve conflicting rules. Add examples when they clarify a real format or decision boundary; use the smallest useful set. Keep prompts lean while preserving the required context.
+Specify the result, relevant context, constraints, evidence, and output contract. Resolve conflicting rules. Add examples when they clarify a real format or decision boundary; use the smallest useful set. Keep prompts lean while preserving the required context. Put stable instructions and examples first and per-request context last.
 
 For API integrations, current models accept application instructions through `developer` messages or Responses `instructions`; these outrank user input, not provider/system instructions. Keep untrusted retrieved material in clearly delimited input, outside privileged instructions. Responses `instructions` must be supplied again on later requests; `previous_response_id` does not carry that field forward. See [prompt engineering](https://developers.openai.com/api/docs/guides/prompt-engineering).
 
@@ -30,9 +30,9 @@ Keep runtime configuration separate from copyable prompt text. Reasoning effort,
 
 Use the [GPT-6 prompting and migration guide](https://developers.openai.com/api/docs/guides/latest-model) and exact model pages for [Astra](https://developers.openai.com/api/docs/models/gpt-6-astra), [GPT-6.1 Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol), [GPT-6.1 Terra](https://developers.openai.com/api/docs/models/gpt-6.1-terra), and [Luna](https://developers.openai.com/api/docs/models/gpt-6-luna). The guide offers Astra-derived prompting patterns as a starting point across GPT-6; evaluate them for the chosen model and task rather than asserting identical behavior. GPT-6.1 Sol, GPT-6 Sol, and GPT-5.6 Sol are distinct models with different API rules, as are GPT-6.1 Terra and GPT-5.6 Terra; preserve the requested version and never treat one as an alias of another. GPT-6.1 Terra targets visual reasoning, computer use, and writing; the guide gives it no separate prompting patterns.
 
-- For action requests, describe the full deliverable and which routine decisions the agent should make itself. Ask only about ambiguity or authorization that changes the work; carry on with independent authorized work while awaiting an answer.
-- Audit loaded skills and repository instructions for contradictory process requirements. Do not add approval gates for work the user already authorized. Preserve the actual instruction hierarchy.
-- Specify the writing style, structure, and length needed by the product; Astra can otherwise produce lengthy, heavily formatted replies.
+- For action requests, describe the full deliverable and which routine decisions the agent should make itself. Ask only about ambiguity or authorization that changes the work; carry on with independent authorized work while awaiting an answer. Treat "can you" or "help me" phrasing as a request to do the work, not to stop at a plan or an offer. Finish the authorized work first so the user approves a concrete, reviewable result.
+- Audit loaded skills and repository instructions for contradictory process requirements. Do not add approval gates for work the user already authorized. Preserve the actual instruction hierarchy, and state whether user instructions or skills win when they conflict.
+- Specify the writing style, structure, and length needed by the product; Astra can otherwise produce lengthy, heavily formatted replies. For reader-facing prose, name stock phrases to avoid and rule out unprompted "X, not Y" contrasts.
 - When delegation is available and warranted, give concrete criteria for independent work. Do not assume the harness supports subagents or mandate delegation for every task.
 - Scope validation to the change and required checks. Once those pass, repeat or broaden testing only for new changes, failures, or unresolved concerns.
 
@@ -40,7 +40,7 @@ Use the [GPT-6 prompting and migration guide](https://developers.openai.com/api/
 
 **Luna integration only:** It supports `none`, `low`, `medium` (default), `high`, `xhigh`, and `max`. Preserve a supported effort setting; do not replace `none` merely because Astra and 6.1 Sol reject it. Chat Completions supports function calling only with `reasoning_effort: "none"`. Built-in tools, and function calling at any other effort, require Responses. Sampling parameters such as `temperature` and `top_p` can remain at `none`. At any other effort, remove them and the log-probability options listed above. `minimal` is unsupported; start at `low` when migrating from it.
 
-**6.1 Terra integration only:** It supports `none`, `low`, `medium` (default), `high`, `xhigh`, and `max`; start at `medium`. Like Astra and 6.1 Sol, tool calling requires Responses at every effort, including `none`; text-only Chat Completions is supported. Sampling and log-probability options may remain only at `none`. When migrating from GPT-5.6 Terra, compare both on representative images and workflows at the same effort.
+**6.1 Terra integration only:** It supports `none`, `low`, `medium` (default), `high`, `xhigh`, and `max`. Start new integrations at `medium`; in migrations, preserve a supported effort and move `minimal` to `low`. Like Astra and 6.1 Sol, tool calling requires Responses at every effort, including `none`; text-only Chat Completions is supported. Sampling and log-probability options may remain only at `none`. When migrating from GPT-5.6 Terra, compare both on representative images and workflows at the same effort.
 
 Async tool calling and mid-turn steering require application support; a prompt cannot create either. Keep corrections and side questions connected to the original task unless the user changes it. The [September 25 fix](https://developers.openai.com/api/docs/changelog) corrects degraded image encoding in GPT-6 Luna; when advising an existing image-input integration, recommend rerunning affected evaluations rather than adding prompt workarounds.
 

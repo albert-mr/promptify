@@ -2,6 +2,12 @@
 
 Newest first. Entries describe the releases they were written for and are not runtime guidance.
 
+## Guide review — 2026-11-10
+
+Anthropic launched Claude Fable 5.2 on 2026-11-09, after that day's discovery check, and moved Fable 5.1 to legacy. The Fable section was rewritten from the Fable 5.2 prompting guide, what's-new page, and migration guide. The Opus 5.5, Sonnet 5.5, Haiku 5.5, Claude best-practices, GPT-6, and OpenAI prompt-engineering guides were each read in full, and only additions likely to change a drafted prompt were applied; lower-value items were left out to limit the context loaded per draft. Not reread: what's-new and migration pages other than Fable 5.2's, and TypeSafe docs beyond the 2026-11-09 check.
+
+A blind comparison on 10 scenarios, three runs each and graded by Opus, preferred the skill's output over a bare Sonnet 5.5 in 29 of 30 pairs. The skill met the scenario criteria in 26 pairs and the bare model in 12. Those criteria were written for this skill, so the result favors it, and the bare model had no access to current provider docs.
+
 ## Discovery check — 2026-11-09
 
 No new in-scope models. OpenAI released GPT-6-Cyber (2026-11-05), which needs Daybreak Red access and stays outside maintained coverage, along with image and voice updates. GPT-6.1 Sol's catalog entry and GPT-6 Sol's page ("the newer Sol model") led to removing the GPT-6 Sol section under the successor rule. Anthropic's catalog and lifecycle tables list the same four maintained models; message threads (2026-11-02, beta) are integration-only and not added. TypeSafe has no release after Jev 1.14, but its context limits, long-context header, and `jev-preview` alias were missing and were added. This check compared section headings of the four Claude prompting guides and read selected sections; it was not a full reread.

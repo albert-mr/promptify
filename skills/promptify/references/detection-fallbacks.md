@@ -6,7 +6,7 @@ Only an explicit TypeSafe/Jev destination selects native request output. Follow 
 
 ## Resolution order
 
-1. **Explicit destination:** preserve the user's named model, version, alias, and deployment surface. "For Claude Fable 5.1" in Codex means a Claude-targeted prompt. A current-session identity does not override that destination.
+1. **Explicit destination:** preserve the user's named model, version, alias, and deployment surface. "For Claude Fable 5.2" in Codex means a Claude-targeted prompt. A current-session identity does not override that destination.
 2. **Authoritative session evidence:** if no destination was specified, use model metadata explicitly supplied by the host or higher-priority session instructions. A model field from a request/response describes that request; it need not describe later turns or fallback requests. A session-start model describes that start, and a requested switch can be blocked, so only a completed switch changes the session model. Preserve an unresolved alias instead of expanding it from memory.
 3. **Known family only:** use that family's shared guidance. Do not turn "Claude", "OpenAI", "Codex", or a model's unsupported self-description into an exact version.
 4. **Unknown:** draft using the common principles in `SKILL.md`. Ask about the destination only if its capabilities materially affect the deliverable, such as a tool-dependent integration.
@@ -17,7 +17,7 @@ Do not inspect credentials, dump environment variables, read private transcripts
 
 Use a short, truthful line outside the copyable block:
 
-- `Target: Claude Fable 5.1 (user-specified).`
+- `Target: Claude Fable 5.2 (user-specified).`
 - `Target: GPT-6 Astra (session-provided).`
 - `Target: OpenAI family (exact model unknown).`
 - `Target: unspecified; using general prompting guidance.`
