@@ -56,7 +56,7 @@ This feature needs no TypeSafe key, SDK, or plugin. Templates are drafts: they a
 ## Model coverage
 
 - **OpenAI:** GPT-6 Astra, GPT-6.1 Sol, GPT-6.1 Terra, and GPT-6 Luna.
-- **Anthropic:** Claude Fable 5.2, Opus 5.5, Sonnet 5.5, and Haiku 5.5.
+- **Anthropic:** Claude Fable 5.2 (and Mythos 5.2, which shares its guidance), Opus 5.5, Sonnet 5.5, and Haiku 5.5.
 - **TypeSafe:** Jev `jev-1.14.0` (default) and `jev-1.13.0`, with experimental image input and Box questions on explicit request.
 
 Any other model, including other providers such as Gemini, gets a normal prompt with general guidance and a note saying so. Requests for "latest" check official docs when browsing is available. Each reference lists when its guidance was reviewed: [OpenAI](skills/promptify/references/openai-families.md), [Anthropic](skills/promptify/references/claude-families.md), and [TypeSafe](skills/promptify/references/typesafe.md).
