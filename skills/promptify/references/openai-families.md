@@ -1,18 +1,16 @@
 # OpenAI prompting reference
 
-Last verified: 2026-09-14. Sources are linked beside the guidance they support.
-
-GPT-6 family guidance (Astra, 6.1 Sol, 6 Sol, Luna) and model availability rechecked 2026-09-30; added GPT-6.1 Sol (6 Sol and Luna added 2026-09-27). Model availability rechecked, Decisions API routing added, and the previous-generation GPT-5.6 section removed 2026-10-12. GPT-6.1 Terra added 2026-10-30; GPT-6 prompting guidance unchanged. GPT-6 Sol section removed 2026-11-09 after GPT-6.1 Sol superseded it in the catalog.
+Catalog and lifecycle checked 2026-11-09. Sources are linked beside the guidance they support. For a dated offline disclosure, cite the target's Reviewed date below: the last full review of that model's guidance.
 
 ## Routing and freshness
 
 Use the user's exact target. This is a dated reference, not live model discovery. For "latest", an unknown version, or API configuration, check the official [model catalog](https://developers.openai.com/api/docs/models), [current model guide](https://developers.openai.com/api/docs/guides/latest-model), and [deprecations](https://developers.openai.com/api/docs/deprecations), then open the relevant model's guide. Follow published links; do not construct a guide URL from a guessed name. If access fails, disclose that limitation and use verified family-level guidance without claiming freshness or substituting a version.
 
-| Target | Guidance to load |
-| --- | --- |
-| `gpt-6-astra`, `gpt-6.1-sol` | Shared principles + GPT-6 family; Astra/6.1 Sol integration rules |
-| `gpt-6-luna` | Shared principles + GPT-6 family; Luna integration rules |
-| `gpt-6.1-terra` | Shared principles + GPT-6 family; 6.1 Terra integration rules |
+| Target | Guidance to load | Reviewed |
+| --- | --- | --- |
+| `gpt-6-astra`, `gpt-6.1-sol` | Shared principles + GPT-6 family; Astra/6.1 Sol integration rules | 2026-09-30 |
+| `gpt-6-luna` | Shared principles + GPT-6 family; Luna integration rules | 2026-09-30 |
+| `gpt-6.1-terra` | Shared principles + GPT-6 family; 6.1 Terra integration rules | 2026-10-30 |
 
 These are the maintained text models. Other OpenAI targets, including GPT-6 Sol and the previous-generation GPT-5.6 Sol, Terra, and Luna, receive general guidance with the coverage limit disclosed; do not restore removed model sections from historical documents. Never transfer GPT-6 API rules to an older target; integration notes for it need live verification. For a new model discovered through a live check, distinguish freshly verified guidance from bundled coverage.
 

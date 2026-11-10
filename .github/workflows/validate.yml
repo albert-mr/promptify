@@ -13,3 +13,5 @@ jobs:
       - uses: actions/checkout@v7
       - name: Validate plugin, skill, references, and documentation
         run: python3 scripts/validate.py
+      - name: Test upstream check logic
+        run: python3 scripts/test_check_upstream.py

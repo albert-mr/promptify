@@ -39,7 +39,7 @@ if frontmatter:
     check(description is not None and len(description[1]) <= 1024, "Invalid skill description")
 
 refs = set((SKILL / "references").glob("*.md"))
-check({p.name for p in refs} == {"claude-families.md", "openai-families.md", "detection-fallbacks.md", "typesafe.md"}, "Unexpected or missing skill reference")
+check({p.name for p in refs} == {"claude-families.md", "claude-integration.md", "openai-families.md", "detection-fallbacks.md", "typesafe.md"}, "Unexpected or missing skill reference")
 for path in [SKILL / "SKILL.md", *refs]:
     check(not re.search(r"/goal\b", path.read_text()), f"Removed mode remains in {path.relative_to(ROOT)}")
 for path in (ROOT / ".claude-plugin").glob("*.json"):
