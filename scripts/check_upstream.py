@@ -1,8 +1,8 @@
-"""Report new text model IDs and changed prompting guides since the committed snapshot.
+"""Report new text model IDs and changed prompting and integration guides since the committed snapshot.
 
 Standard library only. Changelogs are not watched: providers post several unrelated entries a week.
 
-python3 scripts/check_upstream.py           exit 0 unchanged, 1 changed, 2 fetch failed
+python3 scripts/check_upstream.py           exit 0 unchanged, 1 changed, 2 check failed
 python3 scripts/check_upstream.py --update  rewrite the snapshot after review
 """
 
@@ -32,6 +32,8 @@ PAGES = [
     f"{PROMPTING}/prompting-claude-opus-5-5.md",
     f"{PROMPTING}/prompting-claude-sonnet-5-5.md",
     f"{PROMPTING}/prompting-claude-haiku-5-5.md",
+    f"{ANTHROPIC}/build-with-claude/effort.md",
+    f"{ANTHROPIC}/build-with-claude/preserved-thinking.md",
     f"{TYPESAFE}/api.md",
     f"{TYPESAFE}/primitives.md",
     f"{TYPESAFE}/images.md",
@@ -67,12 +69,8 @@ def collect():
     }
 
 
-def main():
-    try:
-        current = collect()
-    except OSError as error:
-        print(f"Could not fetch upstream docs: {error}")
-        return 2
+def check():
+    current = collect()
     empty = [n for n, v in current["models"].items() if not v]
     if empty:
         print(f"Extraction found nothing for: {', '.join(empty)}. The page format may have changed.")
@@ -88,6 +86,15 @@ def main():
     print("Upstream docs changed. Follow the Source review steps in MAINTAINING.md.\n")
     print("\n".join(f"- {change}" for change in changes))
     return 1
+
+
+def main():
+    # An uncaught error would exit 1, which the workflow reads as "changed".
+    try:
+        return check()
+    except Exception as error:
+        print(f"Upstream check failed: {error!r}")
+        return 2
 
 
 if __name__ == "__main__":

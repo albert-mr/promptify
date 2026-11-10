@@ -60,7 +60,7 @@ check(discovery.is_symlink() and discovery.resolve() == SKILL, "Broken Codex dis
 
 # ponytail: inline Markdown links only; use a Markdown parser if docs adopt reference-style links.
 for path in [
-    ROOT / "README.md", ROOT / "MAINTAINING.md", SKILL / "SKILL.md", *sorted(refs),
+    ROOT / "README.md", ROOT / "MAINTAINING.md", ROOT / "AGENTS.md", SKILL / "SKILL.md", *sorted(refs),
     *sorted((ROOT / "docs").glob("*.md")), *sorted((ROOT / "tests").glob("*.md")),
 ]:
     content = re.sub(r"```.*?```", "", path.read_text(), flags=re.S)
