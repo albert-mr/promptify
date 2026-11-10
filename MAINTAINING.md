@@ -16,7 +16,7 @@ Keep plugin and marketplace names/descriptions consistent. The marketplace deleg
 
 The source inventories are the official links in the [OpenAI reference](skills/promptify/references/openai-families.md), [Anthropic reference](skills/promptify/references/claude-families.md), [Anthropic integration notes](skills/promptify/references/claude-integration.md), [TypeSafe reference](skills/promptify/references/typesafe.md), and the target-resolution sources below. Fetch their current contents, not search snippets. Append `.md` where the provider supports it; fall back to normal pages when Markdown fails, and follow published links rather than guessing URLs.
 
-Start with `python3 scripts/check_upstream.py`, which reports new model IDs, new changelog entries, and changed guide pages since the committed snapshot. It does not explain a change, so still read what it flags. After review, run it with `--update` and commit the snapshot in the same PR. A full review also starts from these indexes, even when the existing references appear current:
+Start with `python3 scripts/check_upstream.py`, which reports new text model IDs and changed prompting guides since the committed snapshot. It does not explain a change and does not watch changelogs, so still read what it flags and check the indexes below during a full review. After review, run it with `--update` and commit the snapshot in the same PR. A full review also starts from these indexes, even when the existing references appear current:
 
 | Provider | Discovery sources |
 | --- | --- |

@@ -10,11 +10,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Other providers such as Gemini now get a normal prompt with general guidance and a disclosure, matching how unknown OpenAI and Anthropic models are handled.
 - Activation phrases for improving or optimizing an existing prompt or system prompt, and an argument hint for the slash command.
 - `AGENTS.md` for repository agents, `scripts/check_upstream.py`, and a weekly workflow that opens an issue when upstream docs change.
-- Regression scenarios E1, E2, T1, and T2.
+- Regression scenarios E1, E2, and T1 through T6, covering activation and near-misses.
 
 ### Changed
 - Claude API and migration notes moved to `claude-integration.md`, loaded only when requested, and target resolution is skipped for exact maintained models. A typical Claude draft now loads about a third less reference text.
 - Provider references now show one Reviewed date per model.
+- The workflow now requires reading the target's reference before drafting, including for short or prompt-only requests.
 - README now leads with installation and has a complete Codex install path.
 
 ### Removed

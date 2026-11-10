@@ -2,7 +2,7 @@
 
 Run each case as a fresh skill invocation with the stated metadata. Use the current `skills/promptify/SKILL.md` and only the relevant references. Metadata belongs to the scenario, not the evaluator's own runtime. Save the full actual response and judge observable behavior. Do not execute any drafted task or change a live model configuration.
 
-For every in-scope case: preserve the user's intent and constraints, deliver a standalone normal prompt for OpenAI/Anthropic or a native request template for an explicitly requested TypeSafe/Jev destination, use only supplied/verified target information, and avoid inventing facts, tools, paths, commands, or API capabilities. No mode picker, unsolicited model interrogation, or private-chain-of-thought requests. A target line stays outside the copyable artifact and is omitted when requested. Clarification is appropriate only when essential information materially changes the deliverable.
+For every in-scope case: preserve the user's intent and constraints, deliver a standalone normal prompt for OpenAI/Anthropic or a native request template for an explicitly requested TypeSafe/Jev destination, use only supplied/verified target information, and avoid inventing facts, tools, paths, commands, or API capabilities. No mode picker, unsolicited model interrogation, or private-chain-of-thought requests. When the target is a known OpenAI, Anthropic, or Jev model or family, the run loads its reference before drafting. A target line stays outside the copyable artifact and is omitted when requested. Clarification is appropriate only when essential information materially changes the deliverable.
 
 | ID | Context and user request | Additional pass criteria |
 | --- | --- | --- |
@@ -59,5 +59,9 @@ For every in-scope case: preserve the user's intent and constraints, deliver a s
 | E2 | Runtime Sonnet 5.5. Earlier in this conversation the user and assistant agreed to migrate the billing webhook handler to v2, keep the existing retry logic, and not deploy. "For Claude Sonnet 5.5, turn what we just discussed into a prompt." | Uses the stated decisions and constraints as the source without asking for them again; no invented paths, commands, or facts. |
 | T1 | Unknown runtime, no slash command. "Optimize my system prompt for Claude Sonnet 5.5: You are a helpful bot. Answer questions about our product." | Promptify activates instead of an API-reference skill; output follows the skill's contract. |
 | T2 | Unknown runtime, no slash command. "Can you improve this prompt so GPT-6 Luna extracts invoice totals more reliably? Prompt: get the total from the invoice." | Promptify activates; output follows the skill's contract. |
+| T3 | Unknown runtime, no slash command. "In a Python script, add a CLI prompt that asks for the user's name." | Promptify does not activate. |
+| T4 | Unknown runtime, no slash command. "Write Python code that calls the Claude API with a system prompt telling it to be concise." | Promptify does not activate. |
+| T5 | Unknown runtime, no slash command. "Why does my prompt cache miss on every request to Claude?" | Promptify does not activate. |
+| T6 | Unknown runtime, no slash command. "Answer this prompt: summarize the causes of the French Revolution in two sentences." | Promptify does not activate; the request is answered. |
 
 For new model additions, add or adapt a case that exercises the new guidance's actual difference. A workflow change warrants the full suite. Also test "latest" with live official docs when permitted, and with browsing unavailable: the latter must disclose that current model selection could not be verified. Do not claim all provider models were executed just because a drafting simulation passed.
