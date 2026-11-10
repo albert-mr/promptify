@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [3.6.0] - 2026-11-10
+
+### Added
+- Claude Fable 5.2 guidance for early stops, approval rules, code ownership, user updates, final reports, and instructions to remove from earlier prompts, with separate integration notes.
+- Regression scenarios D3 and N13.
+
+### Changed
+- Full review of the Opus 5.5, Sonnet 5.5, Haiku 5.5, Claude best-practices, and GPT-6 prompting guides. Reviewed dates updated to match.
+- Sonnet 5.5's "think the problem through" line is scoped to Structured Outputs, and GPT-6.1 Terra's `medium` starting point to new integrations.
+- Thinking-replay notes now include Fable 5.2 as a reader of Opus, Sonnet, and Haiku 5.5 blocks.
+
+### Removed
+- Claude Fable 5.1 section, now legacy. Explicit requests keep their target with a general-guidance disclosure.
+
 ## [3.5.0] - 2026-11-09
 
 ### Added

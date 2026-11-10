@@ -28,7 +28,7 @@ PAGES = [
     f"{OPENAI}/guides/latest-model.md",
     f"{OPENAI}/guides/prompt-engineering.md",
     f"{PROMPTING}/claude-prompting-best-practices.md",
-    f"{PROMPTING}/prompting-claude-fable-5-1.md",
+    f"{PROMPTING}/prompting-claude-fable-5-2.md",
     f"{PROMPTING}/prompting-claude-opus-5-5.md",
     f"{PROMPTING}/prompting-claude-sonnet-5-5.md",
     f"{PROMPTING}/prompting-claude-haiku-5-5.md",
