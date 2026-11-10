@@ -2,6 +2,12 @@
 
 Newest first. Entries describe the releases they were written for and are not runtime guidance.
 
+## Fable 5.2 follow-up — 2026-11-10
+
+A second read of the Fable 5.2 prompting guide against the shipped reference found items the 3.6.0 rewrite left out: subagent tool descriptions, built-up cautions, reply length, refusal categories and fallback, and the guide's note that prompt changes go into new conversations only. The line on inherited delegation and token-budget text was stronger than the guide, which says to test without them, and was reworded. The guide, the what's-new page, and the Mythos 5.2 overview describe Mythos 5.2 as the same model for verified organizations, so `claude-mythos-5-2` now routes to the Fable 5.2 section instead of general guidance. No model newer than Fable 5.2 exists in the catalog or the 2026-11-09 release notes.
+
+Anthropic's [model-choice post](https://claude.dev/blog/which-claude-model-should-you-build-with/) (2026-11-09) was read in full. Only its rule for prompts shared across models was adopted. Its prices, benchmark figures, and harness settings were left out, and the which-model answer cites the [choosing a model](https://platform.claude.com/docs/en/about-claude/models/choosing-a-model) docs page instead. The blog is not watched by `scripts/check_upstream.py`. The `anthropics/claude-cookbooks` repository had no Fable 5.2 commit (latest 2026-11-04). Read in part only: the migration guide (headings) and the refusals-and-fallback page (the fallback sentence came from the what's-new page).
+
 ## Guide review — 2026-11-10
 
 Anthropic launched Claude Fable 5.2 on 2026-11-09, after that day's discovery check, and moved Fable 5.1 to legacy. The Fable section was rewritten from the Fable 5.2 prompting guide, what's-new page, and migration guide. The Opus 5.5, Sonnet 5.5, Haiku 5.5, Claude best-practices, GPT-6, and OpenAI prompt-engineering guides were each read in full, and only additions likely to change a drafted prompt were applied; lower-value items were left out to limit the context loaded per draft. Not reread: what's-new and migration pages other than Fable 5.2's, and TypeSafe docs beyond the 2026-11-09 check.

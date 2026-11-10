@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [3.7.0] - 2026-11-10
+
+### Added
+- Claude Mythos 5.2 routes to the Fable 5.2 guidance and integration notes.
+- Fable 5.2 guidance for subagent tool descriptions, built-up cautions in memory and instruction files, and reply length, with integration notes for refusals and fallback and for applying revised prompts to new conversations only.
+- A starting-point answer with a link to Anthropic's choosing-a-model page when the user asks which Claude model to target, and a rule for prompts shared across several Claude models.
+- Regression scenarios N14 and N15.
+
+### Changed
+- Inherited delegation lines and prompt-written token budgets are dropped unless the user wants them kept, matching the guide's advice to test without them.
+
 ## [3.6.0] - 2026-11-10
 
 ### Added
