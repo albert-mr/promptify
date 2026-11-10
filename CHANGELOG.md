@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [3.4.0] - 2026-11-09
+
+### Added
+- Jev context limits and the long-context header for integration notes, plus the `jev-preview` alias and a pointer to the official TypeSafe agent skill.
+- Claude Opus 5.5 guidance for pasted-text marking, thinking instructions in chat prompts, and multiagent time signals. Claude Fable 5.1 guidance for safeguard false positives.
+- Regression scenarios N12 and J14.
+
+### Removed
+- GPT-6 Sol section, now superseded by GPT-6.1 Sol. Explicit requests keep their target with a general-guidance disclosure.
+
+### Fixed
+- Removed quotation marks around a TypeSafe image-status phrase the docs do not use.
+- Plugin update links now point to Claude Code's discover-plugins page.
+
 ## [3.3.0] - 2026-10-30
 
 ### Added
