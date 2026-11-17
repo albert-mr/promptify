@@ -23,7 +23,7 @@ Start with `python3 scripts/check_upstream.py`, which reports new text model IDs
 | OpenAI | [Models](https://developers.openai.com/api/docs/models), [latest model](https://developers.openai.com/api/docs/guides/latest-model), [prompt engineering](https://developers.openai.com/api/docs/guides/prompt-engineering), [API changelog](https://developers.openai.com/api/docs/changelog), [deprecations](https://developers.openai.com/api/docs/deprecations) |
 | Anthropic | [Models](https://platform.claude.com/docs/en/models/overview), [prompting overview](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview), [best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices), [migration index](https://platform.claude.com/docs/en/about-claude/models/migration-guide), [release notes](https://platform.claude.com/docs/en/release-notes/overview), [deprecations](https://platform.claude.com/docs/en/about-claude/model-deprecations) |
 | TypeSafe | [Index](https://docs.typesafe.ai/llms.txt), [models](https://docs.typesafe.ai/models), [API](https://docs.typesafe.ai/api), [primitives](https://docs.typesafe.ai/primitives), [confidence](https://docs.typesafe.ai/confidence), [known limitations](https://docs.typesafe.ai/model-jaggedness), [model changelog](https://docs.typesafe.ai/changelog) |
-| Installation | [Codex skills](https://learn.chatgpt.com/docs/build-skills), [Claude Code marketplaces](https://code.claude.com/docs/en/plugin-marketplaces), [discover plugins](https://code.claude.com/docs/en/discover-plugins) |
+| Installation | [Codex skills](https://learn.chatgpt.com/docs/build-skills), [Codex plugins](https://learn.chatgpt.com/docs/plugins), [Claude Code marketplaces](https://code.claude.com/docs/en/plugin-marketplaces), [discover plugins](https://code.claude.com/docs/en/discover-plugins) |
 
 For each update:
 
@@ -52,12 +52,13 @@ Claude's prompting docs demonstrate supplying model identity through instruction
 python3 scripts/validate.py
 ```
 
-CI runs this same command, plus `python3 scripts/test_check_upstream.py` for the upstream check's logic. It checks manifest consistency, version/changelog pairing, skill frontmatter, reference reachability, JSON example syntax, relative documentation links, the discovery symlink, and removal of the old mode from shipped skill instructions. JSON parsing checks syntax, not provider compatibility or semantic correctness. It needs no network, model API, or third-party Python package.
+CI runs this same command, plus `python3 scripts/test_check_upstream.py` for the upstream check's logic. It checks manifest consistency, version/changelog pairing, skill frontmatter, reference reachability, JSON example syntax, relative documentation links, the discovery symlink, the Codex marketplace entry, and removal of the old mode from shipped skill instructions. JSON parsing checks syntax, not provider compatibility or semantic correctness. It needs no network, model API, or third-party Python package.
 
 Run the [behavior scenarios](tests/scenarios.md) in fresh evaluation contexts after workflow changes; for a reference-only correction, select the affected model cases plus cross-provider and unknown-target cases. Review actual outputs, not just wording matches. Save the baseline, revised outputs, and pass/fail notes in the PR or `.context/` for local review. Never execute the task inside a regression prompt. API compatibility claims require source review or real integration tests; a drafting simulation does not validate a provider endpoint.
 
 ## Propagation
 
+- **Codex plugin:** `.agents/plugins/marketplace.json` lists this repository as a Codex marketplace, and Codex reads the plugin version from `.claude-plugin/plugin.json`. Users refresh with `codex plugin marketplace upgrade promptify`, then `codex plugin add promptify@promptify`.
 - **Codex symlinks:** an install reflects the checkout it points to, including uncommitted changes. Merging elsewhere does not update a stale checkout or another worktree. Update that checkout and reload/restart if necessary. A copied install must be recopied.
 - **Claude Code:** the installed plugin is cached. Refresh the marketplace, update the versioned plugin, then reload:
 

@@ -20,12 +20,13 @@ Invoke it with `/promptify:promptify` followed by your idea, or ask for a prompt
 **Codex**
 
 ```bash
-git clone https://github.com/albert-mr/promptify.git ~/promptify
-mkdir -p ~/.agents/skills
-ln -s ~/promptify/skills/promptify ~/.agents/skills/promptify
+codex plugin marketplace add albert-mr/promptify
+codex plugin add promptify@promptify
 ```
 
-Invoke it with `$promptify`, and restart Codex if the skill does not appear. For a single project, link it into that project's `.agents/skills/` instead. Inside this repository no install is needed. See [Codex skills](https://learn.chatgpt.com/docs/build-skills).
+Type `$` and pick promptify, or ask for a prompt in plain language. Restart Codex if the skill does not appear. Inside this repository no install is needed. See [Codex plugins](https://learn.chatgpt.com/docs/plugins).
+
+Where plugins are unavailable, clone the repository and link `skills/promptify` into `~/.agents/skills/` or a project's `.agents/skills/`. See [Codex skills](https://learn.chatgpt.com/docs/build-skills).
 
 ## Example
 
@@ -70,7 +71,14 @@ claude plugin marketplace update promptify
 claude plugin update promptify@promptify
 ```
 
-Then run `/reload-plugins`. For Codex, run `git -C ~/promptify pull`.
+Then run `/reload-plugins`. For Codex:
+
+```bash
+codex plugin marketplace upgrade promptify
+codex plugin add promptify@promptify
+```
+
+A linked clone updates with `git pull`.
 
 ## Contributing
 

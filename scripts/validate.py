@@ -55,6 +55,9 @@ for path in [SKILL / "SKILL.md", *sorted(refs), ROOT / "README.md"]:
         except json.JSONDecodeError as error:
             check(False, f"Invalid JSON example in {path.relative_to(ROOT)}: {error}")
 
+codex = json.loads((ROOT / ".agents/plugins/marketplace.json").read_text())
+check(codex.get("name") == "promptify" and [(e.get("name"), e.get("source")) for e in codex.get("plugins", [])] == [("promptify", {"source": "local", "path": "./"})], "Invalid Codex marketplace")
+
 discovery = ROOT / ".agents/skills/promptify"
 check(discovery.is_symlink() and discovery.resolve() == SKILL, "Broken Codex discovery symlink")
 
@@ -71,4 +74,4 @@ for path in [
 
 if errors:
     raise SystemExit("\n".join(f"FAIL: {error}" for error in errors))
-print(f"Validation passed: promptify {version}, manifests, skill, references, links, and discovery symlink")
+print(f"Validation passed: promptify {version}, manifests, skill, references, links, Codex marketplace, and discovery symlink")
