@@ -4,11 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [3.8.0] - 2026-11-17
+## [3.9.0] - 2026-11-17
 
 ### Added
 - Promptify now applies unasked when a larger task has the agent author a substantial prompt in the user's files, writing it in place for the model the code names.
 - Regression scenarios X1 through X3.
+
+## [3.8.0] - 2026-11-17
+
+### Added
 - Codex plugin marketplace at `.agents/plugins/marketplace.json`, so Codex installs and updates Promptify with two commands instead of a clone and symlink.
 
 ## [3.7.0] - 2026-11-10
