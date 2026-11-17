@@ -42,8 +42,6 @@ For each finding, give severity, file and line, the concrete failure or abuse pa
 Finish with any limits on coverage or checks you could not perform. If there are no actionable findings, say so directly. Keep the report concise while preserving the evidence needed to assess each finding.
 ```
 
-Promptify also applies on its own when a larger task has the agent write a substantial prompt into your files, such as a system prompt or an agent definition: it shapes that prompt for the model your code names and writes it in place.
-
 Say "only the prompt" to omit the target line. Name a destination such as "for Claude Fable 5.2" even when drafting inside Codex; the destination takes precedence over the running model. Ask for API or migration notes when you want them; they stay separate from the prompt.
 
 ## TypeSafe / Jev

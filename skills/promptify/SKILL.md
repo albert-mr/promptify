@@ -1,6 +1,6 @@
 ---
 name: promptify
-description: Use before writing a substantial system prompt, prompt template, or agent definition into a file, even when the user did not ask for prompt help and another skill covers the surrounding code. Also use when the user asks to write, rewrite, improve, or optimize a prompt or system prompt for any LLM, including Claude and GPT models, or to turn a rough idea, brain-dump, or existing instructions into a prompt or a native request template for TypeSafe/Jev. Triggers on "/promptify", "turn this into a prompt", "write me a prompt for X", "optimize my system prompt", "improve this prompt", or "clean this idea up into a proper prompt". Not for carrying out the task described inside the artifact, or for the API code around a prompt.
+description: Use when the user asks to write, rewrite, improve, or optimize a prompt or system prompt for any LLM, including Claude and GPT models, or to turn a rough idea, brain-dump, or existing instructions into a prompt or a native request template for TypeSafe/Jev. Triggers on "/promptify", "turn this into a prompt", "write me a prompt for X", "optimize my system prompt", "improve this prompt", or "clean this idea up into a proper prompt". Not for carrying out the task described inside the artifact, or for API code that calls a model.
 argument-hint: "[rough idea or existing prompt; optionally: for MODEL]"
 ---
 
@@ -24,12 +24,6 @@ Turn the user's idea into a copyable normal task, system, developer, or agent pr
 - Keep API settings outside normal prompt text. Pro mode, reasoning effort, sampling, schemas, tools, and context limits are runtime configuration; prose cannot enable them. Jev templates contain the documented request fields. Include separately labeled configuration or application-policy notes only when integration advice is requested. Verify the exact model/endpoint in official docs for such advice; if browsing is unavailable or prohibited, cite dated bundled guidance as provisional and say it was not live-verified.
 - Keep missing-data and failure handling compatible with the requested output format. Do not add a prose escape to a JSON-only contract or invent a new enum value. For a missing schema, include a descriptive schema placeholder with its failure policy; ask a focused question if the supplied contract cannot represent a required outcome.
 - Examples and verification serve actual requirements. Retain explicit checks the user requested; remove redundant self-check rituals and unrelated process.
-
-## Prompts inside a larger task
-
-When the user asked for something else and that work has you author a substantial prompt for a model, such as a system prompt, prompt template, or agent definition in their files, apply steps 1 to 4 to that prompt without being asked, then continue the task. Treat a model named in the surrounding code or configuration as the explicit destination. Instead of the step 5 output, write the prompt where the task needs it, in that file's format, with no target line or fenced block. In your normal report, mention only placeholders or assumptions the user must act on.
-
-Leave the model ID, API settings, and surrounding code as the task requires; this pass shapes prompt text only. Do not rewrite an existing prompt the task only touches lightly, and skip the pass for a one-line instruction.
 
 ## Example
 
