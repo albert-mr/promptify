@@ -26,6 +26,7 @@ MODELS = {
 }
 PAGES = [
     f"{OPENAI}/guides/latest-model.md",
+    f"{OPENAI}/guides/latest-model/gpt-6-astra.md",
     f"{OPENAI}/guides/prompt-engineering.md",
     f"{PROMPTING}/claude-prompting-best-practices.md",
     f"{PROMPTING}/prompting-claude-fable-5-2.md",
