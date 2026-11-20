@@ -2,6 +2,12 @@
 
 Newest first. Entries describe the releases they were written for and are not runtime guidance.
 
+## Model discovery — 2026-11-20
+
+OpenAI released GPT-6.2 Astra and GPT-6.2 Sol on November 17. They replace GPT-6 Astra and GPT-6.1 Sol in maintained coverage under the same-tier successor rule. The catalog still features GPT-6.1 Terra and GPT-6 Luna. The GPT-6.2 guide was read in full. Its prompting guidance and Responses changes apply to the two new targets. The November 19 GPT-Live-1.1 voice release falls outside text-model coverage. [Catalog](https://developers.openai.com/api/docs/models), [release notes](https://developers.openai.com/api/docs/changelog), [GPT-6.2 guide](https://developers.openai.com/api/docs/guides/latest-model/gpt-6.2-astra.md).
+
+The Claude catalog and release notes show no newer maintained model than Fable 5.2, and the TypeSafe catalog and changelog still list Jev 1.14 as newest. The changed Claude guide headings and integration topics were checked for model discovery. Their full-review dates remain November 10. [Claude catalog](https://platform.claude.com/docs/en/models/overview), [Claude releases](https://platform.claude.com/docs/en/release-notes/overview), [Jev models](https://docs.typesafe.ai/models), [Jev releases](https://docs.typesafe.ai/changelog).
+
 ## Fable 5.2 follow-up — 2026-11-10
 
 A second read of the Fable 5.2 prompting guide against the shipped reference found items the 3.6.0 rewrite left out: subagent tool descriptions, built-up cautions, reply length, refusal categories and fallback, and the guide's note that prompt changes go into new conversations only. The line on inherited delegation and token-budget text was stronger than the guide, which says to test without them, and was reworded. The guide, the what's-new page, and the Mythos 5.2 overview describe Mythos 5.2 as the same model for verified organizations, so `claude-mythos-5-2` now routes to the Fable 5.2 section instead of general guidance. No model newer than Fable 5.2 exists in the catalog or the 2026-11-09 release notes.
