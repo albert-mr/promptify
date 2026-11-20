@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [3.10.0] - 2026-11-20
+
+### Changed
+- Added prompting and migration guidance for GPT-6.2 Astra and GPT-6.2 Sol, including where to place reusable instructions and how to preserve reasoning across turns. Requests for their predecessors, GPT-6 Astra and GPT-6.1 Sol, retain the named target and receive general guidance.
+
 ## [3.9.0] - 2026-11-17
 
 ### Added

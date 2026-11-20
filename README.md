@@ -30,9 +30,9 @@ Where plugins are unavailable, clone the repository and link `skills/promptify` 
 
 ## Example
 
-> For GPT-6 Astra, turn this into a prompt: review my PR for security issues. Be thorough, but don't change code.
+> For GPT-6.2 Astra, turn this into a prompt: review my PR for security issues. Be thorough, but don't change code.
 
-Target: GPT-6 Astra (user-specified).
+Target: GPT-6.2 Astra (user-specified).
 
 ```text
 Review the pull request for actionable security defects introduced or exposed by its changes. Inspect the diff and the affected callers and trust boundaries. Keep the work read-only.
@@ -58,7 +58,7 @@ This feature needs no TypeSafe key, SDK, or plugin. Templates are drafts: they a
 
 ## Model coverage
 
-- **OpenAI:** GPT-6 Astra, GPT-6.1 Sol, GPT-6.1 Terra, and GPT-6 Luna.
+- **OpenAI:** GPT-6.2 Astra, GPT-6.2 Sol, GPT-6.1 Terra, and GPT-6 Luna.
 - **Anthropic:** Claude Fable 5.2 (and Mythos 5.2, which shares its guidance), Opus 5.5, Sonnet 5.5, and Haiku 5.5.
 - **TypeSafe:** Jev `jev-1.14.0` (default) and `jev-1.13.0`, with experimental image input and Box questions on explicit request.
 

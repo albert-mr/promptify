@@ -18,7 +18,7 @@ Do not inspect credentials, dump environment variables, read private transcripts
 Use a short, truthful line outside the copyable block:
 
 - `Target: Claude Fable 5.2 (user-specified).`
-- `Target: GPT-6 Astra (session-provided).`
+- `Target: GPT-6.2 Astra (session-provided).`
 - `Target: OpenAI family (exact model unknown).`
 - `Target: unspecified; using general prompting guidance.`
 - `Target: Gemini (no bundled guidance; using general prompting guidance).`

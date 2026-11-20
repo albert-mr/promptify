@@ -33,9 +33,9 @@ Leave the model ID, API settings, and surrounding code as the task requires; thi
 
 ## Example
 
-User: "For GPT-6 Astra: make an agent that reviews PRs for security issues, thorough but focused. Don't change code."
+User: "For GPT-6.2 Astra: make an agent that reviews PRs for security issues, thorough but focused. Don't change code."
 
-Target: GPT-6 Astra (user-specified).
+Target: GPT-6.2 Astra (user-specified).
 
 ```text
 Review the pull request for security defects introduced or exposed by its changes. Inspect the diff and enough surrounding code to trace affected inputs, callers, and trust boundaries. Use the repository's existing guidance and available inspection tools. Keep the work read-only.
