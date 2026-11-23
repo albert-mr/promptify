@@ -21,7 +21,7 @@ A "Gemini" or Antigravity harness does not establish the exact model. Use suppli
 
 State the task, the context the model needs, constraints, and the response format; do not assume the model already has the required information. Add a few specific, varied examples when they show the format or decision boundary, and keep their structure and delimiters identical; too many can overfit the response to them. See [prompt design strategies](https://ai.google.dev/gemini-api/docs/prompting-strategies).
 
-Application instructions go in the `system_instruction` request field; a prompt cannot set it. Put shared system instructions, tool definitions, and reference documents first and the per-request input last: Gemini 4 caches repeated prefixes of at least 4,096 tokens automatically. See [choosing a model](https://ai.google.dev/gemini-api/docs/choosing-a-model).
+Application instructions go in the `system_instruction` request field; a prompt cannot set it. Put shared system instructions, tool definitions, and reference documents first and the per-request input last: implicit caching runs by default on Gemini 4 prompts of at least 4,096 tokens, and Google recommends this order to maximize cache hits. See [choosing a model](https://ai.google.dev/gemini-api/docs/choosing-a-model).
 
 Keep runtime configuration separate from copyable prompt text. Thinking level, Google Search grounding, code execution, structured outputs, and declared functions are not enabled by prose. When integration advice is requested, the guide recommends enabling Search for recent or obscure facts and code execution for arithmetic and counting.
 
