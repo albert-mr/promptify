@@ -18,10 +18,12 @@ OPENAI = "https://developers.openai.com/api/docs"
 ANTHROPIC = "https://platform.claude.com/docs/en"
 PROMPTING = f"{ANTHROPIC}/build-with-claude/prompt-engineering"
 TYPESAFE = "https://docs.typesafe.ai"
+GOOGLE = "https://ai.google.dev/gemini-api/docs"
 
 MODELS = {
     "openai": (f"{OPENAI}/models/all.md", r"/models/(gpt-\d[a-z0-9.-]*?)\.md"),
     "anthropic": (f"{ANTHROPIC}/models/overview.md", r"\b(claude-[a-z]+-\d[a-z0-9-]*)\b"),
+    "google": (f"{GOOGLE}/models.md.txt", r"`(gemini-\d[a-z0-9.-]*)`"),
     "typesafe": (f"{TYPESAFE}/models.md", r"\b(jev-(?:latest|preview|\d+\.\d+\.\d+))\b"),
 }
 PAGES = [
@@ -35,6 +37,12 @@ PAGES = [
     f"{PROMPTING}/prompting-claude-haiku-5-5.md",
     f"{ANTHROPIC}/build-with-claude/effort.md",
     f"{ANTHROPIC}/build-with-claude/preserved-thinking.md",
+    f"{GOOGLE}/prompting-strategies.md.txt",
+    f"{GOOGLE}/whats-new-gemini-4-carbon.md.txt",
+    f"{GOOGLE}/whats-new-gemini-4-argon.md.txt",
+    f"{GOOGLE}/whats-new-gemini-4-neon.md.txt",
+    f"{GOOGLE}/whats-new-gemini-4-hydrogen.md.txt",
+    f"{GOOGLE}/thinking.md.txt",
     f"{TYPESAFE}/api.md",
     f"{TYPESAFE}/primitives.md",
     f"{TYPESAFE}/images.md",

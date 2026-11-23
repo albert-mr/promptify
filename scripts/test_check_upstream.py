@@ -16,6 +16,7 @@ assert diff(base, changed) == [
 assert fingerprint("a  b\n") == fingerprint("a b")
 sample = "[x](/api/docs/models/gpt-6.1-sol.md) [y](/api/docs/models/gpt-image-2.md) [z](/api/docs/models/gpt-live-1.md)"
 assert re.findall(MODELS["openai"][1], sample) == ["gpt-6.1-sol"]
+assert re.findall(MODELS["google"][1], "`gemini-4-neon` and /docs/models/gemini-4-models") == ["gemini-4-neon"]
 assert re.findall(MODELS["typesafe"][1], "`jev-1.14.0` and jev-latest") == ["jev-1.14.0", "jev-latest"]
 
 def broken():

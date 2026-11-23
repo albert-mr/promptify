@@ -1,7 +1,7 @@
 {
   "name": "promptify",
-  "version": "3.10.0",
-  "description": "Turns rough ideas into OpenAI or Anthropic prompts, or native TypeSafe/Jev request templates.",
+  "version": "3.11.0",
+  "description": "Turns rough ideas into OpenAI, Anthropic, or Google prompts, or native TypeSafe/Jev request templates.",
   "author": {
     "name": "Albert"
   },
@@ -13,6 +13,7 @@
     "prompts",
     "claude",
     "openai",
+    "gemini",
     "typesafe",
     "jev"
   ]

@@ -1,6 +1,6 @@
 # Maintaining Promptify
 
-Promptify drafts normal prompts for OpenAI/Anthropic and native JSON request templates for explicitly requested TypeSafe/Jev destinations. Its product is the authored artifact and its references; source accuracy and drafting behavior both need review. It does not execute inference requests.
+Promptify drafts normal prompts for OpenAI, Anthropic, and Google and native JSON request templates for explicitly requested TypeSafe/Jev destinations. Its product is the authored artifact and its references; source accuracy and drafting behavior both need review. It does not execute inference requests.
 
 ## Versioning
 
@@ -14,7 +14,7 @@ Keep plugin and marketplace names/descriptions consistent. The marketplace deleg
 
 ## Source review
 
-The source inventories are the official links in the [OpenAI reference](skills/promptify/references/openai-families.md), [Anthropic reference](skills/promptify/references/claude-families.md), [Anthropic integration notes](skills/promptify/references/claude-integration.md), [TypeSafe reference](skills/promptify/references/typesafe.md), and the target-resolution sources below. Fetch their current contents, not search snippets. Append `.md` where the provider supports it; fall back to normal pages when Markdown fails, and follow published links rather than guessing URLs.
+The source inventories are the official links in the [OpenAI reference](skills/promptify/references/openai-families.md), [Anthropic reference](skills/promptify/references/claude-families.md), [Anthropic integration notes](skills/promptify/references/claude-integration.md), [Google reference](skills/promptify/references/google-families.md), [TypeSafe reference](skills/promptify/references/typesafe.md), and the target-resolution sources below. Fetch their current contents, not search snippets. Append `.md` where the provider supports it (`.md.txt` on ai.google.dev); fall back to normal pages when Markdown fails, and follow published links rather than guessing URLs.
 
 Start with `python3 scripts/check_upstream.py`, which reports new text model IDs and changed prompting, effort, and preserved-thinking pages since the committed snapshot. It does not explain a change and does not watch changelogs, so still read what it flags and check the indexes below during a full review. After review, run it with `--update` and commit the snapshot in the same PR. A full review also starts from these indexes, even when the existing references appear current:
 
@@ -22,6 +22,7 @@ Start with `python3 scripts/check_upstream.py`, which reports new text model IDs
 | --- | --- |
 | OpenAI | [Models](https://developers.openai.com/api/docs/models), [latest model](https://developers.openai.com/api/docs/guides/latest-model), [prompt engineering](https://developers.openai.com/api/docs/guides/prompt-engineering), [API changelog](https://developers.openai.com/api/docs/changelog), [deprecations](https://developers.openai.com/api/docs/deprecations) |
 | Anthropic | [Models](https://platform.claude.com/docs/en/models/overview), [prompting overview](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview), [best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices), [migration index](https://platform.claude.com/docs/en/about-claude/models/migration-guide), [release notes](https://platform.claude.com/docs/en/release-notes/overview), [deprecations](https://platform.claude.com/docs/en/about-claude/model-deprecations) |
+| Google | [Models](https://ai.google.dev/gemini-api/docs/models), [latest models](https://ai.google.dev/gemini-api/docs/latest-model), [choosing a model](https://ai.google.dev/gemini-api/docs/choosing-a-model), [prompt design](https://ai.google.dev/gemini-api/docs/prompting-strategies), [release notes](https://ai.google.dev/gemini-api/docs/changelog), [deprecations](https://ai.google.dev/gemini-api/docs/deprecations) |
 | TypeSafe | [Index](https://docs.typesafe.ai/llms.txt), [models](https://docs.typesafe.ai/models), [API](https://docs.typesafe.ai/api), [primitives](https://docs.typesafe.ai/primitives), [confidence](https://docs.typesafe.ai/confidence), [known limitations](https://docs.typesafe.ai/model-jaggedness), [model changelog](https://docs.typesafe.ai/changelog) |
 | Installation | [Codex skills](https://learn.chatgpt.com/docs/build-skills), [Codex plugins](https://learn.chatgpt.com/docs/plugins), [Claude Code marketplaces](https://code.claude.com/docs/en/plugin-marketplaces), [discover plugins](https://code.claude.com/docs/en/discover-plugins) |
 
