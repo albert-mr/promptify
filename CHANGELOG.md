@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [3.11.0] - 2026-11-23
+
+### Added
+- Google as a third prompt provider, with guidance and integration notes for Gemini 4 Carbon, Argon, Neon, and Hydrogen. Other Gemini models keep the named target and receive general guidance.
+- Regression scenarios G1 through G4. B4 now uses a provider without bundled guidance.
+- The upstream check watches the Gemini model catalog, prompt guide, thinking guide, and the four Gemini 4 what's-new pages.
+
 ## [3.10.0] - 2026-11-20
 
 ### Changed

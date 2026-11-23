@@ -2,6 +2,12 @@
 
 Newest first. Entries describe the releases they were written for and are not runtime guidance.
 
+## Google added — 2026-11-23
+
+Google is now a maintained provider. Its catalog lists four Gemini 4 text models with no shutdown date: Argon (2026-10-13), Carbon (2026-11-10), Hydrogen (2026-11-12), and Neon (2026-11-18). Gemini 3.8 Flash and 3.6 Flash are labeled previous-generation, and Gemini 3.5 Flash-Lite predates Gemini 4, so they stay outside maintained coverage. Read in full: the four what's-new pages apart from their code samples and pricing tables, and the Gemini 3 and agentic-workflow sections of the prompt guide. Read in part: the earlier general sections of the prompt guide, the thinking guide (levels, token limits, signatures, best practices), choosing a model, latest models, deprecations, release notes back to October 13, and the opening of the Decisions API guide. Not read: the long decode guide, which is linked for reference only. [Catalog](https://ai.google.dev/gemini-api/docs/models), [release notes](https://ai.google.dev/gemini-api/docs/changelog), [deprecations](https://ai.google.dev/gemini-api/docs/deprecations), [prompt guide](https://ai.google.dev/gemini-api/docs/prompting-strategies).
+
+Gap: the prompt guide has no Gemini 4 section. The Carbon what's-new page links a [developer guide](https://aistudio.google.com/learn/gemini-4-carbon-developer-guide) for prompting and multi-agent patterns, but that page returns only an application shell to a plain fetch and was not read. The reference therefore carries the guide's general and agentic advice plus the prompt-relevant items from the what's-new pages, and says the Gemini 3 section is version-specific. Read the developer guide in a browser at the next review. It is not watched by `scripts/check_upstream.py`. The OpenAI, Anthropic, and TypeSafe snapshots were not reviewed in this change.
+
 ## Model discovery — 2026-11-20
 
 OpenAI released GPT-6.2 Astra and GPT-6.2 Sol on November 17. They replace GPT-6 Astra and GPT-6.1 Sol in maintained coverage under the same-tier successor rule. The catalog still features GPT-6.1 Terra and GPT-6 Luna. The GPT-6.2 guide was read in full. Its prompting guidance and Responses changes apply to the two new targets. The November 19 GPT-Live-1.1 voice release falls outside text-model coverage. [Catalog](https://developers.openai.com/api/docs/models), [release notes](https://developers.openai.com/api/docs/changelog), [GPT-6.2 guide](https://developers.openai.com/api/docs/guides/latest-model/gpt-6.2-astra.md).

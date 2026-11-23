@@ -2,7 +2,7 @@
 
 ![Is this Astra 6?](assets/is-this-astra-6.svg)
 
-Turn a rough idea or existing instructions into a clear, copyable prompt tuned for **OpenAI and Anthropic** models, or a native **TypeSafe/Jev request template**. Works as a skill in Claude Code and Codex.
+Turn a rough idea or existing instructions into a clear, copyable prompt tuned for **OpenAI, Anthropic, and Google** models, or a native **TypeSafe/Jev request template**. Works as a skill in Claude Code and Codex.
 
 Promptify preserves your intent, uses guidance for the destination you name, and makes missing inputs explicit. It never executes the drafted task or calls an inference API.
 
@@ -60,9 +60,10 @@ This feature needs no TypeSafe key, SDK, or plugin. Templates are drafts: they a
 
 - **OpenAI:** GPT-6.2 Astra, GPT-6.2 Sol, GPT-6.1 Terra, and GPT-6 Luna.
 - **Anthropic:** Claude Fable 5.2 (and Mythos 5.2, which shares its guidance), Opus 5.5, Sonnet 5.5, and Haiku 5.5.
+- **Google:** Gemini 4 Carbon, Argon, Neon, and Hydrogen.
 - **TypeSafe:** Jev `jev-1.14.0` (default) and `jev-1.13.0`, with experimental image input and Box questions on explicit request.
 
-Any other model, including other providers such as Gemini, gets a normal prompt with general guidance and a note saying so. Requests for "latest" check official docs when browsing is available. Each reference lists when its guidance was reviewed: [OpenAI](skills/promptify/references/openai-families.md), [Anthropic](skills/promptify/references/claude-families.md), and [TypeSafe](skills/promptify/references/typesafe.md).
+Any other model, including other providers such as Mistral, gets a normal prompt with general guidance and a note saying so. Requests for "latest" check official docs when browsing is available. Each reference lists when its guidance was reviewed: [OpenAI](skills/promptify/references/openai-families.md), [Anthropic](skills/promptify/references/claude-families.md), [Google](skills/promptify/references/google-families.md), and [TypeSafe](skills/promptify/references/typesafe.md).
 
 ## Update
 
